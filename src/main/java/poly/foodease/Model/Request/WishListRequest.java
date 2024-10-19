@@ -10,4 +10,6 @@ public class WishListRequest {
     private Integer userId;
     private List<Integer> foodIds;
     private List<String> foods;
+    private Integer foodVariationId;  
+    private Integer quantityStock;    
 }
