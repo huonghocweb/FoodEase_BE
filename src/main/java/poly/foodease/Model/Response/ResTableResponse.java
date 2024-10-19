@@ -11,7 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResTableResponse {
     private Integer tableId;
-    private String tableName;
     private Integer capacity;
-    private Boolean isAvailable; // true nếu bàn còn trống
+    private Boolean isAvailable;
+    private Double price;
+    private Double deposit;
+    private String imageUrl;
+    private String tableName;
+    private TableCategoryResponse tableCategory;
+
 }

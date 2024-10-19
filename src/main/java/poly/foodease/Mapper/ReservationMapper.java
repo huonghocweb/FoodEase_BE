@@ -1,40 +1,64 @@
 package poly.foodease.Mapper;
 
-import org.springframework.stereotype.Component;
-
-import poly.foodease.Model.Entity.ResTable;
+import jakarta.persistence.EntityNotFoundException;
+import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import poly.foodease.Model.Entity.Reservation;
-import poly.foodease.Model.Request.ReservationRequest;
+import poly.foodease.Model.Response.ReservationRequest;
 import poly.foodease.Model.Response.ReservationResponse;
+import poly.foodease.Repository.ResTableRepo;
+import poly.foodease.Repository.ReservationStatusRepo;
+import poly.foodease.Repository.TableServiceRepo;
+import poly.foodease.Repository.UserRepo;
 
-@Component
-public class ReservationMapper {
+import java.util.stream.Collectors;
 
-    public Reservation toEntity(ReservationRequest request) {
-        Reservation reservation = new Reservation();
-        reservation.setName(request.getName());
-        reservation.setEmail(request.getEmail());
-        reservation.setPhone(request.getPhone());
-        reservation.setReservationDate(request.getReservationDate());
-        reservation.setReservationTime(request.getReservationTime());
-        reservation.setGuests(request.getGuests());
-        reservation.setRestaurantTable(new ResTable(request.getTableId())); // Set bàn
-        reservation.setStatus("Pending"); // Trạng thái mặc định
-        return reservation;
+@Mapper(componentModel = "spring")
+public abstract class ReservationMapper {
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+     private ResTableMapper resTableMapper;
+    @Autowired
+    private ReservationStatusMapper reservationStatusMapper;
+    @Autowired
+    private ReservationStatusRepo reservationStatusRepo;
+    @Autowired
+    private ResTableRepo resTableRepo;
+    @Autowired
+    private TableServiceRepo tableServiceRepo;
+
+    public ReservationResponse convertEnToRes(Reservation reservation){
+        return ReservationResponse.builder()
+                .reservationId(reservation.getReservationId())
+                .totalDeposit(reservation.getTotalDeposit())
+                .guests(reservation.getGuests())
+                .reservationTime(reservation.getReservationTime())
+                .reservationDate(reservation.getReservationDate())
+                .user(userMapper.convertEnToRes(reservation.getUser()))
+                .resTable(resTableMapper.convertEnToRes(reservation.getResTable()))
+                .reservationStatus(reservationStatusMapper.convertEnToRes(reservation.getReservationStatus()))
+                .build();
     }
 
-    public ReservationResponse toResponse(Reservation reservation) {
-        ReservationResponse response = new ReservationResponse();
-        response.setReservationId(reservation.getReservationId());
-        response.setStatus(reservation.getStatus());
-        response.setName(reservation.getName());
-        response.setEmail(reservation.getEmail());
-        response.setPhone(reservation.getPhone());
-        response.setReservationDate(reservation.getReservationDate());
-        response.setReservationTime(reservation.getReservationTime());
-        response.setGuests(reservation.getGuests());
-        response.setTableId(reservation.getRestaurantTable().getTableId());
-        response.setTableName(reservation.getRestaurantTable().getTableName());
-        return response;
+    public Reservation convertReqToEn(ReservationRequest reservationRequest){
+        return Reservation.builder()
+                .totalDeposit(reservationRequest.getTotalDeposit())
+                .reservationDate(reservationRequest.getReservationDate())
+                .reservationTime(reservationRequest.getReservationTime())
+                .reservationStatus(reservationStatusRepo.findById(reservationRequest.getReservationStatusId())
+                        .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Status")))
+                .user(userRepo.findById(reservationRequest.getUserId())
+                        .orElseThrow(() -> new EntityNotFoundException("Not found User")))
+                .resTable(resTableRepo.findById(reservationRequest.getResTableIds())
+                        .orElseThrow(() -> new EntityNotFoundException("Not found ResTable")))
+                .services(reservationRequest.getServiceIds().stream()
+                        .map(servicesId -> tableServiceRepo.findById(servicesId)
+                                .orElseThrow(() -> new EntityNotFoundException("not found Services")))
+                        .collect(Collectors.toList()))
+                .build();
     }
+
 }

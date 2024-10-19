@@ -7,10 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import poly.foodease.Mapper.ResTableMapper;
-import poly.foodease.Model.Entity.ResTable;
-import poly.foodease.Model.Request.ResTableRequest;
-import poly.foodease.Model.Response.ResTableResponse;
 import poly.foodease.Service.ResTableService;
 
 @RestController

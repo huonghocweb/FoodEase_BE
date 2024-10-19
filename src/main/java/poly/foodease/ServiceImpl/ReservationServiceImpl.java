@@ -8,7 +8,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import poly.foodease.Model.Entity.Reservation;
 import poly.foodease.Repository.ReservationRepo;
 import poly.foodease.Service.EmailService;
 import poly.foodease.Service.ReservationService;
