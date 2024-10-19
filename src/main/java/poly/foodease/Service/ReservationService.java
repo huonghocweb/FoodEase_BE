@@ -2,8 +2,6 @@ package poly.foodease.Service;
 
 import java.util.List;
 
-import poly.foodease.Model.Entity.Reservation;
-
 public interface ReservationService {
     Reservation createReservation(Reservation reservation);
 

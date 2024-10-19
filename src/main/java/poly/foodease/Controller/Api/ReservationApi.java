@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import poly.foodease.Mapper.ReservationMapper;
-import poly.foodease.Model.Entity.Reservation;
-import poly.foodease.Model.Request.ReservationRequest;
-import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Service.ReservationService;
 
 @RestController

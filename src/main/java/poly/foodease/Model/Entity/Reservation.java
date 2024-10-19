@@ -1,64 +1,62 @@
 package poly.foodease.Model.Entity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import org.springframework.data.annotation.Transient;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "reservations")
 @Builder
+@Entity
+@Table(name="reservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
+    @Column(name="reservation_id")
     private Integer reservationId;
 
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "reservation_date")
-    private LocalDate reservationDate;
-
-    @Column(name = "reservation_time")
-    private LocalTime reservationTime;
-
-    @Column(name = "guests")
+    @Column(name="reservation_id")
     private Integer guests;
 
+    @Column(name="reservation_id")
+    private LocalDate reservationDate;
+
+    @Column(name="reservation_id")
+    private LocalTime reservationTime;
+
+    @Column(name="total_deposit")
+    private Double totalDeposit;
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "table_id")
-    private ResTable restaurantTable;
+    @JoinColumn(name="reservation_status_id")
+    private ReservationStatus reservationStatus;
 
-    @Transient
-    private String tableName;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
-    public String getTableName() {
-        return restaurantTable != null ? restaurantTable.getTableName() : null;
-    }
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="table_id")
+    private ResTable resTable;
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "reservation_service",
+            joinColumns = @JoinColumn(name="reservation_id"),
+            inverseJoinColumns = @JoinColumn(name="service_id")
+    )
+    private List<TableServices> services;
+
 }

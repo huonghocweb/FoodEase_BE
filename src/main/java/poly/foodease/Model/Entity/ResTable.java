@@ -1,11 +1,7 @@
 package poly.foodease.Model.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,26 +10,35 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "restables")
 @Builder
+@Entity
+@Table(name="res_tables")
 public class ResTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "table_id")
+    @Column(name="table_id")
     private Integer tableId;
 
-    @Column(name = "table_name")
-    private String tableName;
-
-    @Column(name = "capacity")
+    @Column(name="capacity")
     private Integer capacity;
 
-    @Column(name = "is_available")
+    @Column(name="is_available")
     private Boolean isAvailable;
 
-    public ResTable(Integer tableId) {
-        this.tableId = tableId;
-    }
-}
+    @Column(name="price")
+    private Double price;
 
+    @Column(name="deposit")
+    private Double deposit;
+
+    @Column(name="image_url")
+    private String imageUrl;
+
+    @Column(name="table_name")
+    private String tableName;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="table_catetgory_id")
+    private TableCategory tableCategory;
+}

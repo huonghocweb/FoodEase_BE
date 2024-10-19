@@ -1,28 +1,44 @@
 package poly.foodease.Mapper;
 
-import org.springframework.stereotype.Component;
-
+import jakarta.persistence.EntityNotFoundException;
+import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import poly.foodease.Model.Entity.ResTable;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Response.ResTableResponse;
+import poly.foodease.Repository.TableCategoryRepo;
 
-@Component
-public class ResTableMapper {
+@Mapper(componentModel = "spring")
+public abstract class ResTableMapper {
 
-    public ResTable toEntity(ResTableRequest request) {
-        ResTable table = new ResTable();
-        table.setTableName(request.getTableName());
-        table.setCapacity(request.getCapacity());
-        table.setIsAvailable(request.getIsAvailable());
-        return table;
+    @Autowired
+    private TableCategoryMapper tableCategoryMapper;
+    @Autowired
+    private TableCategoryRepo tableCategoryRepo;
+
+    public ResTableResponse convertEnToRes(ResTable resTable){
+        return ResTableResponse.builder()
+                .tableId(resTable.getTableId())
+                .tableName(resTable.getTableName())
+                .price(resTable.getPrice())
+                .deposit(resTable.getDeposit())
+                .isAvailable(resTable.getIsAvailable())
+                .imageUrl(resTable.getImageUrl())
+                .capacity(resTable.getCapacity())
+                .tableCategory(tableCategoryMapper.convertEnToRes(resTable.getTableCategory()))
+                .build();
     }
 
-    public ResTableResponse toResponse(ResTable table) {
-        ResTableResponse response = new ResTableResponse();
-        response.setTableId(table.getTableId());
-        response.setTableName(table.getTableName());
-        response.setCapacity(table.getCapacity());
-        response.setIsAvailable(table.getIsAvailable());
-        return response;
+    public ResTable convertReqToEn(ResTableRequest resTableRequest){
+        return ResTable.builder()
+                .tableName(resTableRequest.getTableName())
+                .isAvailable(resTableRequest.getIsAvailable())
+                .deposit(resTableRequest.getDeposit())
+                .price(resTableRequest.getPrice())
+                .capacity(resTableRequest.getCapacity())
+                .imageUrl(resTableRequest.getImageUrl())
+                .tableCategory(tableCategoryRepo.findById(resTableRequest.getTableCategoryId())
+                        .orElseThrow(() -> new EntityNotFoundException("not found Table Category")))
+                .build();
     }
 }

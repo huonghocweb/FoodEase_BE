@@ -1,24 +1,26 @@
 package poly.foodease.Model.Response;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ReservationResponse {
     private Integer reservationId;
-    private String status; // "Pending", "Accepted", "Cancelled"
-    private String name;
-    private String email;
-    private String phone;
+    private Integer guests;
     private LocalDate reservationDate;
     private LocalTime reservationTime;
-    private Integer guests;
-    private Integer tableId; // ID của bàn được đặt
-    private String tableName;
+    private Double totalDeposit;
+    private ReservationStatusResponse reservationStatus;
+    private UserResponse user;
+    private ResTableResponse resTable;
+    private List<TableServicesResponse> services;
 }

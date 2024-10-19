@@ -1,14 +1,21 @@
 package poly.foodease.Model.Request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import poly.foodease.Model.Response.TableCategoryResponse;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ResTableRequest {
-    private String tableName;
     private Integer capacity;
-    private Boolean isAvailable; // true nếu bàn còn trống
+    private Boolean isAvailable;
+    private Double price;
+    private Double deposit;
+    private String imageUrl;
+    private String tableName;
+    private Integer tableCategoryId;
 }

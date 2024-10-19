@@ -6,9 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import poly.foodease.Model.Entity.ResTable;
-import poly.foodease.Model.Request.ResTableRequest;
-import poly.foodease.Model.Response.ResTableResponse;
 import poly.foodease.Repository.ResTableRepo;
 import poly.foodease.Service.ResTableService;
 

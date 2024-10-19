@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import poly.foodease.Mapper.ResTableMapper;
-import poly.foodease.Model.Entity.ResTable;
-import poly.foodease.Model.Request.ResTableRequest;
-import poly.foodease.Model.Response.ResTableResponse;
 import poly.foodease.Service.ResTableService;
 
 @RestController
