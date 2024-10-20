@@ -1,11 +1,16 @@
 package poly.foodease.ServiceImpl;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+import poly.foodease.Mapper.ResTableMapper;
+import poly.foodease.Model.Entity.ResTable;
+import poly.foodease.Model.Request.ResTableRequest;
+import poly.foodease.Model.Response.ResTableResponse;
 import poly.foodease.Repository.ResTableRepo;
 import poly.foodease.Service.ResTableService;
 
@@ -13,85 +18,46 @@ import poly.foodease.Service.ResTableService;
 public class ResTableServiceImpl implements ResTableService {
 
     @Autowired
-    private ResTableRepo restaurantTableRepository;
+    private ResTableRepo resTableRepo;
+
+    @Autowired
+    private ResTableMapper resTableMapper;
 
     @Override
-    public List<ResTable> findAll() {
-        return restaurantTableRepository.findAll();
+    public ResTableResponse createResTable(ResTableRequest resTableRequest) {
+        ResTable newTable = resTableMapper.convertReqToEn(resTableRequest);
+        resTableRepo.save(newTable);
+        return resTableMapper.convertEnToRes(newTable);
     }
 
     @Override
-    public List<ResTable> getAvailableTables() {
-        return restaurantTableRepository.findByIsAvailableTrue(); 
+    public ResTableResponse updateResTable(Integer tableId, ResTableRequest resTableRequest) {
+        ResTable existingTable = resTableRepo.findById(tableId)
+                .orElseThrow(() -> new EntityNotFoundException("Table not found"));
+        ResTable updatedTable = resTableMapper.convertReqToEn(resTableRequest);
+        updatedTable.setTableId(existingTable.getTableId());
+        resTableRepo.save(updatedTable);
+        return resTableMapper.convertEnToRes(updatedTable);
     }
 
     @Override
-    public ResTable findTableById(Integer id) {
-        Optional<ResTable> optionalTable = restaurantTableRepository.findById(id);
-        return optionalTable.orElse(null); // Trả về null nếu không tìm thấy
+    public ResTableResponse getResTableById(Integer tableId) {
+        ResTable resTable = resTableRepo.findById(tableId)
+                .orElseThrow(() -> new EntityNotFoundException("Table not found"));
+        return resTableMapper.convertEnToRes(resTable);
     }
 
     @Override
-    public List<ResTable> findAvailableTablesByCapacity(int guests) {
-        // Giả sử bạn có một dung lượng tối thiểu và tối đa
-        int minCapacity = guests;
-        int maxCapacity = guests + 1; // hoặc theo cách bạn muốn
-
-        return restaurantTableRepository.findByCapacityBetween(minCapacity, maxCapacity);
-    }
-    @Override
-    public ResTableResponse createTable(ResTableRequest table) {
-
-        if(restaurantTableRepository.existsByTableName(table.getTableName())){
-            return ResTableResponse.builder()
-                    .tableId(null)
-                    .build();
-        }
-
-        ResTable newTable = ResTable.builder()
-                .tableName(table.getTableName())
-                .capacity(table.getCapacity())
-                .isAvailable(true)
-                .build();
-
-        ResTable saveTable = restaurantTableRepository.save(newTable);
-
-        return ResTableResponse.builder()
-                .tableId(saveTable.getTableId())
-                .tableName(saveTable.getTableName())
-                .capacity(saveTable.getCapacity())
-                .isAvailable(saveTable.getIsAvailable())
-                .build();
+    public void deleteResTable(Integer tableId) {
+        ResTable resTable = resTableRepo.findById(tableId)
+                .orElseThrow(() -> new EntityNotFoundException("Table not found"));
+        resTableRepo.delete(resTable);
     }
 
     @Override
-    public ResTableResponse updateTable(int tableId, ResTableRequest resTableRequest) {
-
-        // Kiểm tra xem bảng có tồn tại hay không
-        if (!restaurantTableRepository.existsById(tableId)) {
-            return ResTableResponse.builder()
-                    .tableId(null)
-                    .build();
-        }
-
-        // Lấy bảng hiện tại từ cơ sở dữ liệu
-        ResTable existingTable = restaurantTableRepository.findById(tableId).orElseThrow(() ->
-                new RuntimeException("Unknown"));
-
-        // Cập nhật thông tin bảng
-        existingTable.setTableName(resTableRequest.getTableName());
-        existingTable.setCapacity(resTableRequest.getCapacity());
-        // Giữ nguyên trạng thái isAvailable
-
-        // Lưu bảng đã cập nhật vào cơ sở dữ liệu
-        ResTable updatedTable = restaurantTableRepository.save(existingTable);
-
-        // Trả về thông tin bảng đã cập nhật
-        return ResTableResponse.builder()
-                .tableId(updatedTable.getTableId())
-                .tableName(updatedTable.getTableName())
-                .capacity(updatedTable.getCapacity())
-                .isAvailable(updatedTable.getIsAvailable())
-                .build();
+    public List<ResTableResponse> getAllResTables() {
+        return resTableRepo.findAll().stream()
+                .map(resTableMapper::convertEnToRes)
+                .collect(Collectors.toList());
     }
 }

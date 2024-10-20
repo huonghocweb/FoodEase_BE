@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -62,7 +61,7 @@ public class Foods implements Serializable {
 	private List<FoodReview> foodReviews;
 
 	@ManyToMany(mappedBy = "foods")
-	@JsonBackReference
+	@JsonIgnore
     private List<WishList> wishLists;
 
 }

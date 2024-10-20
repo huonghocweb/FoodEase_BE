@@ -1,8 +1,9 @@
 package poly.foodease.Mapper;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Model.Entity.ResTable;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Response.ResTableResponse;

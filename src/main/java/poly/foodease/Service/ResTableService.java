@@ -2,14 +2,17 @@ package poly.foodease.Service;
 
 import java.util.List;
 
+import poly.foodease.Model.Request.ResTableRequest;
+import poly.foodease.Model.Response.ResTableResponse;
+
 public interface ResTableService {
-    List<ResTable> findAll();
-    List<ResTable> getAvailableTables();
+    ResTableResponse createResTable(ResTableRequest resTableRequest);
 
-    ResTable findTableById(Integer tableId);
+    ResTableResponse updateResTable(Integer tableId, ResTableRequest resTableRequest);
 
-    ResTableResponse createTable(ResTableRequest table);
-    ResTableResponse updateTable(int tableId, ResTableRequest resTableRequest);
-    List<ResTable> findAvailableTablesByCapacity(int guests);
+    ResTableResponse getResTableById(Integer tableId);
 
+    void deleteResTable(Integer tableId);
+
+    List<ResTableResponse> getAllResTables();
 }

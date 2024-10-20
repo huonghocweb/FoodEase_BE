@@ -1,17 +1,18 @@
 package poly.foodease.Mapper;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.util.stream.Collectors;
+
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Model.Entity.Reservation;
-import poly.foodease.Model.Response.ReservationRequest;
+import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Repository.ResTableRepo;
 import poly.foodease.Repository.ReservationStatusRepo;
 import poly.foodease.Repository.TableServiceRepo;
 import poly.foodease.Repository.UserRepo;
-
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class ReservationMapper {
