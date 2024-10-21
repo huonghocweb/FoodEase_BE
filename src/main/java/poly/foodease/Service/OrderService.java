@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Request.OrderRequest;
+import poly.foodease.Model.Request.PaymentMethodRevenueRequest;
 import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Model.Response.PaymentMethodRevenueResponse;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
@@ -32,5 +34,9 @@ public interface OrderService {
     List<ReportRevenueByMonth> getRevenueByMonth();
     List<ReportRevenueByYear> ReportRevenueByYear();
     Page<ReportUserBuy> findReportUserBuy(Pageable page);
+
+    List<PaymentMethodRevenueResponse> getRevenueByPaymentMethod(PaymentMethodRevenueRequest request);
+
+    Order getOrderById(Integer orderId);
 
 }

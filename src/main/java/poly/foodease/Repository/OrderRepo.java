@@ -7,11 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 import poly.foodease.Model.Entity.Order;
+import poly.foodease.Model.Response.PaymentMethodRevenueResponse;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderRepo extends JpaRepository<Order ,Integer> {
@@ -46,5 +48,18 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
     @Query("SELECT new poly.foodease.Report.ReportUserBuy(o.user.userId,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email,SUM(o.totalQuantity),SUM(o.totalPrice))"
             + " FROM Order o GROUP BY o.user.userId,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
     Page<ReportUserBuy> findReportUserBuy(Pageable page);
+
+
+    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice)) " +
+            "FROM Order o JOIN o.paymentMethod pm " +
+            "WHERE (:year IS NULL OR YEAR(o.orderDate) = :year) " +
+            "AND (:month IS NULL OR MONTH(o.orderDate) = :month) " +
+            "AND (:startDate IS NULL OR o.orderDate >= :startDate) " +
+            "AND (:endDate IS NULL OR o.orderDate <= :endDate) " +
+            "GROUP BY pm.paymentName")
+    List<PaymentMethodRevenueResponse> getRevenueByPaymentMethod(@Param("year") Integer year,
+                                                                 @Param("month") Integer month,
+                                                                 @Param("startDate") LocalDate startDate,
+                                                                 @Param("endDate") LocalDate endDate);
 
 }
