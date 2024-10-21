@@ -24,6 +24,9 @@ public class TableServices {
     @Column(name="service_name")
     private String serviceName;
 
+    @Column(name="image_url")
+    private String imageUrl;
+
     @Column(name="service_price")
     private Double servicePrice;
 

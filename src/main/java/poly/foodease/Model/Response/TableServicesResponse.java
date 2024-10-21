@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class TableServicesResponse {
     private Integer serviceId;
     private String serviceName;
+    private String imageUrl;
     private Double servicePrice;
     private String description;
 }

@@ -1,10 +1,11 @@
-package poly.foodease.Model.Response;
+package poly.foodease.Model.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -13,10 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ReservationRequest {
-    private Integer reservationId;
     private Integer guests;
-    private LocalDate reservationDate;
-    private LocalTime reservationTime;
+    private LocalDateTime checkinTime;
+    private LocalDateTime checkoutTime;
     private Double totalDeposit;
     private Integer  reservationStatusId;
     private Integer userId;

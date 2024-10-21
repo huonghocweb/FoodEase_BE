@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,8 +14,8 @@ import java.util.List;
 public class ReservationResponse {
     private Integer reservationId;
     private Integer guests;
-    private LocalDate reservationDate;
-    private LocalTime reservationTime;
+    private LocalDateTime checkinTime;
+    private LocalDateTime checkoutTime;
     private Double totalDeposit;
     private ReservationStatusResponse reservationStatus;
     private UserResponse user;

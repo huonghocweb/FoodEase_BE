@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,4 +43,10 @@ public class ResTable {
     @ManyToOne
     @JoinColumn(name="table_catetgory_id")
     private TableCategory tableCategory;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "resTable")
+    private List<Reservation> reservations;
+
+
 }

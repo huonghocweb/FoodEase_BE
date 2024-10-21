@@ -1,22 +1,18 @@
 package poly.foodease.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import poly.foodease.Model.Request.ReservationRequest;
+import poly.foodease.Model.Response.ReservationResponse;
 
+import java.util.Optional;
+
+@Service
 public interface ReservationService {
-    Reservation createReservation(Reservation reservation);
-
-    List<Reservation> getAllReservations();
-
-    Reservation updateReservationStatus(Integer Id, String status);
-
-    Reservation getReservationById(Integer id); // Phương thức lấy đặt bàn theo ID
-
-    void acceptReservation(Reservation reservation);
-
-    void cancelReservation(Reservation reservation);
-
-    Reservation save(Reservation reservation);
-
-    Reservation findById(Integer id);
+    Page<ReservationResponse> getAllReservation(Integer pageCurrent , Integer pageSize, String sortOrder, String sortBy);
+    Optional<ReservationResponse> getReservationByReservationId(Integer reservationId);
+    Optional<ReservationResponse> getReservationByUserName(String userName);
+    ReservationResponse createReservation(ReservationRequest reservationRequest);
+    Optional<ReservationResponse> updateReservation(Integer reservationId , ReservationRequest reservationRequest);
 
 }

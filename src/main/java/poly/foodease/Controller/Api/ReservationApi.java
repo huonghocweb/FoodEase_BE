@@ -1,81 +1,110 @@
 package poly.foodease.Controller.Api;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Service.ReservationService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/reservations")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = { RequestMethod.PATCH,
-        RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.DELETE }, allowCredentials = "true")
+@RequestMapping("/api/reservation")
+@CrossOrigin("*")
 
 public class ReservationApi {
 
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-    private ReservationMapper reservationMapper;
+    @GetMapping
+    public ResponseEntity<Object> getAllReservation(
+            @RequestParam("pageCurrent") Integer pageCurrent,
+            @RequestParam("pageSize") Integer pageSize,
+            @RequestParam("sortOrder") String sortOrder,
+            @RequestParam("sortBy") String sortBy
+    ){
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Get All Reservation");
+            result.put("data",reservationService.getAllReservation(pageCurrent, pageSize, sortOrder, sortBy));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getByUserName/{userName}")
+    public ResponseEntity<Object> getReservationByUserName(
+            @PathVariable("userName") String userName
+    ){
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Get Reservation By UserName");
+            result.put("data",reservationService.getReservationByUserName(userName));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{reservationId}")
+    public ResponseEntity<Object> getReservationById(
+            @PathVariable("reservationId") Integer reservationId
+    ){
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Get Reservation By Reservation Id");
+            result.put("data",reservationService.getReservationByReservationId(reservationId));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> createReservation(@RequestBody ReservationRequest reservationRequest) {
-        Reservation reservation = reservationMapper.toEntity(reservationRequest);
-        Reservation savedReservation = reservationService.createReservation(reservation);
-        ReservationResponse response = reservationMapper.toResponse(savedReservation);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ReservationResponse>> getAllReservations() {
-        List<ReservationResponse> responses = reservationService.getAllReservations().stream()
-                .map(reservationMapper::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
-    }
-
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<ReservationResponse> updateReservationStatus(@PathVariable Integer id,
-            @RequestBody Map<String, String> statusUpdate) {
-        String status = statusUpdate.get("status");
-        Reservation updatedReservation = reservationService.updateReservationStatus(id, status);
-        ReservationResponse response = reservationMapper.toResponse(updatedReservation);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/accept/{id}")
-    public ResponseEntity<String> acceptReservation(@PathVariable Integer id) {
+    public ResponseEntity<Object> createReservation(
+            @RequestPart("reservationRequest") ReservationRequest reservationRequest
+    ){
+        Map<String,Object> result = new HashMap<>();
         try {
-            Reservation reservation = reservationService.getReservationById(id);
-            reservationService.acceptReservation(reservation);
-            return ResponseEntity.ok("Reservation accepted and email sent.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error accepting reservation.");
+            result.put("success",true);
+            result.put("message","Create Reservation");
+            result.put("data",reservationService.createReservation(reservationRequest));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
         }
+        return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/cancel/{id}")
-    public ResponseEntity<String> cancelReservation(@PathVariable Integer id) {
+    @PutMapping("/{reservationId}")
+    public ResponseEntity<Object> updateReservation(
+            @PathVariable("reservationId") Integer reservationId,
+            @RequestPart("reservationRequest") ReservationRequest reservationRequest
+    ){
+        Map<String,Object> result = new HashMap<>();
         try {
-            Reservation reservation = reservationService.getReservationById(id);
-            reservationService.cancelReservation(reservation);
-            return ResponseEntity.ok("Reservation cancelled and email sent.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error cancelling reservation.");
+            result.put("success",true);
+            result.put("message","Update Reservation ");
+            result.put("data",reservationService.updateReservation(reservationId, reservationRequest));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
         }
+        return ResponseEntity.ok(result);
     }
 }

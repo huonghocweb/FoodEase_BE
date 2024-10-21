@@ -54,9 +54,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     System.out.println("Invalid JWT Token");
                 }
             }
-        } else {
-            System.out.println("Authorization header is missing or doesn't start with Bearer.");
         }
+//        else {
+//            System.out.println("Authorization header is missing or doesn't start with Bearer.");
+//        }
         // Tiếp tục chuỗi filter
         chain.doFilter(request, response);
     }

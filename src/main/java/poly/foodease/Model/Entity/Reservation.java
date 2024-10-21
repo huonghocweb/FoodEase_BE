@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -23,14 +24,14 @@ public class Reservation {
     @Column(name="reservation_id")
     private Integer reservationId;
 
-    @Column(name="reservation_id")
+    @Column(name="guests")
     private Integer guests;
 
-    @Column(name="reservation_id")
-    private LocalDate reservationDate;
+    @Column(name="reservation_date")
+    private LocalDateTime checkinTime;
 
-    @Column(name="reservation_id")
-    private LocalTime reservationTime;
+    @Column(name="reservation_time")
+    private LocalDateTime checkoutTime;
 
     @Column(name="total_deposit")
     private Double totalDeposit;

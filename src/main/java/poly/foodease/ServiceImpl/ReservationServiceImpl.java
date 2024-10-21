@@ -1,118 +1,67 @@
 package poly.foodease.ServiceImpl;
 
-import java.util.List;
-import java.util.Optional;
-
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-
+import poly.foodease.Mapper.ReservationMapper;
+import poly.foodease.Model.Entity.Reservation;
+import poly.foodease.Model.Request.ReservationRequest;
+import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Repository.ReservationRepo;
-import poly.foodease.Service.EmailService;
 import poly.foodease.Service.ReservationService;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
-
     @Autowired
-    private ReservationRepo reservationRepository;
-
+    private ReservationMapper reservationMapper;
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private EmailService emailService;
+    private ReservationRepo reservationRepo;
 
     @Override
-    public Reservation createReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
-    }
-
-    @Override
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public Page<ReservationResponse> getAllReservation(Integer pageCurrent, Integer pageSize, String sortOrder, String sortBy) {
+        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
+        Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
+        Page<Reservation> reservationPage = reservationRepo.findAll(pageable);
+        List<ReservationResponse> reservations = reservationPage.getContent().stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+        return new PageImpl<>(reservations,pageable, reservationPage.getTotalElements());
     }
 
     @Override
-    public Reservation updateReservationStatus(Integer reservationId, String status) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-        reservation.setStatus(status);
-        return reservationRepository.save(reservation);
+    public Optional<ReservationResponse> getReservationByReservationId(Integer reservationId) {
+        Reservation reservation = reservationRepo.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
+        return Optional.of(reservationMapper.convertEnToRes(reservation));
     }
 
     @Override
-    public Reservation getReservationById(Integer id) {
-        return reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+    public Optional<ReservationResponse> getReservationByUserName(String userName) {
+        Reservation reservation = reservationRepo.getReservationByReservationByUserName(userName)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
+        return Optional.of(reservationMapper.convertEnToRes(reservation));
     }
 
     @Override
-    public Reservation findById(Integer id) {
-        Optional<Reservation> reservationOptional = reservationRepository.findById(id);
-
-        if (reservationOptional.isPresent()) {
-            return reservationOptional.get(); // Trả về đối tượng nếu tìm thấy
-        } else {
-            throw new RuntimeException("Reservation not found with id: " + id);
-        }
-    }
-
-    private void sendConfirmationEmail(Reservation reservation) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(reservation.getEmail());
-        message.setSubject("Reservation Status Update");
-        message.setText("Your reservation for " + reservation.getGuests() + " people on " +
-                reservation.getReservationDate() + " at " + reservation.getReservationTime() +
-                " has been " + reservation.getStatus() + ".");
-        mailSender.send(message);
+    public ReservationResponse createReservation(ReservationRequest reservationRequest) {
+        Reservation reservation = reservationMapper.convertReqToEn(reservationRequest);
+        Reservation reservationCreated = reservationRepo.save(reservation);
+        return reservationMapper.convertEnToRes(reservationCreated);
     }
 
     @Override
-    public void acceptReservation(Reservation reservation) {
-        Integer reservationId = reservation.getReservationId();
-
-        Reservation existingReservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
-        existingReservation.setStatus("Accepted");
-        reservationRepository.save(existingReservation);
-
-        String subject = "Reservation Confirmed";
-        String body = "Dear " + existingReservation.getName() + ",\n\nYour reservation has been confirmed.\nDetails:\n"
-                + "Date: " + existingReservation.getReservationDate() + "\n"
-                + "Time: " + existingReservation.getReservationTime() + "\n"
-                + "Guests: " + existingReservation.getGuests() + "\n\nThank you!";
-        emailService.sendEmail(existingReservation.getEmail(), subject, body);
+    public Optional<ReservationResponse> updateReservation(Integer reservationId, ReservationRequest reservationRequest) {
+        return Optional.of(reservationRepo.findById(reservationId).map(reservationExists -> {
+            Reservation reservation = reservationMapper.convertReqToEn(reservationRequest);
+            reservation.setReservationId(reservationExists.getReservationId());
+            Reservation reservationUpdated = reservationRepo.save(reservation);
+            return reservationMapper.convertEnToRes(reservationUpdated);
+        })).orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
     }
-
-    @Override
-    public void cancelReservation(Reservation reservation) {
-        Integer reservationId = reservation.getReservationId();
-
-        Reservation existingReservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
-        existingReservation.setStatus("Cancelled");
-        reservationRepository.save(existingReservation);
-
-        String subject = "Reservation Cancelled";
-        String body = "Dear " + existingReservation.getName() + ",\n\nYour reservation has been cancelled.\n"
-                + "If you have any questions, feel free to contact us.\n\nThank you!";
-        emailService.sendEmail(existingReservation.getEmail(), subject, body);
-    }
-
-    @Override
-    public Reservation save(Reservation reservation) {
-        // Kiểm tra thông tin hợp lệ (nếu cần)
-        // Ví dụ: kiểm tra xem số khách có phù hợp không
-        if (reservation.getGuests() <= 0) {
-            throw new IllegalArgumentException("Number of guests must be greater than 0");
-        }
-
-        // Lưu đối tượng reservation vào cơ sở dữ liệu
-        return reservationRepository.save(reservation);
-    }
-
 }
