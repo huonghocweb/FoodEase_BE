@@ -13,10 +13,5 @@ import java.util.Map;
 public class Cart {
     private Integer cartId;
     private Map<Integer,CartItem> items = new HashMap<>();
-<<<<<<< HEAD
-    private Integer bye;
-
-=======
-    private Integer xinchao;
->>>>>>> origin/Huong_Be
+   
 }

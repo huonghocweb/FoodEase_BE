@@ -171,9 +171,27 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.ReportRevenueByYear();
     }
 
-    @Override
-    public Page<ReportUserBuy> findReportUserBuy(Pageable page) {
-        // TODO Auto-generated method stub
-        return orderRepo.findReportUserBuy(page);
-    }
+    
+
+	@Override
+	public Page<OrderResponse> findOrderByOrderDate(LocalDate date, Pageable page) {
+		// TODO Auto-generated method stub
+		Page<Order> list=orderRepo.findOrderByOrderDate(date, page);
+		
+		return list.map(orderMapper :: convertEnToRes);
+	}
+
+	@Override
+	public Page<ReportOrder> ReportRevenueByToday(LocalDate date, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueByToday(date, page);
+	}
+
+	@Override
+	public Page<ReportUserBuy> findReportUserBuy(LocalDate date, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.findReportUserBuy(date, page);
+	}
+
+
 }

@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class ReportUserBuy {
 @Id
 private Integer userId;
+private LocalDate date;
 private String fullName;
 private Boolean gender;
 private String phoneNumber;
