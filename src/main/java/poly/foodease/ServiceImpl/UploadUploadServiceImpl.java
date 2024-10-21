@@ -18,7 +18,7 @@ public class UploadUploadServiceImpl implements UploadFileService {
     ServletContext app;
     @Override
     public String uploadFile(MultipartFile file) {
-        String uploadRootPath = Paths.get("D:\\HK7\\FoodEaseApp\\foodease-app\\public\\assets\\images").toAbsolutePath().toString();
+        String uploadRootPath = Paths.get("E:\\DuAnTotNghiep\\Code\\Fe-18-10\\foodease-app\\public\\assets\\images").toAbsolutePath().toString();
         File uploadRootDir=new File(uploadRootPath);
         System.out.println(uploadRootPath);
         if(!uploadRootDir.exists())

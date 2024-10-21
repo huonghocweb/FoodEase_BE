@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 
 import org.mapstruct.Mapping;
 import poly.foodease.Model.Entity.Foods;
+import poly.foodease.Model.Request.FoodRequest;
 import poly.foodease.Model.Response.FoodResponse;
 
 import java.util.List;
@@ -22,13 +23,13 @@ public FoodResponse converEntoResponse(Foods foods) {
 			.updatedAt(foods.getUpdatedAt())
 			.discount(foods.getDiscount())
 			.categoryId(foods.getCategoryId())
+			.foodCategories(foods.getCategory())
 			.foodVariations(foods.getFoodVariations())
 			.foodImage(foods.getFoodImage())
 			.foodReviews(foods.getFoodReviews())
 			.build();
 }
 
-//	// Ánh xạ Foods sang FoodResponseDTO
 //	@Mapping(target = "imageUrl", source = "foodImage.images") // ánh xạ trực tiếp từ foodImage.images
 //	FoodResponse toResponse(Foods food);
 //
