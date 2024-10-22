@@ -17,20 +17,20 @@ public abstract class ResTableMapper {
     @Autowired
     private TableCategoryRepo tableCategoryRepo;
 
-    public ResTableResponse convertEnToRes(ResTable resTable){
+    public ResTableResponse convertEnToRes(ResTable resTable) {
         return ResTableResponse.builder()
                 .tableId(resTable.getTableId())
                 .tableName(resTable.getTableName())
                 .price(resTable.getPrice())
                 .deposit(resTable.getDeposit())
                 .isAvailable(resTable.getIsAvailable())
-                .imageUrl(resTable.getImageUrl())
+                .imageUrl(resTable.getImageUrl() != null ? resTable.getImageUrl() : "")
                 .capacity(resTable.getCapacity())
                 .tableCategory(tableCategoryMapper.convertEnToRes(resTable.getTableCategory()))
                 .build();
     }
 
-    public ResTable convertReqToEn(ResTableRequest resTableRequest){
+    public ResTable convertReqToEn(ResTableRequest resTableRequest) {
         return ResTable.builder()
                 .tableName(resTableRequest.getTableName())
                 .isAvailable(resTableRequest.getIsAvailable())
