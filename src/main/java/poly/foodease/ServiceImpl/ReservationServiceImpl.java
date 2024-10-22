@@ -11,6 +11,9 @@ import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Repository.ReservationRepo;
 import poly.foodease.Service.ReservationService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -63,5 +66,16 @@ public class ReservationServiceImpl implements ReservationService {
             Reservation reservationUpdated = reservationRepo.save(reservation);
             return reservationMapper.convertEnToRes(reservationUpdated);
         })).orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
+    }
+
+    @Override
+    public List<ReservationResponse> getReservedByTableIdAndDate(Integer tableId, LocalDate localDate) {
+        LocalDateTime startOfDay = localDate.atTime(LocalTime.of(9, 0));
+        LocalDateTime endOfDay = localDate.atTime(LocalTime.of(22, 0));
+        List<Reservation> reservations = reservationRepo.getReservationsByTableIdAndDate(tableId, startOfDay, endOfDay);
+        return reservations.stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+
     }
 }

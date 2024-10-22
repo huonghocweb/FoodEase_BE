@@ -64,7 +64,7 @@ public class CouponApi {
     public ResponseEntity<Object> createCoupon(
             @PathVariable("folder") String folder,
             @RequestPart("couponRequest")CouponRequest couponRequest,
-            @RequestPart(value = "couponImage",required = false)MultipartFile[] files) throws IOException {
+            @RequestPart(value = "couponImage",required = false) MultipartFile[] files) throws IOException {
         Map<String,Object> result = new HashMap<>();
         couponRequest.setImageUrl("123");
         if(files != null){

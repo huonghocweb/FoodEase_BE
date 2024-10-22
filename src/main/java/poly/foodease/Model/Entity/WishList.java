@@ -1,9 +1,8 @@
 package poly.foodease.Model.Entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,11 +35,11 @@ public class WishList {
     private String wishListName;
 
     @ManyToMany
-    @JsonManagedReference
-    @JoinTable(name = "wish_list_foods", // Tên bảng trung gian
-            joinColumns = @JoinColumn(name = "wish_list_id"), inverseJoinColumns = @JoinColumn(name = "food_id") )
-    private List<Foods> foods = new ArrayList<>(); // Quan hệ Many-to-Many với Foods
+    @JsonIgnore
+    @JoinTable(name = "wishlist_foods", joinColumns = @JoinColumn(name = "wish_list_id"), inverseJoinColumns = @JoinColumn(name = "food_id"))
+    private List<Foods> foods;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

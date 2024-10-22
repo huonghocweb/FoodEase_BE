@@ -1,5 +1,7 @@
 package poly.foodease.Repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,10 +13,17 @@ import java.util.List;
 public interface ResTableRepo extends JpaRepository<ResTable, Integer> {
 
     @Query("SELECT rtb FROM ResTable rtb JOIN rtb.tableCategory tbCa WHERE tbCa.tableCategoryId = :tableCategoryId")
-    List<ResTable> getResTableByCategoryId(@Param("tableCategoryId") Integer tableCategoryId);
+    Page<ResTable> getResTableByCategoryId(@Param("tableCategoryId") Integer tableCategoryId , Pageable pageable);
 
-    @Query("SELECT rtb FROM ResTable rtb JOIN rtb.tableCategory tbCa WHERE tbCa.tableCategoryId = :tableCategoryId AND rtb.capacity = :capacity")
-    List<ResTable> getResTableByCategoryIdAndCapacity(@Param("tableCategoryId") Integer tableCategoryId, @Param("capacity") Integer capacity);
+    @Query("SELECT rtb FROM ResTable rtb JOIN rtb.tableCategory tbCa WHERE tbCa.tableCategoryId = :tableCategoryId AND rtb.capacity >= :capacity")
+    Page<ResTable> getResTableByCategoryIdAndCapacity(@Param("tableCategoryId") Integer tableCategoryId,
+                                                            @Param("capacity") Integer capacity,
+                                                            Pageable pageable);
+
+    @Query("SELECT rtb FROM ResTable rtb JOIN rtb.tableCategory tbCa WHERE  rtb.capacity >= :capacity ")
+    Page<ResTable> getResTableByCapacity(@Param("capacity") Integer capacity,
+                                               Pageable pageable);
+
 
 
     @Query("SELECT rtb FROM ResTable rtb JOIN rtb.reservations res " +
@@ -26,5 +35,8 @@ public interface ResTableRepo extends JpaRepository<ResTable, Integer> {
     List<ResTable> checkResTableIsAvailable(@Param("tableId") Long tableId,
                                          @Param("checkinTime") LocalDateTime checkinTime,
                                          @Param("checkoutTime") LocalDateTime checkoutTime);
+
+
+
 
 }

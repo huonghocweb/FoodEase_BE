@@ -1,8 +1,9 @@
 package poly.foodease.Mapper;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Model.Entity.ResTable;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Response.ResTableResponse;
@@ -36,7 +37,7 @@ public abstract class ResTableMapper {
                 .deposit(resTableRequest.getDeposit())
                 .price(resTableRequest.getPrice())
                 .capacity(resTableRequest.getCapacity())
-                .imageUrl(resTableRequest.getImageUrl())
+                .imageUrl(resTableRequest.getImageUrl() != null ? resTableRequest.getImageUrl() : "")
                 .tableCategory(tableCategoryRepo.findById(resTableRequest.getTableCategoryId())
                         .orElseThrow(() -> new EntityNotFoundException("not found Table Category")))
                 .build();

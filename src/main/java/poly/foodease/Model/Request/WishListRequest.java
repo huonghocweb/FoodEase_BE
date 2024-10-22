@@ -8,6 +8,6 @@ import lombok.Data;
 public class WishListRequest {
     private String wishListName;
     private Integer userId;
-    private List<Integer> foodIds;
-    private List<String> foods;
+    private List<Integer> foodId;
+    private List<String> foods;  
 }

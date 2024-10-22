@@ -23,7 +23,6 @@ public class TableServicesApi {
             @RequestParam("sortBy") String sortBy
     ){
         Map<String,Object> result = new HashMap<>();
-        System.out.println("asb");
         System.out.println(tableServicesService.getAllTableServices(pageCurrent, pageSize, sortOrder, sortBy));
         try {
             result.put("success",true);

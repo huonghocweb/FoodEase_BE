@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Service.ReservationService;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,6 +101,27 @@ public class ReservationApi {
             result.put("success",true);
             result.put("message","Update Reservation ");
             result.put("data",reservationService.updateReservation(reservationId, reservationRequest));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getByTableIdAndDate/{tableId}")
+    public ResponseEntity<Object> getReservationByTableIdAndDate(
+            @PathVariable("tableId") Integer tableId,
+            @RequestParam("dateCheckTime")LocalDate dateCheckTime
+            ){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println("getByTableIdAndDate");
+        System.out.println(" DateTime Cehck " +dateCheckTime);
+        System.out.println(reservationService.getReservedByTableIdAndDate(tableId , dateCheckTime));
+        try {
+            result.put("success",true);
+            result.put("message","Update Reservation ");
+            result.put("data",reservationService.getReservedByTableIdAndDate(tableId, dateCheckTime));
         }catch (Exception e){
             result.put("success",false);
             result.put("message",e.getMessage());
