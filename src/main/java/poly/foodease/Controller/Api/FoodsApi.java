@@ -3,6 +3,7 @@ package poly.foodease.Controller.Api;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,7 +69,7 @@ public class FoodsApi {
 		return ResponseEntity.ok(list);
 	}
 	@PostMapping("/addFood")
-	ResponseEntity<?>postComment (@RequestParam("file") MultipartFile file,@RequestParam("foodName") String foodName,
+	ResponseEntity<?>postFood (@RequestParam("file") MultipartFile file,@RequestParam("foodName") String foodName,
 			@RequestParam("description") String description,@RequestParam("basePrice") Double basePrice,
 			@RequestParam("discount") Integer discount,
 			@RequestParam("categoriesId") Integer categoriesId)
@@ -100,5 +101,40 @@ public class FoodsApi {
 		}
 		
 	}
+	@DeleteMapping("/deleteFood/{foodId}")
+	public ResponseEntity<Void> deleteFood(@PathVariable("foodId") Integer foodId){
+		try {
+			foodService.deleteFood(foodId);
+			System.out.println("thanh cong");
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("thất bại");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@PutMapping("/updateFood/{foodId}")
+	public ResponseEntity<?> updateFood(
+	        @PathVariable("foodId") Integer id,
+	        @RequestParam("file") MultipartFile file,
+	        @RequestParam("foodName") String foodName,
+	        @RequestParam("description") String description,
+	        @RequestParam("basePrice") Double basePrice,
+	        @RequestParam("discount") Integer discount,
+	        @RequestParam("categoriesId") Integer categoriesId) {
+	    
+	    try {
+	        // Update the food item with the provided ID
+	        FoodResponse foodResponse = foodService.update(id, foodName, description, basePrice, file, discount, categoriesId);
+	        
+	        return ResponseEntity.ok(foodResponse);
+	    } catch (Exception e) {
+	        System.out.println("Cập nhật không thành công");
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).body("Update failed");
+	    }
+	}
+	
 
 }

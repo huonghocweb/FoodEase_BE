@@ -46,7 +46,7 @@ public class FoodImplement implements FoodsService {
 	}
 
 	@Override
-	public void deleteFood(int foodId) {
+	public void deleteFood(Integer foodId) {
 		Foods food = foodsDao.findById(foodId).get();
 		foodsDao.deleteById(food.getFoodId());
 	}
@@ -84,6 +84,38 @@ public class FoodImplement implements FoodsService {
 		// TODO Auto-generated method stub
 		Page<Foods> list=foodsDao.findAll(page);
 		return list.map(foodMapper:: converEntoResponse);
+	}
+	@Override
+	public FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile file,
+			Integer discount, Integer categoriesId) {
+		// TODO Auto-generated method stub
+		try {
+			Foods food=new Foods();
+			food.setFoodId(id);
+			food.setFoodName(foodName);
+			food.setDescription(description);
+			food.setBasePrice(basePrice);
+			  if (!file.isEmpty()) {
+		            String fileName = uploadFileService.uploadFile(file);
+		            food.setImageUrl(fileName);
+		            System.out.println("Tên file là: " + fileName);
+		        }
+			food.setDiscount(discount);
+			
+			food.setCreatedAt(LocalDate.now());
+			food.setUpdatedAt(LocalDate.now());
+			food.setCategoryId(categoriesId);			
+			Foods foodRequest =foodsDao.save(food);
+			FoodResponse response=foodMapper.converEntoResponse(foodRequest);
+			System.out.println("update thành công");
+			return response;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("update không thành công");
+			return null;
+		}
+	
 	}
 
 }
