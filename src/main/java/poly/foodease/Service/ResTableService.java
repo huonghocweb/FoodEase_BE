@@ -14,9 +14,14 @@ public interface ResTableService {
 
     ResTableResponse createResTable(ResTableRequest resTableRequest);
 
-    ResTableResponse updateResTable(Integer tableId, ResTableRequest resTableRequest);
+    // ResTableResponse updateResTable(Integer tableId, ResTableRequest
+    // resTableRequest);
 
-    ResTableResponse getResTableById(Integer tableId);
+    Optional<ResTableResponse> updateResTableNew(Integer tableId, ResTableRequest resTableRequest);
+
+    // ResTableResponse getResTableById(Integer tableId);
+
+    Optional<ResTableResponse> getResTableByIdNew(Integer tableId);
 
     void deleteResTable(Integer tableId);
 

@@ -1,7 +1,7 @@
 package poly.foodease.Mapper;
 
 import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import poly.foodease.Model.Entity.Coupon;
 import poly.foodease.Model.Request.CouponRequest;
 import poly.foodease.Model.Response.CouponResponse;

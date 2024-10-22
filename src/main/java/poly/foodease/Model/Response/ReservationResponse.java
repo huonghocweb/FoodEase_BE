@@ -1,5 +1,9 @@
 package poly.foodease.Model.Response;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

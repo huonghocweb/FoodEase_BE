@@ -3,6 +3,7 @@ package poly.foodease.ServiceImpl;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +36,41 @@ public class ResTableServiceImpl implements ResTableService {
         return resTableMapper.convertEnToRes(newTable);
     }
 
-    @Override
-    public ResTableResponse updateResTable(Integer tableId, ResTableRequest resTableRequest) {
-        ResTable existingTable = resTableRepo.findById(tableId)
-                .orElseThrow(() -> new EntityNotFoundException("Table not found"));
-        ResTable updatedTable = resTableMapper.convertReqToEn(resTableRequest);
-        updatedTable.setTableId(existingTable.getTableId());
-        resTableRepo.save(updatedTable);
-        return resTableMapper.convertEnToRes(updatedTable);
-    }
 
     @Override
-    public ResTableResponse getResTableById(Integer tableId) {
-        ResTable resTable = resTableRepo.findById(tableId)
-                .orElseThrow(() -> new EntityNotFoundException("Table not found"));
-        return resTableMapper.convertEnToRes(resTable);
+    public Optional<ResTableResponse> updateResTableNew(Integer tableId, ResTableRequest resTableRequest) {
+        return Optional.of(resTableRepo.findById(tableId)
+                .map(existingTable -> {
+                    ResTable resTable = resTableMapper.convertReqToEn(resTableRequest);
+                    resTable.setTableId(existingTable.getTableId());
+                    ResTable updatedTable = resTableRepo.save(resTable);
+                    return resTableMapper.convertEnToRes(updatedTable);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("not found Coupon")));
+    }
+    
+    // @Override
+    // public ResTableResponse updateResTable(Integer tableId, ResTableRequest resTableRequest) {
+    //     ResTable existingTable = resTableRepo.findById(tableId)
+    //             .orElseThrow(() -> new EntityNotFoundException("Table not found"));
+    //     ResTable updatedTable = resTableMapper.convertReqToEn(resTableRequest);
+    //     updatedTable.setTableId(existingTable.getTableId());
+    //     resTableRepo.save(updatedTable);
+    //     return resTableMapper.convertEnToRes(updatedTable);
+    // }
+
+    // @Override
+    // public ResTableResponse getResTableById(Integer resTableId) {
+    // ResTable resTable = resTableRepo.findById(resTableId)
+    // .orElseThrow(() -> new EntityNotFoundException("Table not found"));
+    // return resTableMapper.convertEnToRes(resTable);
+    // }
+
+    @Override
+    public Optional<ResTableResponse> getResTableByIdNew(Integer resTableId) {
+        ResTable resTable = resTableRepo.findById(resTableId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found ResTable"));
+        return Optional.of(resTableMapper.convertEnToRes(resTable));
     }
 
     @Override
