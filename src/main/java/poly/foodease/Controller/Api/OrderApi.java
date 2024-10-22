@@ -1,6 +1,6 @@
 package poly.foodease.Controller.Api;
 
-import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -8,14 +8,20 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import poly.foodease.Model.Entity.Order;
+import poly.foodease.Model.Entity.OrderDetails;
+import poly.foodease.Model.Response.OrderDTO;
+import poly.foodease.Model.Response.OrderDetailDTO;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
+import poly.foodease.Service.OrderDetailsService;
 import poly.foodease.Service.OrderService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -24,8 +30,12 @@ public class OrderApi {
 
     @Autowired
     OrderService orderService;
+
     @Autowired
     private DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
+
+    @Autowired
+    OrderDetailsService orderDetailsService;
 
     @GetMapping("/orderHistory/{userName}")
     public ResponseEntity<Object> getOrdersByUserName(
@@ -156,5 +166,39 @@ public class OrderApi {
             return null;
         }
 
+    }
+
+    @GetMapping("/{orderId}/details")
+    public ResponseEntity<OrderDTO> getOrderWithDetails(@PathVariable Integer orderId) {
+        // Lấy Order entity từ service
+        Order order = orderService.getOrderById(orderId);
+
+        // Kiểm tra xem đơn hàng có tồn tại không
+        if (order == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Lấy danh sách OrderDetails entity
+        List<OrderDetails> orderDetailsList = orderDetailsService.findByOrderId(orderId);
+
+        // Tạo OrderResponse
+        OrderDTO orderResponse = new OrderDTO();
+        orderResponse.setUser(order.getUser().getFullName()); // Lấy tên người dùng từ Order
+        orderResponse.setOrderDate(order.getOrderDate().toString()); // Chuyển đổi ngày
+        orderResponse.setDeliveryAddress(order.getDeleveryAddress());
+
+        // Chuyển đổi OrderDetails sang OrderDetailResponse
+        List<OrderDetailDTO> details = orderDetailsList.stream().map(detail -> {
+            OrderDetailDTO detailResponse = new OrderDetailDTO();
+            detailResponse.setFoodName(detail.getFoodVariations().getFood().getFoodName());
+            detailResponse.setPrice(detail.getPrice());
+            detailResponse.setQuantity(detail.getQuantity());
+            return detailResponse;
+        }).collect(Collectors.toList());
+
+        orderResponse.setOrderDetails(details);
+
+        // Trả về OrderResponse
+        return ResponseEntity.ok(orderResponse);
     }
 }

@@ -2,6 +2,7 @@ package poly.foodease.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.UserRequest;
 import poly.foodease.Model.Response.UserResponse;
 
@@ -17,4 +18,8 @@ public interface UserService {
     Optional<UserResponse> updateUser(UserRequest userRequest, Integer id);
     Optional<Void> deleteUserById(Integer id);
     Optional<UserResponse> getUserByUsername(String username);
+
+    List<User> getAllUsers();
+
+    void saveAll(List<User> users);
 }

@@ -10,7 +10,9 @@ import poly.foodease.Controller.Controller.WebSocketController;
 import poly.foodease.Mapper.OrderMapper;
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Request.OrderRequest;
+import poly.foodease.Model.Request.PaymentMethodRevenueRequest;
 import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Model.Response.PaymentMethodRevenueResponse;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportUserBuy;
@@ -175,5 +177,17 @@ public class OrderServiceImpl implements OrderService {
     public Page<ReportUserBuy> findReportUserBuy(Pageable page) {
         // TODO Auto-generated method stub
         return orderRepo.findReportUserBuy(page);
+    }
+
+    @Override
+    public List<PaymentMethodRevenueResponse> getRevenueByPaymentMethod(PaymentMethodRevenueRequest request) {
+        return orderRepo.getRevenueByPaymentMethod(request.getYear(), request.getMonth(),
+                request.getStartDate(), request.getEndDate());
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        return orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng với ID: " + orderId));
     }
 }

@@ -1,7 +1,7 @@
 package poly.foodease.ServiceImpl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,15 +19,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepo userRepo;
-    @Autowired
-    UserMapper userMapper;
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public Page<UserResponse> getAllUserByPage(Integer pageNumber, Integer pageSize, String sortOrder, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC ,sortBy));
@@ -77,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<Void> deleteUserById(Integer id) {
         Optional<User> user = userRepo.findById(id);
-        user.ifPresent( u -> userRepo.delete(u));
+        user.ifPresent(userRepo::delete);
         return Optional.empty();
     }
 
@@ -87,5 +84,15 @@ public class UserServiceImpl implements UserService {
         User user = userRepo.findUserByUserName(username)
                 .orElseThrow(() -> new EntityNotFoundException("not found User"));
         return Optional.of(userMapper.convertEnToRes(user));
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public void saveAll(List<User> users) {
+        userRepo.saveAll(users);
     }
 }

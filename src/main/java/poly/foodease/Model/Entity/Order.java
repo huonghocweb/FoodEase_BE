@@ -66,7 +66,7 @@ public class Order {
     private PaymentMethod paymentMethod;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
@@ -81,6 +81,6 @@ public class Order {
     private Coupon coupon;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderDetails> orderDetails;
 }

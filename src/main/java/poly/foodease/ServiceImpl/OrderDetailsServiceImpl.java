@@ -70,4 +70,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         }))
                 .orElseThrow(() -> new EntityNotFoundException("Not found OrderDetails"));
     }
+
+    @Override
+    public List<OrderDetails> findByOrderId(Integer orderId) {
+        return orderDetailsRepo.getOrderDetailsByOrderId(orderId);
+    }
 }
