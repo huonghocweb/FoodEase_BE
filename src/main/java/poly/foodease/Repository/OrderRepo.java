@@ -1,4 +1,4 @@
-package poly.foodease.Repository;
+	package poly.foodease.Repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,9 +45,16 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
             + "FROM Order o GROUP BY YEAR(o.orderDate) ORDER BY year")
     List<ReportRevenueByYear> ReportRevenueByYear();
 
-    @Query("SELECT new poly.foodease.Report.ReportUserBuy(o.user.userId,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email,SUM(o.totalQuantity),SUM(o.totalPrice))"
-            + " FROM Order o GROUP BY o.user.userId,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
-    Page<ReportUserBuy> findReportUserBuy(Pageable page);
+    @Query("SELECT new poly.foodease.Report.ReportUserBuy(o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email,SUM(o.totalQuantity),SUM(o.totalPrice))"
+            + " FROM Order o WHERE o.orderDate =:date GROUP BY o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
+    Page<ReportUserBuy> findReportUserBuy(@Param("date") LocalDate date,Pageable page);
+    
+    @Query("SELECT o FROM Order o where o.orderDate = :date")
+    Page<Order> findOrderByOrderDate(@Param("date") LocalDate date,Pageable page);
+    
+    @Query("SELECT new poly.foodease.Report.ReportOrder(o.orderDate, o.orderTime, SUM(o.totalPrice), SUM(o.totalQuantity)) " +
+            "FROM Order o WHERE o.orderDate = :date GROUP BY o.orderDate, o.orderTime ORDER BY o.orderDate")
+    Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
 
 
     @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice)) " +

@@ -1,7 +1,8 @@
 package poly.foodease.Model.Entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,8 +37,8 @@ public class Foods implements Serializable {
 	private String description;
 	private double basePrice;
 	private String imageUrl;
-	private Date createdAt;
-	private Date updatedAt;
+	private LocalDate createdAt;
+	private LocalDate updatedAt;
 	private int discount;
 	private int categoryId;
 

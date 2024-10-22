@@ -14,6 +14,7 @@ import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +34,13 @@ public interface OrderService {
     List<ReportOrder> findTotalPriceAndQuantityByOrderDate();
     List<ReportRevenueByMonth> getRevenueByMonth();
     List<ReportRevenueByYear> ReportRevenueByYear();
-    Page<ReportUserBuy> findReportUserBuy(Pageable page);
 
     List<PaymentMethodRevenueResponse> getRevenueByPaymentMethod(PaymentMethodRevenueRequest request);
 
     Order getOrderById(Integer orderId);
 
+    Page<ReportUserBuy> findReportUserBuy(LocalDate date,Pageable page);
+    Page<OrderResponse> findOrderByOrderDate(LocalDate date,Pageable page);
+    Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
+ 
 }

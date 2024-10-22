@@ -1,6 +1,8 @@
 package poly.foodease.Controller.Api;
 
 
+import jakarta.persistence.criteria.CriteriaBuilder.In;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import poly.foodease.Report.ReportUserBuy;
 import poly.foodease.Service.OrderDetailsService;
 import poly.foodease.Service.OrderService;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -155,10 +158,12 @@ public class OrderApi {
 
     }
     @GetMapping("/ReportUserBuy")
-    public ResponseEntity<Page<ReportUserBuy>> ReportUserBuy(@RequestParam("page") Optional<Integer> page){
+    public ResponseEntity<Page<ReportUserBuy>> ReportUserBuy(@RequestParam("date") Optional<LocalDate> date,
+    		@RequestParam("page") Optional<Integer> page){
         try {
             Pageable pageable = PageRequest.of(page.orElse(0), 3);
-            Page<ReportUserBuy> list=orderService.findReportUserBuy(pageable);
+            LocalDate dateToday=date.orElse(LocalDate.now());
+            Page<ReportUserBuy> list=orderService.findReportUserBuy(dateToday,pageable);
             return ResponseEntity.ok(list);
         } catch (Exception e) {
             // TODO: handle exception
@@ -200,5 +205,32 @@ public class OrderApi {
 
         // Trả về OrderResponse
         return ResponseEntity.ok(orderResponse);
+    }
+
+    @GetMapping("/ReportOrderByToday")
+    public ResponseEntity<Page<ReportOrder>> ReportOrderByToday(@RequestParam("date") Optional<LocalDate> date,
+    		@RequestParam("page") Optional<Integer>page)
+    {
+    	try {
+			Pageable pageable=PageRequest.of(page.orElse(0),3);
+			LocalDate dateToDay= date.orElse(LocalDate.now());
+			Page<ReportOrder> list=orderService.ReportRevenueByToday(dateToDay, pageable);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+    	
+    }
+    
+    @GetMapping("/findOrderByOrderDate")
+    public ResponseEntity<Page<OrderResponse>>  findOrderByOrderDate(@RequestParam("date")Optional<LocalDate>  date,
+    		@RequestParam("page") Optional<Integer> page)
+    {
+    	LocalDate today=date.orElse(LocalDate.now());
+    	   Pageable pageable = PageRequest.of(page.orElse(0), 5);
+    	   Page<OrderResponse> list=orderService.findOrderByOrderDate(today, pageable);
+    	return ResponseEntity.ok(list);
     }
 }
