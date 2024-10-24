@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Cấu hình CORS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/authenticate/**").permitAll() // Cho phép truy cập không cần xác thực
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll() // Các yêu cầu khác đều không yêu cầu xác thực
                 )
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Thêm bộ lọc JWT

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Response.ResTableResponse;
+import poly.foodease.Model.Response.ReservationResponse;
 
 public interface ResTableService {
 
@@ -31,5 +32,5 @@ public interface ResTableService {
     Page<ResTableResponse> getResTableByTableCategory(Integer tableCategoryId, Pageable pageable);
     Page<ResTableResponse>  getResTableByCapacity(Integer capacity, Pageable pageable);
     Page<ResTableResponse>  getResTableByCapaAndCate(Integer tableCategoryId, Integer capacity, Pageable pageable);
-    List<ResTableResponse> checkResTableInReservation(LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime);
+    ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime);
 }

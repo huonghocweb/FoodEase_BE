@@ -32,11 +32,7 @@ public interface ResTableRepo extends JpaRepository<ResTable, Integer> {
             "OR :checkoutTime BETWEEN res.checkinTime AND res.checkoutTime " +
             "OR res.checkinTime BETWEEN :checkinTime AND :checkoutTime " +
             "OR res.checkoutTime BETWEEN :checkinTime AND :checkoutTime)")
-    List<ResTable> checkResTableIsAvailable(@Param("tableId") Long tableId,
+    List<ResTable> checkResTableIsAvailable(@Param("tableId") Integer tableId,
                                          @Param("checkinTime") LocalDateTime checkinTime,
                                          @Param("checkoutTime") LocalDateTime checkoutTime);
-
-
-
-
 }

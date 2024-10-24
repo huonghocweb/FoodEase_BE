@@ -1,6 +1,7 @@
 package poly.foodease.ServiceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +17,13 @@ import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Mapper.ResTableMapper;
 import poly.foodease.Model.Entity.ResTable;
 import poly.foodease.Model.Request.ResTableRequest;
+import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Model.Response.ResTableResponse;
+import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Repository.ResTableRepo;
+import poly.foodease.Repository.ReservationRepo;
 import poly.foodease.Service.ResTableService;
+import poly.foodease.Service.ReservationService;
 
 @Service
 public class ResTableServiceImpl implements ResTableService {
@@ -28,6 +33,8 @@ public class ResTableServiceImpl implements ResTableService {
 
     @Autowired
     private ResTableMapper resTableMapper;
+    @Autowired
+    private ReservationService reservationService;
 
     @Override
     public ResTableResponse createResTable(ResTableRequest resTableRequest) {
@@ -126,7 +133,31 @@ public class ResTableServiceImpl implements ResTableService {
     }
 
     @Override
-    public List<ResTableResponse> checkResTableInReservation(LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime){
-        return null;
+    public ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime){
+        ResTableResponse resTable = this.getResTableByIdNew(tableId)
+                .orElseThrow(() -> new EntityNotFoundException("N"));
+        LocalDateTime checkin = checkinDate.atTime(checkinTime);
+        LocalDateTime checkout = checkinDate.atTime(checkoutTime);
+        List<ResTable> resTables = resTableRepo.checkResTableIsAvailable(tableId,checkin,checkout);
+        System.out.println("123");
+        System.out.println("ResTable" + resTable);
+        if (resTables.isEmpty()){
+            ReservationRequest reservationRequest = new ReservationRequest();
+            reservationRequest.setResTableIds(tableId);
+            reservationRequest.setUserId(userId);
+            reservationRequest.setCheckinTime(checkin);
+            reservationRequest.setCheckoutTime(checkout);
+            reservationRequest.setGuests(1);
+            reservationRequest.setTotalDeposit(resTable.getDeposit());
+            reservationRequest.setReservationStatusId(1);
+            System.out.println(reservationRequest);
+            System.out.println("Create Reservation");
+            return reservationService.createReservation(reservationRequest);
+        }else {
+            System.out.println("failed");
+
+            return null;
+
+        }
     }
 }

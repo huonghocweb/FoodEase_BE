@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.EntityNotFoundException;
+import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Response.ResTableResponse;
+import poly.foodease.Model.Response.UserResponse;
 import poly.foodease.Service.CloudinaryService;
 import poly.foodease.Service.ResTableService;
 
@@ -190,4 +192,30 @@ public class ResTableApi {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/checkResTableAvailable")
+    public ResponseEntity<Object> checkResTableAvailable(
+            @RequestParam("tableId") Integer tableId,
+            @RequestParam("date") LocalDate date,
+            @RequestParam("checkinTime") LocalTime checkinTime,
+            @RequestParam("checkoutTime") LocalTime checkoutTime,
+            @RequestParam("userId")Integer userId
+            ) {
+        Map<String, Object> result = new HashMap<>();
+        System.out.println("checkResTableAvailable");
+        System.out.println(tableId);
+        System.out.println(date);
+        System.out.println(checkinTime);
+        System.out.println(checkoutTime);
+        System.out.println(userId);
+        try {
+            result.put("success", true);
+            result.put("message", "Check ResTable Available");
+            result.put("data", resTableService.checkResTableInReservation(userId,tableId, date, checkinTime, checkoutTime));
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }
