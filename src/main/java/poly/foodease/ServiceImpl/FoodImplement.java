@@ -63,6 +63,7 @@ public class FoodImplement implements FoodsService {
 		            food.setImageUrl(fileName);
 		            System.out.println("Tên file là: " + fileName);
 		        }
+			  
 			food.setDiscount(discout);
 			
 			food.setCreatedAt(LocalDate.now());

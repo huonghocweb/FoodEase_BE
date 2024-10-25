@@ -75,7 +75,10 @@ public class FoodsApi {
 			@RequestParam("categoriesId") Integer categoriesId)
 	{
 		try {
+			
+			
 			FoodResponse foodResponse =foodService.save(foodName, description, basePrice, file, discount, categoriesId);
+			
 			return ResponseEntity.ok(foodResponse);
 		} catch (Exception e) {
 			// TODO: handle exception
