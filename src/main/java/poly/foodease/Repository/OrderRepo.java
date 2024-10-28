@@ -68,5 +68,7 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
                                                                  @Param("month") Integer month,
                                                                  @Param("startDate") LocalDate startDate,
                                                                  @Param("endDate") LocalDate endDate);
-
+                                                             
+    @Query("SELECT o FROM Order o  WHERE MONTH(o.orderDate) = :month AND YEAR(o.orderDate) = :year")
+    List<Order> findByDate(@Param("month") Integer month, @Param("year") Integer year);
 }

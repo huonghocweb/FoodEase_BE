@@ -12,4 +12,6 @@ import java.util.List;
 public interface FoodReviewService {
 	List<FoodReviewResponse> findFoodReviewByFoodId(Integer id);
 	FoodReviewResponse save(MultipartFile file,Integer rating,String review,Integer foodId);
+	FoodReview save(FoodReview foodReview);
+	List<FoodReview>  findByFilter(Integer rating,Integer month,Integer year );
 }
