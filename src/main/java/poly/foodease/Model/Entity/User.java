@@ -3,6 +3,7 @@ package poly.foodease.Model.Entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -85,4 +86,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<WishList> wishLists; // Một User có nhiều Wish List
+
+    
 }

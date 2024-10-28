@@ -16,13 +16,15 @@ import poly.foodease.Model.Entity.User;
 @AllArgsConstructor
 @Builder
 public class FoodReviewResponse {
+
+	private User user;
+	private Foods food;
+
 	private int reviewId;
 	private int rating;
 	private String review;
-	private Date reviewDate=new Date();
+	private Date reviewDate;
 	private String imageUrl;
-	private int userId;
+	private Integer userId;
 	private int foodId;
-	private User user;
-	private Foods food;
 }
