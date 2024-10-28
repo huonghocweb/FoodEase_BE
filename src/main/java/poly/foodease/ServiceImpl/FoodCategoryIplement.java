@@ -34,5 +34,22 @@ public class FoodCategoryIplement implements FoodCategoryService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public FoodCategoriesReponse save(String categoryName) {
+		try {
+			FoodCategories foodCategories = new FoodCategories();
+			foodCategories.setCartegoryName(categoryName);
+			FoodCategories foodCategoriesRequest = foodCategoryDao.save(foodCategories);
+			FoodCategoriesReponse request=foodCategoryMapper.converEnToRes(foodCategoriesRequest);
+			return request;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

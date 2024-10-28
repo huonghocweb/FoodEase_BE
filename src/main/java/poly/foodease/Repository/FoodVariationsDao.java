@@ -34,4 +34,7 @@ public interface FoodVariationsDao extends JpaRepository<FoodVariations, Integer
 
     // chánh
     Optional<FoodVariations> findByFoodId(Integer foodId);
+    //ngọc
+    @Query("SELECT fv FROM FoodVariations fv WHERE fv.foodId = ?1")
+    List<FoodVariations> findFoodVariationByFoodId(Integer id);
 }

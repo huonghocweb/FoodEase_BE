@@ -18,8 +18,8 @@ public interface FoodsService {
 	List<Foods> findByCategoryMainDishes();
 	List<Foods> findByCategoryDrink();
 	void deleteFood(Integer foodId);
-	FoodResponse save (String name,String deception,Double pasePrice,MultipartFile file,Integer discout,Integer categoryId);
+	FoodResponse save (String name,String deception,Double pasePrice,MultipartFile[] file,Integer discout,Integer categoryId);
 	Page<FoodResponse> findAddFoodAll(Pageable page);
-	FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile file, Integer discount, Integer categoriesId);
+	FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile[] file, Integer discount, Integer categoriesId);
 	
 }

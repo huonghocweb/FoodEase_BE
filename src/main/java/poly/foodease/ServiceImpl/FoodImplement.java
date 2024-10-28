@@ -16,6 +16,7 @@ import poly.foodease.Model.Entity.Foods;
 import poly.foodease.Model.Request.FoodRequest;
 import poly.foodease.Model.Response.FoodResponse;
 import poly.foodease.Repository.FoodsDao;
+import poly.foodease.Service.CloudinaryService;
 import poly.foodease.Service.FoodsService;
 import poly.foodease.Service.UploadFileService;
 
@@ -28,6 +29,7 @@ public class FoodImplement implements FoodsService {
 	
 	@Autowired FoodMapper foodMapper;
 	@Autowired UploadFileService uploadFileService;
+	@Autowired  CloudinaryService cloudinaryService;
 	@Override
 	public List<FoodResponse> findAll() {
 		List<Foods> list=foodsDao.findAll();
@@ -51,19 +53,22 @@ public class FoodImplement implements FoodsService {
 		foodsDao.deleteById(food.getFoodId());
 	}
 	@Override
-	public FoodResponse save(String name, String deception, Double basePrice, MultipartFile file, Integer discout,
+	public FoodResponse save(String name, String deception, Double basePrice, MultipartFile[] file, Integer discout,
 			Integer categoryId) {
 		try {
 			Foods food=new Foods();
 			food.setFoodName(name);
 			food.setDescription(deception);
 			food.setBasePrice(basePrice);
-			  if (!file.isEmpty()) {
-		            String fileName = uploadFileService.uploadFile(file);
-		            food.setImageUrl(fileName);
-		            System.out.println("Tên file là: " + fileName);
+			 
+			  if (file != null) {
+				  food.setImageUrl(cloudinaryService.uploadFile(file, "restables").get(0));
+		            // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
+				  System.out.println(food.getImageUrl());
+		        } else {
+		            System.out.println("file null");
+		            food.setImageUrl(" ");
 		        }
-			  
 			food.setDiscount(discout);
 			
 			food.setCreatedAt(LocalDate.now());
@@ -87,7 +92,7 @@ public class FoodImplement implements FoodsService {
 		return list.map(foodMapper:: converEntoResponse);
 	}
 	@Override
-	public FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile file,
+	public FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile[] file,
 			Integer discount, Integer categoriesId) {
 		// TODO Auto-generated method stub
 		try {
@@ -96,10 +101,13 @@ public class FoodImplement implements FoodsService {
 			food.setFoodName(foodName);
 			food.setDescription(description);
 			food.setBasePrice(basePrice);
-			  if (!file.isEmpty()) {
-		            String fileName = uploadFileService.uploadFile(file);
-		            food.setImageUrl(fileName);
-		            System.out.println("Tên file là: " + fileName);
+			if (file != null) {
+				  food.setImageUrl(cloudinaryService.uploadFile(file, "restables").get(0));
+		            // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
+				  System.out.println(food.getImageUrl());
+		        } else {
+		            System.out.println("file null");
+		            food.setImageUrl(" ");
 		        }
 			food.setDiscount(discount);
 			
