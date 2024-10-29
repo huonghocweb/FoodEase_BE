@@ -95,4 +95,10 @@ public class UserServiceImpl implements UserService {
     public void saveAll(List<User> users) {
         userRepo.saveAll(users);
     }
+
+	@Override
+	public User SaveUser(User user) {
+		// TODO Auto-generated method stub
+		return userRepo.save(user);
+	}
 }

@@ -1,9 +1,16 @@
 package poly.foodease.Controller.Api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +20,15 @@ import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.UserRequest;
 import poly.foodease.Model.Response.UserResponse;
 import poly.foodease.Service.UserService;
+import poly.foodease.Utils.UserBuyExportExcel;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +40,7 @@ import java.util.Map;
 public class UserApi {
     @Autowired
     UserService userService;
-
+ 
     @GetMapping("/getByUserName/{userName}")
     public ResponseEntity<Object> getUserByUserName(
             @PathVariable("userName") String userName
@@ -167,4 +180,118 @@ public class UserApi {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    //ngoc
+    private void importExcelData(String filePath) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) continue; // Skip the header row
+
+                User user = new User();
+                
+                // Read userName
+                user.setUserName(row.getCell(0).getStringCellValue());
+                
+                // Read fullName
+                user.setFullName(row.getCell(1).getStringCellValue());
+                
+                // Read password with type checking
+                if (row.getCell(2).getCellType() == CellType.NUMERIC) {
+                    int pass = (int) row.getCell(2).getNumericCellValue();
+                   
+                    user.setPassword(String.valueOf(pass));
+                } else {
+                    user.setPassword(row.getCell(2).getStringCellValue());
+                }
+
+                // Read gender
+                if (row.getCell(3).getCellType() == CellType.STRING) {
+                    String genderValue = row.getCell(3).getStringCellValue().toLowerCase();
+                    user.setGender(genderValue.equals("male") || genderValue.equals("female"));
+                }
+
+                // Read address
+                user.setAddress(row.getCell(4).getStringCellValue());
+
+                // Read phone number with type checking
+                if (row.getCell(5).getCellType() == CellType.NUMERIC) {
+                    int SDT = (int) row.getCell(5).getNumericCellValue();
+                    user.setPhoneNumber(String.valueOf(SDT));
+                } else {
+                    user.setPhoneNumber(row.getCell(5).getStringCellValue());
+                }
+
+                // Read image URL
+                user.setImageUrl(row.getCell(6).getStringCellValue());
+                
+//                
+//                if (row.getCell(7) != null) { // Đảm bảo ô không phải null
+//                    Cell cell = row.getCell(7);
+//
+//                    // Kiểm tra kiểu ô
+//                    if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
+//                        // Nếu ô là kiểu NUMERIC và định dạng ngày tháng
+//                        LocalDate localDate = cell.getLocalDateTimeCellValue().toLocalDate(); // Lấy LocalDate
+//
+//                        user.setBirthday(localDate); // Gán LocalDate cho thuộc tính birthday của User
+//
+//                        System.out.println("Ngày đăng ký: " + localDate); // Hiển thị ngày trên console
+//                    } else {
+//                        System.out.println("Ô không chứa ngày tháng hợp lệ.");
+//                    }}
+//                   
+                
+
+                
+                
+                // Read email
+                user.setEmail(row.getCell(8).getStringCellValue());
+
+                // Read status with type checking
+                if (row.getCell(9).getCellType() == CellType.NUMERIC) {
+                    int statusValue = (int) row.getCell(9).getNumericCellValue();
+                    user.setStatus(statusValue != 0);
+                }
+
+                // Save user
+                userService.SaveUser(user);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle error appropriately
+        }
+    }
+
+   
+    @PostMapping("/importUser")
+    public ResponseEntity<String> importUserBuy(@RequestParam("file") MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tệp không hợp lệ.");
+        }
+
+        String directoryPath = "E:\\DuAnTotNghiep\\Code\\Be-24-10\\file";
+        String filePath = directoryPath + file.getOriginalFilename(); // Đường dẫn đầy đủ đến tệp
+
+        // Tạo thư mục nếu chưa tồn tại
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // Tạo thư mục và tất cả thư mục con nếu cần
+        }
+        try {
+            // Lưu tệp tải lên tạm thời
+            File tempFile = new File(filePath);
+            file.transferTo(tempFile);
+            
+            importExcelData(tempFile.getAbsolutePath());
+            return ResponseEntity.ok("Dữ liệu đã được nhập thành công.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nhập dữ liệu thất bại.");
+        }
+    }
+
+ 
 }

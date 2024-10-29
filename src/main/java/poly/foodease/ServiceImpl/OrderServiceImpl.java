@@ -207,4 +207,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepo.findReportUserBuy(date, page);
 	}
 
+	@Override
+	public List<ReportUserBuy> findAllReportUserBuy() {
+		// TODO Auto-generated method stub
+		return orderRepo.findAllReportUserBuy();
+	}
+
 }

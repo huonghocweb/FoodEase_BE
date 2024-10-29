@@ -3,6 +3,8 @@ package poly.foodease.Controller.Api;
 
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,11 @@ import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
 import poly.foodease.Service.OrderDetailsService;
 import poly.foodease.Service.OrderService;
+import poly.foodease.Utils.UserBuyExportExcel;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -233,4 +239,21 @@ public class OrderApi {
     	   Page<OrderResponse> list=orderService.findOrderByOrderDate(today, pageable);
     	return ResponseEntity.ok(list);
     }
+    
+    @GetMapping("/exportUserBuy")
+    public void exportUserBuy(HttpServletResponse response)throws IOException{
+    	response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+    	List<ReportUserBuy> list= orderService.findAllReportUserBuy();
+    	  UserBuyExportExcel excelExporter = new UserBuyExportExcel(list);
+    	     
+    	    excelExporter.export(response);  
+    	
+    }
+    
 }
