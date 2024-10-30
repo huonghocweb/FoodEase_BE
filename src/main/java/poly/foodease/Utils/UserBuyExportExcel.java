@@ -113,12 +113,6 @@ public class UserBuyExportExcel {
             createCell(row, columnCount++, userBuy.getTotalPrice(), style);
             
             
-            
-           
-           
-           
-            
-             
         }
     }
      
