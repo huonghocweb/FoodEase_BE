@@ -125,36 +125,5 @@ public class UserBuyExportExcel {
          
         outputStream.close();
     }
-    private void importExcelData(String filePath) {
-        try (FileInputStream fis = new FileInputStream(filePath);
-             Workbook workbook = new XSSFWorkbook(fis)) {
-
-            Sheet sheet = workbook.getSheetAt(0); // Lấy trang đầu tiên
-            for (Row row : sheet) {
-                if (row.getRowNum() == 0) continue; // Bỏ qua hàng đầu tiên (tiêu đề)
-
-                User user = new User();
-                user.setUserName(row.getCell(0).getStringCellValue());
-                user.setFullName(row.getCell(1).getStringCellValue());
-                user.setPassword(row.getCell(2).getStringCellValue());
-                String genderValue = row.getCell(3).getStringCellValue().toLowerCase();
-                user.setGender(genderValue.equals("Male") || genderValue.equals("Female"));
-                user.setAddress(row.getCell(4).getStringCellValue());
-                user.setPhoneNumber(row.getCell(5).getStringCellValue());
-                user.setImageUrl(row.getCell(6).getStringCellValue());
-                String birthdayString = row.getCell(7).getStringCellValue();
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Đảm bảo định dạng khớp với dữ liệu của bạn
-                LocalDate birthdayDate = LocalDate.parse(birthdayString, dateFormatter);
-                user.setBirthday(birthdayDate);
-                user.setEmail(row.getCell(8).getStringCellValue());
-                int statusValue = (int) row.getCell(9).getNumericCellValue(); // Lấy giá trị ô và ép kiểu nếu cần
-                user.setStatus(statusValue != 0);
-              
-              
-                userService.SaveUser(user); // Lưu vào cơ sở dữ liệu
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // Bắt lỗi và xử lý hợp lý
-        }
-    }
+   
 }
