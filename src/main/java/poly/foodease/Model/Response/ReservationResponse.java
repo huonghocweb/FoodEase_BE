@@ -20,6 +20,7 @@ public class ReservationResponse {
     private Integer guests;
     private LocalDateTime checkinTime;
     private LocalDateTime checkoutTime;
+    private LocalDateTime bookTime;
     private Double totalDeposit;
     private ReservationStatusResponse reservationStatus;
     private UserResponse user;

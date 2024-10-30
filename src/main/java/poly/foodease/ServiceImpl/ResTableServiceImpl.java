@@ -1,12 +1,18 @@
 package poly.foodease.ServiceImpl;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.google.zxing.WriterException;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,15 +21,16 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Mapper.ResTableMapper;
+import poly.foodease.Model.Entity.MailInfo;
 import poly.foodease.Model.Entity.ResTable;
 import poly.foodease.Model.Request.ResTableRequest;
 import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Model.Response.ResTableResponse;
 import poly.foodease.Model.Response.ReservationResponse;
+import poly.foodease.Model.Response.UserResponse;
 import poly.foodease.Repository.ResTableRepo;
 import poly.foodease.Repository.ReservationRepo;
-import poly.foodease.Service.ResTableService;
-import poly.foodease.Service.ReservationService;
+import poly.foodease.Service.*;
 
 @Service
 public class ResTableServiceImpl implements ResTableService {
@@ -35,6 +42,15 @@ public class ResTableServiceImpl implements ResTableService {
     private ResTableMapper resTableMapper;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MailInfo mailInfo;
+    @Autowired
+    private QrCodeService qrCodeService;
+
 
     @Override
     public ResTableResponse createResTable(ResTableRequest resTableRequest) {
@@ -133,9 +149,11 @@ public class ResTableServiceImpl implements ResTableService {
     }
 
     @Override
-    public ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime){
+    public ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime, List<Integer> serviceIds) throws IOException, WriterException, MessagingException {
         ResTableResponse resTable = this.getResTableByIdNew(tableId)
-                .orElseThrow(() -> new EntityNotFoundException("N"));
+                .orElseThrow(() -> new EntityNotFoundException("Not Found ResTable"));
+        UserResponse user = userService.getUserById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found User"));
         LocalDateTime checkin = checkinDate.atTime(checkinTime);
         LocalDateTime checkout = checkinDate.atTime(checkoutTime);
         List<ResTable> resTables = resTableRepo.checkResTableIsAvailable(tableId,checkin,checkout);
@@ -150,12 +168,41 @@ public class ResTableServiceImpl implements ResTableService {
             reservationRequest.setGuests(1);
             reservationRequest.setTotalDeposit(resTable.getDeposit());
             reservationRequest.setReservationStatusId(1);
+            reservationRequest.setServiceIds(serviceIds);
             System.out.println(reservationRequest);
             System.out.println("Create Reservation");
-            return reservationService.createReservation(reservationRequest);
+            ReservationResponse reservationCreate = reservationService.createReservation(reservationRequest);
+            if(reservationCreate != null){
+                mailInfo.setTo(user.getEmail());
+                StringBuilder bodyBuilder = new StringBuilder();
+                bodyBuilder.append("<html><body>");
+                bodyBuilder.append("<p>Kính chào quý khách,</p>");
+                bodyBuilder.append("<p>Cảm ơn quý khách đã đặt bàn tại Victory Restaurant. Dưới đây là thông tin đặt bàn của quý khách:</p>");
+                bodyBuilder.append("<p><strong>Tên khách hàng:</strong> ").append(user.getFullName()).append("<br>");
+                bodyBuilder.append("<strong>Email:</strong> ").append(user.getEmail()).append("<br>");
+                bodyBuilder.append("<strong>Số điện thoại:</strong> ").append(user.getPhoneNumber()).append("<br>");
+                bodyBuilder.append("<p>Thông tin chi tiết:</p>");
+                bodyBuilder.append("<ul>");
+                bodyBuilder.append("<strong>Mã bàn:</strong> ").append(reservationCreate.getResTable().getTableId()).append("<br>");
+                bodyBuilder.append("<strong>Giờ Check In:</strong> ").append(reservationCreate.getCheckinTime()).append("<br>");
+                bodyBuilder.append("<strong>Giờ Check Out:</strong> ").append(reservationCreate.getCheckoutTime()).append("<br>");
+                bodyBuilder.append("<strong>Tổng tiền cọc:</strong> ").append(reservationCreate.getTotalDeposit()).append(" VND</p>");
+                bodyBuilder.append("</ul>");
+                bodyBuilder.append("<p>Quý khách có thể quét Mã QR để xem thông tin chi tiết.</p>");
+                bodyBuilder.append("<p>Chúc quý khách có một ngày vui vẻ!</p>");
+                bodyBuilder.append("<p>Trân trọng,<br>Công ty Victory Group</p>");
+                bodyBuilder.append("</body></html>");
+                List<File> files = new ArrayList<>();
+                File qrcodeFile = qrCodeService.createQrCodeWithFileTemp(String.valueOf(reservationCreate.getReservationId()), 360, 360);
+                mailInfo.setBody(bodyBuilder.toString());
+                mailInfo.setSubject("Reservation Information");
+                files.add(qrcodeFile);
+                mailInfo.setFiles(files);
+                mailService.send(mailInfo);
+            }
+            return reservationCreate;
         }else {
             System.out.println("failed");
-
             return null;
 
         }

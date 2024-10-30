@@ -43,6 +43,8 @@ public class Reservation {
     @Column(name="checkout_time")
     private LocalDateTime checkoutTime;
 
+    @Column(name = "book_time")
+    private LocalDateTime bookTime;
 
     @Column(name="total_deposit")
     private Double totalDeposit;

@@ -1,5 +1,6 @@
 package poly.foodease.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
@@ -30,6 +31,8 @@ public abstract class ReservationMapper {
     private ResTableRepo resTableRepo;
     @Autowired
     private TableServiceRepo tableServiceRepo;
+    @Autowired
+    private TableServicesMapper tableServicesMapper;
 
     public ReservationResponse convertEnToRes(Reservation reservation){
         return ReservationResponse.builder()
@@ -38,9 +41,13 @@ public abstract class ReservationMapper {
                 .guests(reservation.getGuests())
                 .checkinTime(reservation.getCheckinTime())
                 .checkoutTime(reservation.getCheckoutTime())
+                .bookTime(reservation.getBookTime())
                 .user(userMapper.convertEnToRes(reservation.getUser()))
                 .resTable(resTableMapper.convertEnToRes(reservation.getResTable()))
                 .reservationStatus(reservationStatusMapper.convertEnToRes(reservation.getReservationStatus()))
+                .services(reservation.getServices() != null ? reservation.getServices().stream()
+                        .map(tableServicesMapper :: convertEnToRes)
+                        .collect(Collectors.toList()) : null)
                 .build();
     }
 
@@ -49,6 +56,7 @@ public abstract class ReservationMapper {
                 .totalDeposit(reservationRequest.getTotalDeposit())
                 .checkinTime(reservationRequest.getCheckinTime())
                 .checkoutTime(reservationRequest.getCheckoutTime())
+                .bookTime(LocalDateTime.now())
                 .reservationStatus(reservationRequest.getReservationStatusId() != null ? reservationStatusRepo.findById(reservationRequest.getReservationStatusId())
                         .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Status")) : null)
                 .user(reservationRequest.getUserId() != null ? userRepo.findById(reservationRequest.getUserId())

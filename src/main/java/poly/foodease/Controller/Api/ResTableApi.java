@@ -1,23 +1,18 @@
 package poly.foodease.Controller.Api;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -192,13 +188,14 @@ public class ResTableApi {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/checkResTableAvailable")
+    @PostMapping("/checkResTableAvailable")
     public ResponseEntity<Object> checkResTableAvailable(
             @RequestParam("tableId") Integer tableId,
             @RequestParam("date") LocalDate date,
             @RequestParam("checkinTime") LocalTime checkinTime,
             @RequestParam("checkoutTime") LocalTime checkoutTime,
-            @RequestParam("userId")Integer userId
+            @RequestParam("userId")Integer userId,
+            @RequestParam(value = "serviceIds",required = false) List<Integer> servicesId
             ) {
         Map<String, Object> result = new HashMap<>();
         System.out.println("checkResTableAvailable");
@@ -206,11 +203,11 @@ public class ResTableApi {
         System.out.println(date);
         System.out.println(checkinTime);
         System.out.println(checkoutTime);
-        System.out.println(userId);
+        System.out.println(servicesId);
         try {
             result.put("success", true);
             result.put("message", "Check ResTable Available");
-            result.put("data", resTableService.checkResTableInReservation(userId,tableId, date, checkinTime, checkoutTime));
+            result.put("data", resTableService.checkResTableInReservation(userId,tableId, date, checkinTime, checkoutTime,servicesId));
         } catch (Exception e) {
             result.put("success", false);
             result.put("message", e.getMessage());

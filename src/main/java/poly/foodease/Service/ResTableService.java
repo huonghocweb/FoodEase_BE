@@ -1,10 +1,13 @@
 package poly.foodease.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.zxing.WriterException;
+import jakarta.mail.MessagingException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import poly.foodease.Model.Request.ResTableRequest;
@@ -32,5 +35,5 @@ public interface ResTableService {
     Page<ResTableResponse> getResTableByTableCategory(Integer tableCategoryId, Pageable pageable);
     Page<ResTableResponse>  getResTableByCapacity(Integer capacity, Pageable pageable);
     Page<ResTableResponse>  getResTableByCapaAndCate(Integer tableCategoryId, Integer capacity, Pageable pageable);
-    ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime);
+    ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime, List<Integer> serviceIds) throws IOException, WriterException, MessagingException;
 }

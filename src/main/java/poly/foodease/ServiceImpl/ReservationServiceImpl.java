@@ -9,6 +9,7 @@ import poly.foodease.Model.Entity.Reservation;
 import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Model.Response.ReservationResponse;
 import poly.foodease.Repository.ReservationRepo;
+import poly.foodease.Repository.ReservationStatusRepo;
 import poly.foodease.Service.ReservationService;
 
 import java.time.LocalDate;
@@ -25,11 +26,12 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationMapper reservationMapper;
     @Autowired
     private ReservationRepo reservationRepo;
+    @Autowired
+    private ReservationStatusRepo reservationStatusRepo;
 
     @Override
-    public Page<ReservationResponse> getAllReservation(Integer pageCurrent, Integer pageSize, String sortOrder, String sortBy) {
-        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
-        Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
+    public Page<ReservationResponse> getAllReservation(Pageable pageable) {
+
         Page<Reservation> reservationPage = reservationRepo.findAll(pageable);
         List<ReservationResponse> reservations = reservationPage.getContent().stream()
                 .map(reservationMapper :: convertEnToRes)
@@ -45,10 +47,30 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Optional<ReservationResponse> getReservationByUserName(String userName) {
-        Reservation reservation = reservationRepo.getReservationByReservationByUserName(userName)
-                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
-        return Optional.of(reservationMapper.convertEnToRes(reservation));
+    public Optional<ReservationResponse> cancelRequestReservation(Integer reservationId) {
+        Reservation reservation =reservationRepo.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("not found Reservation"));
+        if (LocalDateTime.now().plusHours(24).isBefore(reservation.getCheckinTime()) ){
+            reservation.setReservationStatus(reservationStatusRepo.findById(4)
+                    .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Status")));
+            System.out.println("Change to cancel Reservation Success");
+            Reservation reservationUpdated = reservationRepo.save(reservation);
+            return Optional.of(reservationMapper.convertEnToRes(reservationUpdated));
+        }else {
+            return Optional.empty();
+        }
+
+    }
+
+    @Override
+    public Page<ReservationResponse> getReservationByUserName(String userName, Integer pageCurrent,Integer pageSize, String sortOrder, String sortBy) {
+        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC,sortBy  ));
+        Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
+        Page<Reservation> reservationPage = reservationRepo.getReservationByReservationByUserName(userName, pageable);
+        List<ReservationResponse> reservations = reservationPage.getContent().stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+        return new PageImpl<>(reservations,pageable,reservationPage.getTotalElements());
     }
 
     @Override
@@ -77,5 +99,30 @@ public class ReservationServiceImpl implements ReservationService {
                 .map(reservationMapper :: convertEnToRes)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public ReservationResponse checkinReservation(Integer reservationId, Integer checkinKey) {
+        return null;
+    }
+
+    @Override
+    public Page<ReservationResponse> getReservationByBookDate(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atTime(LocalTime.MAX);
+        Page<Reservation> reservationPage = reservationRepo.getReservationFilterByBookDate(pageable,  startDateTime, endDateTime);
+        List<ReservationResponse> reservations = reservationPage.getContent().stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+        return new PageImpl<>(reservations,pageable, reservationPage.getTotalElements());
+    }
+
+    @Override
+    public Page<ReservationResponse> getReservationByKeyWord(String keyWord, Pageable pageable) {
+        Page<Reservation>reservationPage = reservationRepo.getReservationByKeyWord(keyWord, pageable);
+        List<ReservationResponse> reservations = reservationPage.getContent().stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+        return new PageImpl<>( reservations,pageable, reservationPage.getTotalElements());
     }
 }

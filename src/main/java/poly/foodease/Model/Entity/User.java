@@ -84,5 +84,8 @@ public class User {
     private List<UserPoint> userPoints;
 
     @OneToMany(mappedBy = "user")
-    private List<WishList> wishLists; // Một User có nhiều Wish List
+    private List<WishList> wishLists;
+
+    @OneToMany(mappedBy = "user")
+    private List<DeliveryAddress> deliveryAddresses;
 }
