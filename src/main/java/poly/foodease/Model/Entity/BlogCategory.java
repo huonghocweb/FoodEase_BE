@@ -1,35 +1,28 @@
 package poly.foodease.Model.Entity;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
-@Table(name="Roles")
-public class Role {
+@Table(name = "blog_categories")
+public class BlogCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="role_id")
-    private Integer roleId;
+    @Column(name = "blog_category_id")
+    private Integer blogCategoryId;
 
-    @Column(name ="role_name")
-    private String roleName;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @Column(name = "blog_category_name")
+    private String blogCategoryName;
 }
