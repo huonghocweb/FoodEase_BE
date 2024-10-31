@@ -49,6 +49,9 @@ public class Reservation {
     @Column(name="total_deposit")
     private Double totalDeposit;
 
+    @Column(name="checkin_code")
+    private String checkinCode;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="reservation_status_id")

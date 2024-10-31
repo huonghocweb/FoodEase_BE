@@ -9,4 +9,5 @@ import java.util.List;
 public interface FoodVariationToppingService {
 
 	List<FoodVariationToppingResponse> findFoodVariationToppingById(Integer id);
+	FoodVariationToppingResponse Save(Integer foodVariationId,Integer toppingID);
 }

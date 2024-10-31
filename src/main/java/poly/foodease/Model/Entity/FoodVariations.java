@@ -1,6 +1,7 @@
 package poly.foodease.Model.Entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class FoodVariations implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int foodVariationId;
 	private String imageUrl;
-	private Date createdAt;
-	private Date updatedAt;
+	private LocalDate createdAt;
+	private LocalDate updatedAt;
 	private int quantityStock;
 	private int foodId;
 	private int foodSizeId;

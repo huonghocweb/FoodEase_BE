@@ -3,6 +3,7 @@ package poly.foodease.ServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.ReservationMapper;
 import poly.foodease.Model.Entity.Reservation;
@@ -18,6 +19,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepo reservationRepo;
     @Autowired
     private ReservationStatusRepo reservationStatusRepo;
+
 
     @Override
     public Page<ReservationResponse> getAllReservation(Pageable pageable) {

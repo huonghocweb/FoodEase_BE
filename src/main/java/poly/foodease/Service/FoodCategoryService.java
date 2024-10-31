@@ -11,4 +11,5 @@ public interface FoodCategoryService {
 	
 	List<FoodCategoriesReponse> findAll();
 	void deleteCategories(Integer id);
+	FoodCategoriesReponse save(String categoryName);
 } 

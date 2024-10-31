@@ -18,6 +18,7 @@ public class ReservationRequest {
     private LocalDateTime checkinTime;
     private LocalDateTime checkoutTime;
     private Double totalDeposit;
+    private String checkinCode;
     private Integer  reservationStatusId;
     private Integer userId;
     private Integer resTableIds;

@@ -1,6 +1,7 @@
 package poly.foodease.Model.Response;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,8 @@ import poly.foodease.Model.Entity.Foods;
 public class FoodVariationResponse {
 	private int foodVariationId;
 	private String imageUrl;
-	private Date createdAt;
-	private Date updatedAt;
+	private LocalDate createdAt;
+	private LocalDate updatedAt;
 	private int quantityStock;
 	private int foodId;
 	private int foodSizeId;

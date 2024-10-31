@@ -22,6 +22,7 @@ public class ReservationResponse {
     private LocalDateTime checkoutTime;
     private LocalDateTime bookTime;
     private Double totalDeposit;
+    private String checkinCode;
     private ReservationStatusResponse reservationStatus;
     private UserResponse user;
     private ResTableResponse resTable;

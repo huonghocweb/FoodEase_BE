@@ -25,6 +25,16 @@ FoodVariatonToppingDao foodVariatonToppingDao;
 				.map(foodVariationToppingMapper :: converEntoResponse)
 				.collect(Collectors.toList());
 	}
-
+	@Override
+	public FoodVariationToppingResponse Save(Integer foodVariationId, Integer toppingID) {
+		// TODO Auto-generated method stub
+		FoodVariationToppings foodVariationToppings= new FoodVariationToppings();
+		foodVariationToppings.setFoodVariationId(foodVariationId);
+		foodVariationToppings.setToppingId(toppingID);
+		FoodVariationToppings Save=foodVariatonToppingDao.save(foodVariationToppings);
+		FoodVariationToppingResponse response = foodVariationToppingMapper.converEntoResponse(Save);		
+		return response;
+	}
+	
 	
 }

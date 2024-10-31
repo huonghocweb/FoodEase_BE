@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.google.zxing.WriterException;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -50,6 +52,8 @@ public class ResTableServiceImpl implements ResTableService {
     private MailInfo mailInfo;
     @Autowired
     private QrCodeService qrCodeService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -161,6 +165,9 @@ public class ResTableServiceImpl implements ResTableService {
         System.out.println("ResTable" + resTable);
         if (resTables.isEmpty()){
             ReservationRequest reservationRequest = new ReservationRequest();
+            String randomCode = "CK" + UUID.randomUUID().toString().substring(0,5);
+            reservationRequest.setCheckinCode(passwordEncoder.encode(randomCode));
+            System.out.println(reservationRequest.getCheckinCode());
             reservationRequest.setResTableIds(tableId);
             reservationRequest.setUserId(userId);
             reservationRequest.setCheckinTime(checkin);
@@ -188,12 +195,12 @@ public class ResTableServiceImpl implements ResTableService {
                 bodyBuilder.append("<strong>Giờ Check Out:</strong> ").append(reservationCreate.getCheckoutTime()).append("<br>");
                 bodyBuilder.append("<strong>Tổng tiền cọc:</strong> ").append(reservationCreate.getTotalDeposit()).append(" VND</p>");
                 bodyBuilder.append("</ul>");
-                bodyBuilder.append("<p>Quý khách có thể quét Mã QR để xem thông tin chi tiết.</p>");
+                bodyBuilder.append("<p>Quý khách có thể quét Mã QR để xem thông tin mã checkin .</p>");
                 bodyBuilder.append("<p>Chúc quý khách có một ngày vui vẻ!</p>");
                 bodyBuilder.append("<p>Trân trọng,<br>Công ty Victory Group</p>");
                 bodyBuilder.append("</body></html>");
                 List<File> files = new ArrayList<>();
-                File qrcodeFile = qrCodeService.createQrCodeWithFileTemp(String.valueOf(reservationCreate.getReservationId()), 360, 360);
+                File qrcodeFile = qrCodeService.createQrCodeWithFileTemp("Mã Checkin Của Bạn Là  : " + randomCode , 360, 360);
                 mailInfo.setBody(bodyBuilder.toString());
                 mailInfo.setSubject("Reservation Information");
                 files.add(qrcodeFile);

@@ -68,5 +68,9 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
                                                                  @Param("month") Integer month,
                                                                  @Param("startDate") LocalDate startDate,
                                                                  @Param("endDate") LocalDate endDate);
-
+    //ngọc
+    @Query("SELECT new poly.foodease.Report.ReportUserBuy(o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email,SUM(o.totalQuantity),SUM(o.totalPrice))"
+            + " FROM Order o  GROUP BY o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
+    List<ReportUserBuy> findAllReportUserBuy();
+    
 }

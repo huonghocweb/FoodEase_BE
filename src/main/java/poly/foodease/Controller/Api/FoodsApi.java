@@ -69,13 +69,16 @@ public class FoodsApi {
 		return ResponseEntity.ok(list);
 	}
 	@PostMapping("/addFood")
-	ResponseEntity<?>postFood (@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("foodName") String foodName,
+	ResponseEntity<?>postFood (@RequestParam(value = "file", required = false) MultipartFile[] file,@RequestParam("foodName") String foodName,
 			@RequestParam("description") String description,@RequestParam("basePrice") Double basePrice,
 			@RequestParam("discount") Integer discount,
 			@RequestParam("categoriesId") Integer categoriesId)
 	{
 		try {
+			
+			
 			FoodResponse foodResponse =foodService.save(foodName, description, basePrice, file, discount, categoriesId);
+			
 			return ResponseEntity.ok(foodResponse);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -117,7 +120,7 @@ public class FoodsApi {
 	@PutMapping("/updateFood/{foodId}")
 	public ResponseEntity<?> updateFood(
 	        @PathVariable("foodId") Integer id,
-	        @RequestParam(value = "file",required = false) MultipartFile file,
+	        @RequestParam(value = "file",required = false) MultipartFile[] file,
 	        @RequestParam("foodName") String foodName,
 	        @RequestParam("description") String description,
 	        @RequestParam("basePrice") Double basePrice,

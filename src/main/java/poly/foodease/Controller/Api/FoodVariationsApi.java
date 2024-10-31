@@ -9,11 +9,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import poly.foodease.Model.Entity.FoodVariations;
 import poly.foodease.Model.Response.FoodVariationResponse;
 import poly.foodease.Repository.FoodVariationsDao;
@@ -86,4 +91,53 @@ public class FoodVariationsApi {
 		Page<FoodVariationResponse> list=foodVariationsService.findAll(pageable);
 		return ResponseEntity.ok(list);
 	}
+	@GetMapping("/findFoodVariationByFoodId/{foodId}")
+	public ResponseEntity<List<FoodVariationResponse>>findFoodVariationByFoodId(@PathVariable("foodId") Integer id){
+		List<FoodVariationResponse> list = foodVariationsService.findFoodVariationByFoodId(id);
+		return ResponseEntity.ok(list);
+	}
+	@PostMapping("/AddFoodVariation")
+	public ResponseEntity<?> Save(@RequestParam("foodId") Integer id,@RequestParam("file") MultipartFile[] file,
+			@RequestParam("quantityStock") Integer quantityStock,@RequestParam("FoodSizeId") Integer FoodSizeId)
+	{
+		try {
+			FoodVariationResponse foodVariationResponse=foodVariationsService.Save(file, quantityStock, FoodSizeId, id);
+			System.out.println("Thêm  thành công foodVariation");
+			return ResponseEntity.ok(foodVariationResponse);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Thêm không thành công foodVariation");
+			return null;
+		}
+	}
+	@DeleteMapping("/deleteFoodVariation/{foodIdVariationId}")
+	public ResponseEntity<Void> deleteFoodVariation(@PathVariable("foodIdVariationId") Integer id){
+		try {
+			foodVariationsService.deletebyId(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	@PutMapping("/updateFoodVariation/{foodVariationId}")
+	public ResponseEntity<?> Update(@RequestParam("foodId") Integer id,@RequestParam("file") MultipartFile[] file,
+			@RequestParam("quantityStock") Integer quantityStock,@RequestParam("FoodSizeId") Integer FoodSizeId,@PathVariable
+			("foodVariationId") Integer foodVariationId)
+	{
+		try {
+			FoodVariationResponse foodVariationResponse=foodVariationsService.Update(foodVariationId,file, quantityStock, FoodSizeId, id);
+			System.out.println("Update  thành công foodVariation");
+			return ResponseEntity.ok(foodVariationResponse);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Udpate không thành công foodVariation");
+			return null;
+		}
+	}
+	
 }
