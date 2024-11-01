@@ -4,15 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.UserRequest;
 import poly.foodease.Model.Response.UserResponse;
-import poly.foodease.Report.ReportUserBuy;
 import poly.foodease.Service.UserService;
-import poly.foodease.Utils.UserBuyExportExcel;
 import poly.foodease.Utils.UserExportExcel;
+
 import poly.foodease.Utils.UserImportExcel;
 
 import java.io.ByteArrayOutputStream;
@@ -101,30 +94,6 @@ public class UserApi {
 		userService.deleteUserById(id);
 		return ResponseEntity.noContent().build();
 	}
-
-//	@PostMapping("/import")
-//	public ResponseEntity<String> importUsers(@RequestParam("file") MultipartFile file) {
-//		List<User> userList = new ArrayList<>();
-//
-//		try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-//			var sheet = workbook.getSheetAt(0);
-//			for (int i = 1; i <= sheet.getLastRowNum(); i++) { // Bỏ qua dòng tiêu đề
-//				Row row = sheet.getRow(i);
-//				User user = User.builder().userName(row.getCell(0).getStringCellValue())
-//						.fullName(row.getCell(1).getStringCellValue()).password(row.getCell(2).getStringCellValue())
-//						.gender(row.getCell(3).getBooleanCellValue()).address(row.getCell(4).getStringCellValue())
-//						.phoneNumber(row.getCell(5).getStringCellValue()).imageUrl(row.getCell(6).getStringCellValue())
-//						.birthday(row.getCell(7).getLocalDateTimeCellValue().toLocalDate())
-//						.email(row.getCell(8).getStringCellValue()).status(row.getCell(9).getBooleanCellValue())
-//						.build();
-//				userList.add(user);
-//			}
-//			userService.saveAll(userList); // Lưu tất cả người dùng vào DB
-//			return new ResponseEntity<>("Import successful!", HttpStatus.OK);
-//		} catch (IOException e) {
-//			return new ResponseEntity<>("Failed to import users: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
 
 	@GetMapping("/export")
 	public ResponseEntity<byte[]> exportUsers() {
@@ -221,4 +190,5 @@ public class UserApi {
 		excelExporter.export(response);
 
 	}
+
 }

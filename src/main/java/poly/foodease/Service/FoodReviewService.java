@@ -16,4 +16,6 @@ public interface FoodReviewService {
 	FoodReviewResponse save(MultipartFile file,Integer rating,String review,Integer foodId);
 
 	FoodReview createReview(FoodReviewRequest request) throws IOException;
+	FoodReview save(FoodReview foodReview);
+	List<FoodReview>  findByFilter(Integer rating,Integer month,Integer year );
 }

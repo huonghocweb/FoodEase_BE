@@ -154,5 +154,16 @@ public class FoodReviewImplement implements FoodReviewService {
 //	}
 
 
+	// Thêm phương thức save
+    @Override
+    public FoodReview save(FoodReview foodReview) {
+        return foodReviewDao.save(foodReview);
+    }
+
+    // Thêm phương thức findByFilter
+    @Override
+    public List<FoodReview> findByFilter(Integer rating, Integer month, Integer year) {
+        return foodReviewDao.findByFilter(rating, month, year);
+    }	
 
 }

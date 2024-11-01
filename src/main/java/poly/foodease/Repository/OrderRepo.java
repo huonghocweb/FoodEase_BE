@@ -73,5 +73,6 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
             + " FROM Order o  GROUP BY o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
     List<ReportUserBuy> findAllReportUserBuy();
     
-
+    @Query("SELECT o FROM Order o  WHERE MONTH(o.orderDate) = :month AND YEAR(o.orderDate) = :year")
+    List<Order> findByDate(@Param("month") Integer month, @Param("year") Integer year);
 }
