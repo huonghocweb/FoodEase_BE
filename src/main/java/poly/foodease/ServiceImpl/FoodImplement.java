@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -125,6 +126,15 @@ public class FoodImplement implements FoodsService {
 			return null;
 		}
 	
+	}
+
+	@Override
+	public Page<FoodResponse> fillAllFoodByHuong(Pageable pageable) {
+		Page<Foods> foodsPage = foodsDao.findAll(pageable);
+		List<FoodResponse> foodResponses = foodsPage.getContent().stream()
+				.map(foodMapper :: converEntoResponse)
+				.collect(Collectors.toList());
+		return new PageImpl<>(foodResponses,pageable , foodsPage.getTotalElements());
 	}
 
 }

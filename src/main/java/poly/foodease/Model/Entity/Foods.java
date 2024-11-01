@@ -65,4 +65,13 @@ public class Foods implements Serializable {
 	@JsonIgnore
     private List<WishList> wishLists;
 
+	// Huong
+	@ManyToMany(mappedBy = "foods")
+	@JsonIgnore
+	private List<Reservation> reservations;
+
+	@OneToMany(mappedBy = "foods")
+	private List<ReservationBillDetails> reservationBillDetails;
+
+
 }

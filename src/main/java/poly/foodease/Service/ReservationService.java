@@ -21,7 +21,8 @@ public interface ReservationService {
     ReservationResponse createReservation(ReservationRequest reservationRequest);
     Optional<ReservationResponse> updateReservation(Integer reservationId , ReservationRequest reservationRequest);
     List<ReservationResponse> getReservedByTableIdAndDate(Integer tableId , LocalDate localDate);
-    ReservationResponse checkinReservation(Integer reservationId, Integer checkinKey);
+    ReservationResponse checkinReservation(Integer reservationId, String checkinKey);
     Page<ReservationResponse> getReservationByBookDate(LocalDate startDate, LocalDate endDate, Pageable pageable);
     Page<ReservationResponse> getReservationByKeyWord(String keyWord, Pageable pageable);
+    public List<ReservationResponse> changeReservationStatusToWaitingCheckin();
 }

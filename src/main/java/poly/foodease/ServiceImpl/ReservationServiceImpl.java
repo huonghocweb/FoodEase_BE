@@ -3,8 +3,10 @@ package poly.foodease.ServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import poly.foodease.Mapper.ReservationMapper;
 import poly.foodease.Model.Entity.Reservation;
 import poly.foodease.Model.Request.ReservationRequest;
@@ -30,6 +32,8 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepo reservationRepo;
     @Autowired
     private ReservationStatusRepo reservationStatusRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -105,8 +109,20 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponse checkinReservation(Integer reservationId, Integer checkinKey) {
-        return null;
+    public ReservationResponse checkinReservation(Integer reservationId, String checkinKey) {
+        Reservation reservation = reservationRepo.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
+        String reservationCheckinCode = reservation.getCheckinCode();
+        if(passwordEncoder.matches(checkinKey,reservationCheckinCode)){
+            System.out.println("Checkin Thanh Cong");
+            reservation.setReservationStatus(reservationStatusRepo.findById(3)
+                    .orElseThrow(() -> new EntityNotFoundException("not Found Reservation Status")));
+            Reservation reservationUpdated = reservationRepo.save(reservation);
+            return reservationMapper.convertEnToRes(reservationUpdated);
+        }else{
+            return null;
+        }
+
     }
 
     @Override
@@ -127,5 +143,21 @@ public class ReservationServiceImpl implements ReservationService {
                 .map(reservationMapper :: convertEnToRes)
                 .collect(Collectors.toList());
         return new PageImpl<>( reservations,pageable, reservationPage.getTotalElements());
+    }
+
+    @Override
+    @Scheduled(fixedRate = 1000)
+    @Transactional
+    public List<ReservationResponse> changeReservationStatusToWaitingCheckin(){
+        List<Reservation> reservations = reservationRepo.getReservationByReservationStatusId(1);
+        reservations.forEach(reservation -> {
+            if (reservation.getCheckinTime().isEqual(LocalDateTime.now())){
+                reservation.setReservationStatus(reservationStatusRepo.findById(2)
+                        .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Status")));
+            }
+        });
+        return reservationRepo.saveAll(reservations).stream()
+                .map(reservationMapper :: convertEnToRes)
+                .collect(Collectors.toList());
     }
 }

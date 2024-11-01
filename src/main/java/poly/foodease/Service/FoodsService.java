@@ -21,5 +21,7 @@ public interface FoodsService {
 	FoodResponse save (String name,String deception,Double pasePrice,MultipartFile[] file,Integer discout,Integer categoryId);
 	Page<FoodResponse> findAddFoodAll(Pageable page);
 	FoodResponse update(Integer id, String foodName, String description, Double basePrice, MultipartFile[] file, Integer discount, Integer categoriesId);
-	
+
+	// Hưởng
+	Page<FoodResponse> fillAllFoodByHuong(Pageable pageable);
 }

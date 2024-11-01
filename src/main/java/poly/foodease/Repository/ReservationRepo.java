@@ -35,4 +35,7 @@ public interface ReservationRepo extends JpaRepository<Reservation, Integer> {
             " OR ser.serviceName LIKE CONCAT('%', :keyWord ,'%')")
     Page<Reservation> getReservationByKeyWord(@Param("keyWord") String keyWord,
                                               Pageable pageable);
+
+    @Query("SELECT res FROM Reservation res JOIN res.reservationStatus resSta WHERE resSta.reservationStatusId = :reservationStatusId")
+    List<Reservation> getReservationByReservationStatusId(@Param("reservationStatusId") Integer reservationStatusId );
 }

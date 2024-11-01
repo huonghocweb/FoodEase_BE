@@ -170,4 +170,23 @@ public class ReservationApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/checkinReservation/{reservationId}/{checkinCode}")
+    public ResponseEntity<Object> checkinReservation(
+            @PathVariable("reservationId") Integer reservationId,
+            @PathVariable("checkinCode") String checkinCode
+    ){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println("checkinReservation");
+        try {
+            result.put("success",true);
+            result.put("message","Checkin  Reservation ");
+            result.put("data",reservationService.checkinReservation(reservationId, checkinCode));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

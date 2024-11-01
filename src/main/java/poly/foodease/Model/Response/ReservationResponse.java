@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +25,5 @@ public class ReservationResponse {
     private UserResponse user;
     private ResTableResponse resTable;
     private List<TableServicesResponse> services;
+    private List<FoodResponse> foods;
 }

@@ -1,13 +1,13 @@
 package poly.foodease.Controller.Api;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -140,4 +140,28 @@ public class FoodsApi {
 	}
 	
 
+
+	// Hưởng
+	@GetMapping("/getAllFoodByHuong")
+	public ResponseEntity<Object> getAllFoods(
+			@RequestParam("pageCurrent") Integer pageCurrent,
+			@RequestParam("pageSize") Integer pageSize,
+			@RequestParam("sortOrder") String sortOrder,
+			@RequestParam("sortBy") String sortBy
+	){
+		Map<String,Object> result = new HashMap<>();
+		System.out.println("Get Food By Huong");
+		Sort sort = Sort.by(new Sort.Order(Objects.equals("asc", sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
+		Pageable pageable = PageRequest.of(pageCurrent,  pageSize, sort);
+		try {
+			result.put("success",true);
+			result.put("message","Fill All Foods By Huong ");
+			result.put("data",foodService.fillAllFoodByHuong(pageable));
+		}catch (Exception e){
+			result.put("success",false);
+			result.put("message",e.getMessage());
+			result.put("data",null);
+		}
+		return ResponseEntity.ok(result);
+	}
 }
