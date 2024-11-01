@@ -57,10 +57,10 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
     Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
 
 
-    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice)) " +
+    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice), COUNT(o.orderId)) " +
             "FROM Order o JOIN o.paymentMethod pm " +
-            "WHERE (:year IS NULL OR YEAR(o.orderDate) = :year) " +
-            "AND (:month IS NULL OR MONTH(o.orderDate) = :month) " +
+            "WHERE (:year IS NULL OR FUNCTION('YEAR', o.orderDate) = :year) " +
+            "AND (:month IS NULL OR FUNCTION('MONTH', o.orderDate) = :month) " +
             "AND (:startDate IS NULL OR o.orderDate >= :startDate) " +
             "AND (:endDate IS NULL OR o.orderDate <= :endDate) " +
             "GROUP BY pm.paymentName")
@@ -73,4 +73,5 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
             + " FROM Order o  GROUP BY o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
     List<ReportUserBuy> findAllReportUserBuy();
     
+
 }

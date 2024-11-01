@@ -2,13 +2,11 @@ package poly.foodease.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +27,7 @@ public class CloudinaryService {
         ));
     }
 
-//    public List<Map<String, Object>> uploadFile(MultipartFile[] files, String folder) throws IOException {
-//        List<Map<String, Object>> fileInfos = new ArrayList<>();
-//        Map<String, Object> options = ObjectUtils.asMap("folder", folder);
-//        for (MultipartFile file : files) {
-//            Map<String, Object> fileInfo = cloudinary.uploader().upload(file.getBytes(), options);
-//            fileInfos.add(fileInfo);
-//            System.out.println(fileInfo);
-//        }
-//        return fileInfos;
-//    }
+
     public List<String> uploadFile(MultipartFile[] files, String folder) throws IOException {
         List<String> fileUrls = new ArrayList<>();
         Map<String, Object> options = ObjectUtils.asMap("folder", folder);
@@ -57,4 +46,15 @@ public class CloudinaryService {
     public ResponseEntity<String> getImageUrl(String publicId){
         return ResponseEntity.ok(cloudinary.url().resourceType("image").publicId(publicId).generate());
     }
+
+    //    public List<Map<String, Object>> uploadFile(MultipartFile[] files, String folder) throws IOException {
+//        List<Map<String, Object>> fileInfos = new ArrayList<>();
+//        Map<String, Object> options = ObjectUtils.asMap("folder", folder);
+//        for (MultipartFile file : files) {
+//            Map<String, Object> fileInfo = cloudinary.uploader().upload(file.getBytes(), options);
+//            fileInfos.add(fileInfo);
+//            System.out.println(fileInfo);
+//        }
+//        return fileInfos;
+//    }
 }
