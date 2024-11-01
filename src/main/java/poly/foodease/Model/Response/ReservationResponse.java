@@ -25,5 +25,5 @@ public class ReservationResponse {
     private UserResponse user;
     private ResTableResponse resTable;
     private List<TableServicesResponse> services;
-    private List<FoodResponse> foods;
+//    private List<FoodResponse> foods;
 }

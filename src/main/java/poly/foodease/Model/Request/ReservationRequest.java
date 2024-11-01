@@ -23,5 +23,5 @@ public class ReservationRequest {
     private Integer userId;
     private Integer resTableIds;
     private List<Integer> serviceIds;
-    private List<Integer> foodIds;
+//    private List<Integer> foodIds;
 }

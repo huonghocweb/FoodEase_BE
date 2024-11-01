@@ -12,6 +12,7 @@ import poly.foodease.Service.ReservationService;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -189,4 +190,23 @@ public class ReservationApi {
         }
         return ResponseEntity.ok(result);
     }
+
+//    @PutMapping("/orderFoodToReservation/{reservationId}")
+//    public ResponseEntity<Object> orderFoodToReservation(
+//            @PathVariable("reservationId") Integer reservationId,
+//            @RequestPart("foodIds") List<Integer > foodIds
+//            ){
+//        Map<String,Object> result = new HashMap<>();
+//        System.out.println("checkinReservation");
+//        try {
+//            result.put("success",true);
+//            result.put("message","Update Food To Reservation ");
+//            result.put("data",reservationService.orderFootToReservation(reservationId, foodIds));
+//        }catch (Exception e){
+//            result.put("success",false);
+//            result.put("message",e.getMessage());
+//            result.put("data",null);
+//        }
+//        return ResponseEntity.ok(result);
+//    }
 }

@@ -67,9 +67,9 @@ public class Foods implements Serializable {
     private List<WishList> wishLists;
 
 	// Huong
-	@ManyToMany(mappedBy = "foods")
-	@JsonIgnore
-	private List<Reservation> reservations;
+//	@ManyToMany(mappedBy = "foods")
+//	@JsonIgnore
+//	private List<Reservation> reservations;
 
 	@OneToMany(mappedBy = "foods")
 	private List<ReservationBillDetails> reservationBillDetails;

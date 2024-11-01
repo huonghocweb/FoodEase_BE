@@ -50,9 +50,9 @@ public abstract class ReservationMapper {
                 .services(reservation.getServices() != null ? reservation.getServices().stream()
                         .map(tableServicesMapper :: convertEnToRes)
                         .collect(Collectors.toList()) : null)
-                .foods(reservation.getFoods() != null ? reservation.getFoods().stream()
-                        .map(foodMapper :: converEntoResponse)
-                        .collect(Collectors.toList()): null)
+//                .foods(reservation.getFoods() != null ? reservation.getFoods().stream()
+//                        .map(foodMapper :: converEntoResponse)
+//                        .collect(Collectors.toList()): null)
                 .build();
     }
 
@@ -73,10 +73,10 @@ public abstract class ReservationMapper {
                         .map(servicesId -> tableServiceRepo.findById(servicesId)
                                 .orElseThrow(() -> new EntityNotFoundException("not found Services")))
                         .collect(Collectors.toList()): null)
-                .foods(reservationRequest.getFoodIds() != null ? reservationRequest.getFoodIds().stream()
-                        .map(foodId -> foodsDao.findById(foodId)
-                                .orElseThrow(() -> new EntityNotFoundException("Not found Foods")))
-                        .collect(Collectors.toList()) : null)
+//                .foods(reservationRequest.getFoodIds() != null ? reservationRequest.getFoodIds().stream()
+//                        .map(foodId -> foodsDao.findById(foodId)
+//                                .orElseThrow(() -> new EntityNotFoundException("Not found Foods")))
+//                        .collect(Collectors.toList()) : null)
                 .build();
     }
 

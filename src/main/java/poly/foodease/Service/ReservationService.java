@@ -25,4 +25,5 @@ public interface ReservationService {
     Page<ReservationResponse> getReservationByBookDate(LocalDate startDate, LocalDate endDate, Pageable pageable);
     Page<ReservationResponse> getReservationByKeyWord(String keyWord, Pageable pageable);
     public List<ReservationResponse> changeReservationStatusToWaitingCheckin();
+   // ReservationResponse orderFootToReservation(Integer reservationId, List<Integer> foodIds);
 }

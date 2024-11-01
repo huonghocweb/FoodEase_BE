@@ -11,6 +11,7 @@ import poly.foodease.Mapper.ReservationMapper;
 import poly.foodease.Model.Entity.Reservation;
 import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Model.Response.ReservationResponse;
+import poly.foodease.Repository.FoodsDao;
 import poly.foodease.Repository.ReservationRepo;
 import poly.foodease.Repository.ReservationStatusRepo;
 import poly.foodease.Service.ReservationService;
@@ -34,6 +35,8 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationStatusRepo reservationStatusRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private FoodsDao foodsDao;
 
 
     @Override
@@ -160,4 +163,15 @@ public class ReservationServiceImpl implements ReservationService {
                 .map(reservationMapper :: convertEnToRes)
                 .collect(Collectors.toList());
     }
+
+//    @Override
+//    public ReservationResponse orderFootToReservation(Integer reservationId, List<Integer> foodIds) {
+//        Reservation reservation = reservationRepo.findById(reservationId)
+//                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
+//        reservation.setFoods(foodIds.stream().map( foodId -> {
+//            return foodsDao.findById(foodId).orElseThrow(() -> new EntityNotFoundException("Not found Food"));
+//        }).collect(Collectors.toList()));
+//        Reservation reservationUpdated = reservationRepo.save(reservation);
+//        return reservationMapper.convertEnToRes(reservationUpdated);
+//    }
 }

@@ -76,13 +76,13 @@ public class Reservation {
     )
     private List<TableServices> services;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "reservation_food",
-            joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id")
-    )
-    private List<Foods>  foods;
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(
+//            name = "reservation_food",
+//            joinColumns = @JoinColumn(name = "reservation_id"),
+//            inverseJoinColumns = @JoinColumn(name = "food_id")
+//    )
+//    private List<Foods>  foods;
 
 }
