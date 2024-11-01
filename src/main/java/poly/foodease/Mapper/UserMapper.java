@@ -38,21 +38,24 @@ public abstract class UserMapper {
                 .build();
     }
 
-    public User convertReqToEn(UserRequest userRequest){
+    public User convertReqToEn(UserRequest userRequest) {
+
         return User.builder()
-                .userName(userRequest.getUsername())
-                .fullName(userRequest.getFullname())
+                .userName(userRequest.getUserName())
+                .fullName(userRequest.getFullName())
                 .email(userRequest.getEmail())
                 .birthday(userRequest.getBirthday())
+                .gender(userRequest.getGender())
                 .address(userRequest.getAddress())
                 .password(userRequest.getPassword())
                 .imageUrl(userRequest.getImageUrl())
-                .phoneNumber(userRequest.getPhonenumber())
+                .phoneNumber(userRequest.getPhoneNumber())
                 .status(true)
                 .roles(userRequest.getRoleIds() != null ? userRequest.getRoleIds().stream()
                         .map(roleId -> roleRepo.findById(roleId)
-                                .orElseThrow(() -> new EntityNotFoundException("not found Entity")))
+                                .orElseThrow(() -> new EntityNotFoundException("Role not found for ID: " + roleId)))
                         .toList() : null)
                 .build();
     }
+
 }

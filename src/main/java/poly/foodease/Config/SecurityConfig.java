@@ -24,7 +24,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -38,7 +37,6 @@ public class SecurityConfig {
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Thêm bộ lọc JWT
         return httpSecurity.build();
     }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -50,17 +48,14 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // Mã hóa mật khẩu
     }
-
     @Bean
     public JwtRequestFilter jwtRequestFilter() {
         return new JwtRequestFilter(); // Bộ lọc JWT tùy chỉnh
