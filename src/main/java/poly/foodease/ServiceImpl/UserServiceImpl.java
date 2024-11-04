@@ -12,6 +12,8 @@ import poly.foodease.Model.Request.UserRequest;
 import poly.foodease.Model.Response.UserResponse;
 import poly.foodease.Repository.UserRepo;
 import poly.foodease.Service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,15 +27,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Override
     public Page<UserResponse> getAllUserByPage(Integer pageNumber, Integer pageSize, String sortOrder, String sortBy) {
-        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC ,sortBy));
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<User> usersPage= userRepo.findAll(pageable);
-        List<UserResponse> userResponses = usersPage.getContent().stream()
-                .map(userMapper :: convertEnToRes)
-                .collect(Collectors.toList());
-        return new PageImpl<>(userResponses, pageable , usersPage.getTotalElements());
+    logger.debug("Fetching users with pageNumber={}, pageSize={}, sortOrder={}, sortBy={}", pageNumber, pageSize, sortOrder, sortBy);
+    Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
+    Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+    Page<User> usersPage = userRepo.findAll(pageable);
+    List<UserResponse> userResponses = usersPage.getContent().stream()
+            .map(userMapper::convertEnToRes)
+            .collect(Collectors.toList());
+    logger.info("Successfully fetched {} users", userResponses.size());
+    return new PageImpl<>(userResponses, pageable, usersPage.getTotalElements());
     }
 
     @Override
@@ -46,35 +51,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserResponse> getUserById(Integer id) {
-        Optional<User> user = userRepo.findById(id);
-        return Optional.of(user.map(userMapper :: convertEnToRes)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found")));
+    logger.debug("Retrieving user with ID={}", id);
+    Optional<User> user = userRepo.findById(id);
+    return Optional.of(user.map(userMapper::convertEnToRes)
+            .orElseThrow(() -> {
+                logger.error("User with ID={} not found", id);
+                return new EntityNotFoundException("Not Found");
+            }));
     }
 
     @Override
     public UserResponse createUser(UserRequest userRequest) {
+        logger.debug("Creating user with username={}", userRequest.getUsername());
         User user = userMapper.convertReqToEn(userRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User userUpdate= userRepo.save(user);
+        User userUpdate = userRepo.save(user);
+        logger.info("User with username={} created successfully", userRequest.getUsername());
         return userMapper.convertEnToRes(userUpdate);
     }
-
+    
     @Override
     public Optional<UserResponse> updateUser(UserRequest userRequest, Integer id) {
-        Optional<User> userById = userRepo.findById(id);
-        return Optional.of(userById.map(us -> {
+        logger.debug("Updating user with ID={}", id);
+        return Optional.of(userRepo.findById(id).map(us -> {
             User user = userMapper.convertReqToEn(userRequest);
             user.setUserId(us.getUserId());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            User userUpdate= userRepo.save(user);
+            User userUpdate = userRepo.save(user);
+            logger.info("User with ID={} updated successfully", id);
             return userMapper.convertEnToRes(userUpdate);
-        }).orElseThrow(() -> new EntityNotFoundException(" Not Found User By Id")));
+        }).orElseThrow(() -> {
+            logger.error("User with ID={} not found for update", id);
+            return new EntityNotFoundException("Not Found User By Id");
+        }));
     }
-
+    
     @Override
     public Optional<Void> deleteUserById(Integer id) {
+        logger.debug("Deleting user with ID={}", id);
         Optional<User> user = userRepo.findById(id);
-        user.ifPresent(userRepo::delete);
+        user.ifPresentOrElse(
+            u -> {
+                userRepo.delete(u);
+                logger.info("User with ID={} deleted successfully", id);
+            },
+            () -> logger.error("User with ID={} not found for deletion", id)
+        );
         return Optional.empty();
     }
 

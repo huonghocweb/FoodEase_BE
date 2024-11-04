@@ -19,6 +19,8 @@ import poly.foodease.Report.ReportUserBuy;
 import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Repository.OrderStatusRepo;
 import poly.foodease.Service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,42 +37,71 @@ public class OrderServiceImpl implements OrderService {
     private OrderStatusRepo orderStatusRepo;
     @Autowired
     private WebSocketController webSocketController;
+    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Override
     public Page<OrderResponse> getAllOrder(Integer pageCurrent, Integer pageSize, String sortOrder, String sortBy) {
-        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC,sortBy ));
-        Pageable pageable = PageRequest.of(pageCurrent,pageSize,sort);
+    logger.info("Fetching all orders - Page: {}, Size: {}, Sort Order: {}, Sort By: {}", pageCurrent, pageSize, sortOrder, sortBy);
+    try {
+        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
+        Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
         Page<Order> orderPage = orderRepo.findAll(pageable);
         List<OrderResponse> orders = orderPage.getContent().stream()
-                .map(orderMapper :: convertEnToRes)
+                .map(orderMapper::convertEnToRes)
                 .collect(Collectors.toList());
-        return new PageImpl<>(orders,pageable, orderPage.getTotalPages());
+        return new PageImpl<>(orders, pageable, orderPage.getTotalPages());
+    } catch (Exception e) {
+        logger.error("Error fetching orders", e);
+        throw e;
+    }
     }
 
     @Override
     public Optional<OrderResponse> getOrderByOrderId(Integer orderId) {
+    logger.info("Fetching order by ID: {}", orderId);
+    try {
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found Order"));
         return Optional.of(orderMapper.convertEnToRes(order));
+    } catch (EntityNotFoundException e) {
+        logger.error("Order not found with ID: {}", orderId, e);
+        throw e;
+    }
     }
 
     @Override
     public OrderResponse createOrder(OrderRequest orderRequest) {
+    logger.info("Creating new order with request: {}", orderRequest);
+    try {
         Order order = orderMapper.convertReqToEn(orderRequest);
         Order orderCreated = orderRepo.save(order);
-        System.out.println("Create Order");
+        logger.info("Order created successfully with ID: {}", orderCreated.getOrderId());
         return orderMapper.convertEnToRes(orderCreated);
+    } catch (Exception e) {
+        logger.error("Error creating order", e);
+        throw e;
+    }
     }
 
     @Override
     public Optional<OrderResponse> updateOrder(Integer orderId, OrderRequest orderRequest) {
+    logger.info("Updating order with ID: {} and request: {}", orderId, orderRequest);
+    try {
         return Optional.of(orderRepo.findById(orderId).map(orderExists -> {
             Order order = orderMapper.convertReqToEn(orderRequest);
             order.setOrderId(orderExists.getOrderId());
-            Order orderUpdated= orderRepo.save(order);
+            Order orderUpdated = orderRepo.save(order);
+            logger.info("Order updated successfully with ID: {}", orderId);
             return orderMapper.convertEnToRes(orderUpdated);
-        })
-                .orElseThrow(() -> new EntityNotFoundException("not found Order")));
+        }).orElseThrow(() -> new EntityNotFoundException("Order not found")));
+    } catch (EntityNotFoundException e) {
+        logger.error("Order not found with ID: {}", orderId, e);
+        throw e;
+    } catch (Exception e) {
+        logger.error("Error updating order with ID: {}", orderId, e);
+        throw e;
+    }
     }
 
     @Override
@@ -108,43 +139,43 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Scheduled(fixedRate = 60000)
     @Transactional
-    public List<OrderResponse> changeOrderStatusToDelived(){
-        List<Integer> orderStatusIds= Arrays.asList(2,3,4);
+    public List<OrderResponse> changeOrderStatusToDelived() {
+    logger.info("Scheduled update for changing order statuses to delivered");
+    try {
+        List<Integer> orderStatusIds = Arrays.asList(2, 3, 4);
         LocalDateTime now = LocalDateTime.now();
         List<Order> orders = orderRepo.getOrdersToUpdate(orderStatusIds);
-        System.out.println("Total Order Update " +orders.size());
-        webSocketController.sendOrderUpdateMessage("Time : " + LocalDateTime.now());
-        webSocketController.sendOrderUpdateMessage("Total Order Need  Update  : " +orders.size() );
+        logger.info("Total orders to update: {}", orders.size());
+
         orders.forEach(order -> {
-            if(order.getOrderStatus().getOrderStatusId() == 2){
-                LocalDateTime paymentDateTime = order.getPaymentDatetime();
-                if(paymentDateTime.plusMinutes(3).isBefore(now)){
-                    System.out.println("The Order Status is change to Shipping");
-                    order.setOrderStatus(orderStatusRepo.findById(3).orElseThrow());
-                    webSocketController.sendOrderUpdateMessage("Time : " + LocalDateTime.now());
-                    webSocketController.sendOrderUpdateMessage("The Order " + order.getOrderId() + " is now Shipping." );
+            try {
+                if (order.getOrderStatus().getOrderStatusId() == 2) {
+                    LocalDateTime paymentDateTime = order.getPaymentDatetime();
+                    if (paymentDateTime.plusMinutes(3).isBefore(now)) {
+                        logger.info("Order ID: {} status changing to Shipping", order.getOrderId());
+                        order.setOrderStatus(orderStatusRepo.findById(3).orElseThrow());
+                        webSocketController.sendOrderUpdateMessage("Order " + order.getOrderId() + " is now Shipping.");
+                    }
+                } else if (order.getOrderStatus().getOrderStatusId() == 3) {
+                    LocalDateTime estimatedDateTime = order.getEstimatedDeliveryDateTime();
+                    if (estimatedDateTime.isBefore(now)) {
+                        logger.info("Order ID: {} status changing to Delivered", order.getOrderId());
+                        order.setOrderStatus(orderStatusRepo.findById(4).orElseThrow());
+                        webSocketController.sendOrderUpdateMessage("Order " + order.getOrderId() + " is now Delivered.");
+                    }
                 }
-            }else if(order.getOrderStatus().getOrderStatusId() == 3){
-                LocalDateTime estimatedDateTime = order.getEstimatedDeliveryDateTime();
-                if(estimatedDateTime.isBefore(now)){
-                    System.out.println("The Order Status is change to Delivered");
-                    order.setOrderStatus(orderStatusRepo.findById(4).orElseThrow());
-                    webSocketController.sendOrderUpdateMessage("Time : " + LocalDateTime.now());
-                    webSocketController.sendOrderUpdateMessage("The Order " + order.getOrderId() + " is now Delivered." );
-                }
-            }else if(order.getOrderStatus().getOrderStatusId() == 4){
-                LocalDateTime estimatedDateTime = order.getEstimatedDeliveryDateTime();
-                if(estimatedDateTime.plusDays(15).isBefore(now)){
-                    System.out.println("The Order is Complete");
-                    order.setOrderStatus(orderStatusRepo.findById(6).orElseThrow());
-                    webSocketController.sendOrderUpdateMessage("Time : " + LocalDateTime.now());
-                    webSocketController.sendOrderUpdateMessage("The Order " + order.getOrderId() + " is now Complete." );
-                }
+            } catch (Exception e) {
+                logger.error("Error updating status for order ID: {}", order.getOrderId(), e);
             }
         });
+
         return orderRepo.saveAll(orders).stream()
-                .map(orderMapper :: convertEnToRes)
+                .map(orderMapper::convertEnToRes)
                 .toList();
+    } catch (Exception e) {
+        logger.error("Error in scheduled update for changing order statuses", e);
+        throw e;
+    }
     }
 
     // Ngọc
