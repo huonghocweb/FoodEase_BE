@@ -26,7 +26,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain chain) throws ServletException, IOException {
-
+        //        Hòa
+        String path = request.getRequestURI();
+        // Bỏ qua kiểm tra JWT cho các endpoint công khai như request-reset-password và authenticate
+        if (path.startsWith("/api/user/confirm-registration-code")
+                || path.startsWith("/api/user/request-registration-code")
+                || path.startsWith("/api/user/register")
+                || path.startsWith("/api/user/confirm-reset-password")
+                || path.startsWith("/api/user/request-reset-password")
+                || path.startsWith("/api/user/reset-password")
+                || path.startsWith("/api/authenticate")) {
+            chain.doFilter(request, response);
+            return;
+        }
+//        Hòa
         // Log header để kiểm tra token từ frontend
         final String authorizationHeader = request.getHeader("Authorization");
         String username = null;

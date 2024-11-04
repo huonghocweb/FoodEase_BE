@@ -101,6 +101,7 @@ public class MailServiceImpl implements MailService {
 //
 //        javaMailSender.send(mimeMessage);
 //    }
+//    Hòa
 @Override
 public void sendResetCodeEmail(String email, String code) throws MessagingException {
     String message = "<p>Your password reset code is: <b>" + code + "</b></p>"
@@ -115,6 +116,7 @@ public void sendResetCodeEmail(String email, String code) throws MessagingExcept
 
     javaMailSender.send(mimeMessage);
 }
+//    Hòa
 
 }
 

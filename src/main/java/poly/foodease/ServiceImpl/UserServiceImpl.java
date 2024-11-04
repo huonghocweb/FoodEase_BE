@@ -39,8 +39,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    //    Hòa
     @Autowired
     private RoleRepo roleRepo;
+    //    Hòa
     @Override
     public Page<UserResponse> getAllUserByPage(Integer pageNumber, Integer pageSize, String sortOrder, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC ,sortBy));
@@ -76,6 +78,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.convertEnToRes(savedUser);
     }
 
+    //Hoà
     @Override
     public Optional<UserResponse> updateUser(UserRequest userRequest, Integer id) {
         Optional<User> optionalUser = userRepo.findById(id);
@@ -97,6 +100,7 @@ public class UserServiceImpl implements UserService {
         } else {
             return Optional.empty();
         }
+//        Hòa
     }
     @Override
     public Optional<Void> deleteUserById(Integer id) {
@@ -123,6 +127,7 @@ public class UserServiceImpl implements UserService {
         userRepo.saveAll(users);
     }
 
+    //    Hòa
     private String generateVerificationCode() {
         Random random = new Random();
         int code = 10000 + random.nextInt(90000); // Mã số từ 10000 đến 99999
@@ -142,8 +147,9 @@ public class UserServiceImpl implements UserService {
         mailService.sendResetCodeEmail(email, verificationCode);
 
         // Lưu mã số xác nhận vào cơ sở dữ liệu (PasswordResetToken)
-        PasswordResetToken resetToken = new PasswordResetToken(verificationCode, user, LocalDateTime.now().plusMinutes(10));
+        PasswordResetToken resetToken = new PasswordResetToken(verificationCode, null, email, LocalDateTime.now().plusMinutes(10));
         passwordResetTokenRepo.save(resetToken);
+
 
         return "Verification code sent to your email!";
     }
@@ -170,5 +176,27 @@ public class UserServiceImpl implements UserService {
 
         return "Password reset successful!";
     }
+    @Override
+    @Transactional
+    public String requestRegisterCode(String email) throws MessagingException {
+        Optional<User> existingUser = userRepo.findTopByEmail(email);
 
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("An account with this email already exists. Please use 'Forgot Password' instead.");
+        }
+
+        // Tạo mã xác nhận 5 chữ số
+        String verificationCode = generateVerificationCode();
+
+        // Gửi email chứa mã xác nhận
+        mailService.sendResetCodeEmail(email, verificationCode);
+
+        // Lưu mã xác nhận vào cơ sở dữ liệu
+        PasswordResetToken resetToken = new PasswordResetToken(verificationCode, null, email, LocalDateTime.now().plusMinutes(10));
+        resetToken.setEmail(email); // Lưu email trong token để tạo tài khoản
+        passwordResetTokenRepo.save(resetToken);
+
+        return "Verification code sent to your email!";
+    }
+//Hòa
 }

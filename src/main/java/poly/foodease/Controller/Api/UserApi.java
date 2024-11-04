@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/user")
-public class UserApi {
+public class    UserApi {
     @Autowired
     UserService userService;
     @Autowired
@@ -178,82 +178,8 @@ public class UserApi {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping("/import")
-    public ResponseEntity<String> importUsers(@RequestParam("file") MultipartFile file) {
-        List<User> userList = new ArrayList<>();
-        try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            var sheet = workbook.getSheetAt(0);
 
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) { // Bỏ qua dòng tiêu đề
-                Row row = sheet.getRow(i);
-
-                User user = User.builder()
-                        .userName(row.getCell(0).getStringCellValue())
-                        .fullName(row.getCell(1).getStringCellValue())
-                        .email(row.getCell(2).getStringCellValue())
-                        .phoneNumber(row.getCell(3).getStringCellValue())
-                        .address(row.getCell(4).getStringCellValue())
-                        .birthday(row.getCell(5).getLocalDateTimeCellValue().toLocalDate())
-                        .gender(row.getCell(6).getStringCellValue().equalsIgnoreCase("Male"))
-                        .build();
-                userList.add(user);
-            }
-            userService.saveAll(userList); // Lưu tất cả người dùng vào DB
-            return ResponseEntity.ok("Import successful!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to import users: " + e.getMessage());
-        }
-    }
-
-
-    @GetMapping("/export")
-    public ResponseEntity<byte[]> exportUsers() {
-        List<User> userList = userService.getAllUsers(); // Lấy tất cả người dùng từ DB
-        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-            var sheet = workbook.createSheet("Users");
-
-            // Tạo tiêu đề cột
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("User Name");
-            headerRow.createCell(1).setCellValue("Full Name");
-            headerRow.createCell(2).setCellValue("Password");
-            headerRow.createCell(3).setCellValue("Gender");
-            headerRow.createCell(4).setCellValue("Address");
-            headerRow.createCell(5).setCellValue("Phone Number");
-            headerRow.createCell(6).setCellValue("Image URL");
-            headerRow.createCell(7).setCellValue("Birthday");
-            headerRow.createCell(8).setCellValue("Email");
-            headerRow.createCell(9).setCellValue("Status");
-
-            // Điền dữ liệu vào file
-            int rowNum = 1;
-            for (User user : userList) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(user.getUserName());
-                row.createCell(1).setCellValue(user.getFullName());
-                row.createCell(2).setCellValue(user.getPassword());
-                row.createCell(3).setCellValue(user.getGender() ? "Male" : "Female");
-                row.createCell(4).setCellValue(user.getAddress());
-                row.createCell(5).setCellValue(user.getPhoneNumber());
-                row.createCell(6).setCellValue(user.getImageUrl());
-                row.createCell(7).setCellValue(user.getBirthday() != null ? user.getBirthday().toString() : "");
-                row.createCell(8).setCellValue(user.getEmail());
-                row.createCell(9).setCellValue(user.getStatus() ? "Active" : "Inactive");
-            }
-
-            // Ghi dữ liệu vào byte array
-            try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-                workbook.write(out);
-                byte[] bytes = out.toByteArray();
-                return ResponseEntity.ok()
-                        .header("Content-Disposition", "attachment; filename=users.xlsx")
-                        .body(bytes);
-            }
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //	Hòa
     @PostMapping("/request-reset-password")
     public ResponseEntity<Object> requestPasswordReset(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
@@ -269,22 +195,6 @@ public class UserApi {
             return ResponseEntity.status(500).body(result);
         }
     }
-
-//    @PostMapping("/reset-password")
-//    public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordRequest request) {
-//        Map<String, Object> result = new HashMap<>();
-//        try {
-//            String message = userService.resetPassword(request.getToken(), request.getNewPassword());
-//            result.put("success", true);
-//            result.put("message", message);
-//            return ResponseEntity.ok(result);
-//        } catch (Exception e) {
-//            result.put("success", false);
-//            result.put("message", e.getMessage());
-//            return ResponseEntity.status(500).body(result);
-//        }
-//    }
-
     @PostMapping("/reset-password")
     public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordRequest request) {
         Map<String, Object> result = new HashMap<>();
@@ -355,6 +265,87 @@ public class UserApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
+    @PostMapping("/request-registration-code")
+    public ResponseEntity<Object> requestRegisterCode(@RequestBody Map<String, String> request) {
+        System.out.println("Received request: " + request);
+        String email = request.get("email");
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is required");
+        }
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String message = userService.requestRegisterCode(email);
+            result.put("success", true);
+            result.put("message", message);
+            return ResponseEntity.ok(result);
+        } catch (RuntimeException e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "Failed to send verification code.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+    }
+    @PostMapping("/confirm-registration-code")
+    public ResponseEntity<Object> confirmRegisterCode(@RequestBody Map<String, String> request) {
+        String token = request.get("token");
+        String email = request.get("email");
+        Map<String, Object> result = new HashMap<>();
 
+        try {
+            PasswordResetToken resetToken = passwordResetTokenRepo.findByTokenAndEmail(token, email)
+                    .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+
+            if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+                throw new RuntimeException("Token has expired");
+            }
+
+            result.put("success", true);
+            result.put("message", "Token verified successfully! Proceed to register.");
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+    }
+    @PostMapping("/register")
+    public ResponseEntity<Object> registerUser(@RequestBody UserRequest userRequest, @RequestParam("token") String token) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            // Kiểm tra token xác thực
+            PasswordResetToken verificationToken = passwordResetTokenRepo.findByToken(token)
+                    .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+
+            // Kiểm tra thời gian hết hạn của mã xác thực
+            if (verificationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+                throw new RuntimeException("Token has expired");
+            }
+
+            // Gán vai trò "User" mặc định
+            Role userRole = roleRepo.findById(2).orElseThrow(() -> new EntityNotFoundException("Default role not found"));
+            userRequest.setRoleIds(Collections.singletonList(userRole.getRoleId()));
+
+            // Tạo tài khoản người dùng mới
+            UserResponse newUser = userService.createUser(userRequest);
+
+            // Xóa token sau khi hoàn tất
+            passwordResetTokenRepo.delete(verificationToken);
+
+            result.put("success", true);
+            result.put("message", "User registered successfully!");
+            result.put("data", newUser);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+    }
+//	Hòa
 
 }

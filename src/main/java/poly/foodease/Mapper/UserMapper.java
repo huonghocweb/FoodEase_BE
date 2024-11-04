@@ -41,15 +41,21 @@ public abstract class UserMapper {
     public User convertReqToEn(UserRequest userRequest) {
 
         return User.builder()
+                //                Hòa
                 .userName(userRequest.getUserName())
                 .fullName(userRequest.getFullName())
+//                Hòa
                 .email(userRequest.getEmail())
                 .birthday(userRequest.getBirthday())
+//                Hòa
                 .gender(userRequest.getGender())
+//                Hòa
                 .address(userRequest.getAddress())
                 .password(userRequest.getPassword())
                 .imageUrl(userRequest.getImageUrl())
+//                Hòa
                 .phoneNumber(userRequest.getPhoneNumber())
+//                Hòa
                 .status(true)
                 .roles(userRequest.getRoleIds() != null ? userRequest.getRoleIds().stream()
                         .map(roleId -> roleRepo.findById(roleId)

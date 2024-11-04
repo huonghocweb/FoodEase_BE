@@ -30,10 +30,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Cấu hình CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/authenticate/**").permitAll() // Cho phép truy cập không cần xác thực
-                        .requestMatchers("/api/**").permitAll()
-                        .anyRequest().permitAll() // Các yêu cầu khác đều không yêu cầu xác thực
+                        //                        Hòa
+                        .requestMatchers("/api/user/request-registration-code","/api/user/register","/api/user/confirm-registration-code","/api/user/confirm-reset-password","/api/user/request-reset-password", "/api/user/reset-password", "/api/authenticate/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
                 )
+//                Hòa
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Thêm bộ lọc JWT
         return httpSecurity.build();
     }

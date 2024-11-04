@@ -23,4 +23,5 @@ public interface UserService {
     void saveAll(List<User> users);
     String requestPasswordReset(String email) throws MessagingException;
     String resetPassword(String token, String newPassword);
+    String requestRegisterCode(String email) throws MessagingException;
 }
