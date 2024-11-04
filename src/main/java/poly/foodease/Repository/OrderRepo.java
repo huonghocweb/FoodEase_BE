@@ -57,7 +57,7 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
     Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
 
 
-    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice), COUNT(o.orderId)) " +
+    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice), COUNT(o.user.userId), COUNT(o.orderId)) " +
             "FROM Order o JOIN o.paymentMethod pm " +
             "WHERE (:year IS NULL OR FUNCTION('YEAR', o.orderDate) = :year) " +
             "AND (:month IS NULL OR FUNCTION('MONTH', o.orderDate) = :month) " +

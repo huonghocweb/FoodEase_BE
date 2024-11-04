@@ -14,4 +14,5 @@ public class PaymentMethodRevenueResponse {
     private String paymentMethodName;
     private Double totalRevenue;
     private Long userCount;
+    private Long orderCount;
 }
