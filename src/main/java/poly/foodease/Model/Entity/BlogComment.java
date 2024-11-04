@@ -32,6 +32,9 @@ public class BlogComment {
     @Column(name = "comment_content", columnDefinition = "nvarchar(MAX)")
     private String commentContent;
 
+    @Column(name = "imageURL")
+    private String imageURL;
+
     @Column(name = "create_at")
     private LocalDateTime createAt;
 

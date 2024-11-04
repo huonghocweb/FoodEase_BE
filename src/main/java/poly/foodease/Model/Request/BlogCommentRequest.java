@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BlogCommentRequest {
     private String commentContent;
+    private String imageURL;
     private LocalDateTime createAt; // Nếu cần thiết
     private Integer blogId; // Để liên kết với Blog
     private Integer userId; // Để liên kết với User

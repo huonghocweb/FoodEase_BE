@@ -1,6 +1,7 @@
 package poly.foodease.ServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class HashtagServiceImpl implements HashtagService {
 
     @Override
     public HashtagResponse createHashtag(HashtagRequest hashtagRequest) {
+        // Kiểm tra sự tồn tại của hashtag theo tên
+        Hashtag existingHashtag = hashtagRepo.findByHashtagName(hashtagRequest.getHashtagName()).orElse(null);
+
+        if (existingHashtag != null) {
+            // Trả về Hashtag nếu đã tồn tại
+            return hashtagMapper.convertEnToRes(existingHashtag);
+        }
+
+        // Tạo mới nếu chưa tồn tại
         Hashtag newHashtag = hashtagMapper.convertReqToEn(hashtagRequest);
         hashtagRepo.save(newHashtag);
         return hashtagMapper.convertEnToRes(newHashtag);
@@ -50,4 +60,19 @@ public class HashtagServiceImpl implements HashtagService {
                 .map(hashtagMapper::convertEnToRes)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public HashtagResponse findByHashtagName(String hashtagName) {
+        // Tìm kiếm hashtag bằng tên
+        Optional<Hashtag> optionalHashtag = hashtagRepo.findByHashtagName(hashtagName);
+        
+        // Nếu tồn tại, chuyển đổi và trả về
+        if (optionalHashtag.isPresent()) {
+            return hashtagMapper.convertEnToRes(optionalHashtag.get());
+        }
+        
+        // Nếu không tồn tại, trả về null hoặc một giá trị mặc định
+        return null; // hoặc có thể trả về một giá trị khác nếu bạn muốn
+    }
+    
 }

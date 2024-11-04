@@ -15,4 +15,5 @@ public interface HashtagService {
 
     List<HashtagResponse> getHashtags();
 
+    HashtagResponse findByHashtagName(String hashtagName);
 }

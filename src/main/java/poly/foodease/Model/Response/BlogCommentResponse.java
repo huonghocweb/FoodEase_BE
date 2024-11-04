@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class BlogCommentResponse {
     private Integer commentId;
     private String commentContent;
+    private String imageURL;
     private LocalDateTime createAt;
     private BlogResponse blog; // Liên kết với BlogResponse
     private UserResponse user; // Liên kết với UserResponse
