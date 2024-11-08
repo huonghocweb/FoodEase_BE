@@ -29,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         //        Hòa
         String path = request.getRequestURI();
         // Bỏ qua kiểm tra JWT cho các endpoint công khai như request-reset-password và authenticate
-        if (path.startsWith("/api/user/confirm-registration-code")
+        if        (path.startsWith("/api/user/confirm-registration-code")
                 || path.startsWith("/api/user/request-registration-code")
                 || path.startsWith("/api/user/register")
                 || path.startsWith("/api/user/confirm-reset-password")

@@ -2,6 +2,7 @@ package poly.foodease.Controller.Api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import poly.foodease.Mapper.UserMapper;
 import poly.foodease.Model.Entity.PasswordResetToken;
+import poly.foodease.Model.Entity.RegistrationToken;
 import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.ResetPasswordRequest;
 import poly.foodease.Model.Request.UserRequest;
@@ -22,6 +24,8 @@ import poly.foodease.Repository.PasswordResetTokenRepo;
 import poly.foodease.Repository.RoleRepo;
 import poly.foodease.Repository.UserRepo;
 import poly.foodease.Service.CloudinaryService;
+import poly.foodease.Service.EmailService;
+import poly.foodease.Service.RegistrationService;
 import poly.foodease.Service.UserService;
 import poly.foodease.Model.Entity.Role;
 import java.io.ByteArrayOutputStream;
@@ -49,9 +53,13 @@ public class    UserApi {
     private CloudinaryService cloudinaryService;
     @Autowired
     private RoleRepo roleRepo;  // Inject roleRepo
-
+//  Hoa
+    @Autowired
+    private RegistrationService registrationService;
     @Autowired
     private UserMapper userMapper;  // Inject userMapper
+    @Autowired
+    private EmailService emailService;
     @GetMapping("/getByUserName/{userName}")
     public ResponseEntity<Object> getUserByUserName(
             @PathVariable("userName") String userName
@@ -198,30 +206,44 @@ public class    UserApi {
     @PostMapping("/reset-password")
     public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordRequest request) {
         Map<String, Object> result = new HashMap<>();
-        String token = request.getToken(); // Mã số xác nhận
+        String token = request.getToken();
         String newPassword = request.getNewPassword();
+
+        // Kiểm tra xem token và mật khẩu mới có tồn tại không
+        if (token == null || token.isEmpty() || newPassword == null || newPassword.isEmpty()) {
+            result.put("success", false);
+            result.put("message", "Token and new password are required.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+
         try {
             PasswordResetToken resetToken = passwordResetTokenRepo.findByToken(token)
-                    .orElseThrow(() -> new RuntimeException("Invalid or expired token!"));
+                    .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
 
-            // Kiểm tra thời gian hết hạn của mã số
             if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token has expired.");
             }
-            // Cập nhật mật khẩu mới cho người dùng sau khi mã hóa
+
+            if (resetToken.getUser() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user associated with this token.");
+            }
+
             User user = resetToken.getUser();
-            String encodedPassword = passwordEncoder.encode(newPassword); // Mã hóa mật khẩu mới
+            String encodedPassword = passwordEncoder.encode(newPassword);
             user.setPassword(encodedPassword);
             userRepo.save(user);
-            // Xóa token sau khi sử dụng
+
             passwordResetTokenRepo.delete(resetToken);
+
             result.put("success", true);
             result.put("message", "Password reset successful!");
             return ResponseEntity.ok(result);
+
         } catch (Exception e) {
+            e.printStackTrace();
             result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.status(500).body(result);
+            result.put("message", "Failed to reset password: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
     @PostMapping("/confirm-reset-password")
@@ -265,87 +287,125 @@ public class    UserApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
+// Hoa
     @PostMapping("/request-registration-code")
-    public ResponseEntity<Object> requestRegisterCode(@RequestBody Map<String, String> request) {
-        System.out.println("Received request: " + request);
+    public ResponseEntity<?> requestRegistrationCode(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is required");
-        }
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
+
         try {
-            String message = userService.requestRegisterCode(email);
-            result.put("success", true);
-            result.put("message", message);
-            return ResponseEntity.ok(result);
-        } catch (RuntimeException e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            registrationService.deleteToken(email); // Xóa mã xác thực cũ nếu có
+            RegistrationToken registrationToken = registrationService.createRegistrationToken(email);
+            emailService.sendEmail(email, "Your Registration Code", "Your code is: " + registrationToken.getToken());
+
+            response.put("success", true);
+            response.put("message", "Verification code sent to email!");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", "Failed to send verification code.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "Failed to send verification code.");
+            return ResponseEntity.status(500).body(response);
         }
     }
+
     @PostMapping("/confirm-registration-code")
-    public ResponseEntity<Object> confirmRegisterCode(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> confirmRegistrationCode(@RequestBody Map<String, String> request) {
         String token = request.get("token");
         String email = request.get("email");
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
 
-        try {
-            PasswordResetToken resetToken = passwordResetTokenRepo.findByTokenAndEmail(token, email)
-                    .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+        Optional<RegistrationToken> registrationToken = registrationService.validateToken(token);
 
-            if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-                throw new RuntimeException("Token has expired");
-            }
-
-            result.put("success", true);
-            result.put("message", "Token verified successfully! Proceed to register.");
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        if (registrationToken.isPresent() && registrationToken.get().getEmail().equals(email)) {
+            response.put("success", true);
+            response.put("message", "Token verified successfully! Proceed to register.");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("success", false);
+            response.put("message", "Invalid or expired token.");
+            return ResponseEntity.status(400).body(response);
         }
     }
+
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@RequestBody UserRequest userRequest, @RequestParam("token") String token) {
-        Map<String, Object> result = new HashMap<>();
+    public ResponseEntity<?> registerUser(
+            @RequestParam("userName") String userName,
+            @RequestParam("fullName") String fullName,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("password") String password,
+            @RequestParam("address") String address,
+            @RequestParam("birthday") String birthday,
+            @RequestParam("gender") Boolean gender,
+            @RequestParam("roleIds") String roleIdsJson, // JSON chuỗi role IDs
+            @RequestParam("email") String email,
+            @RequestParam("token") String token,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
 
+        Map<String, Object> response = new HashMap<>();
         try {
-            // Kiểm tra token xác thực
-            PasswordResetToken verificationToken = passwordResetTokenRepo.findByToken(token)
-                    .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+            // Xác thực mã xác thực
+            Optional<RegistrationToken> registrationToken = registrationService.validateToken(token);
 
-            // Kiểm tra thời gian hết hạn của mã xác thực
-            if (verificationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-                throw new RuntimeException("Token has expired");
+            if (registrationToken.isEmpty() || !registrationToken.get().getEmail().equals(email)) {
+                response.put("success", false);
+                response.put("message", "Invalid or expired token.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            // Gán vai trò "User" mặc định
-            Role userRole = roleRepo.findById(2).orElseThrow(() -> new EntityNotFoundException("Default role not found"));
-            userRequest.setRoleIds(Collections.singletonList(userRole.getRoleId()));
+            // Chuyển đổi roleIds từ JSON chuỗi thành danh sách Integer
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Integer> roleIds = objectMapper.readValue(roleIdsJson, List.class);
 
-            // Tạo tài khoản người dùng mới
+            // Kiểm tra nếu danh sách roleIds trống, mặc định là vai trò "User"
+            if (roleIds == null || roleIds.isEmpty()) {
+                roleIds = Collections.singletonList(2); // Ví dụ: vai trò "User" có ID là 2
+            }
+
+            // Chuẩn bị đối tượng UserRequest
+            UserRequest userRequest = new UserRequest();
+            userRequest.setUserName(userName);
+            userRequest.setFullName(fullName);
+            userRequest.setPhoneNumber(phoneNumber);
+            userRequest.setPassword(password);
+            userRequest.setAddress(address);
+            userRequest.setBirthday(LocalDate.parse(birthday));
+            userRequest.setGender(gender);
+            userRequest.setRoleIds(roleIds);
+            userRequest.setEmail(email);
+
+            // Tạo người dùng mới
             UserResponse newUser = userService.createUser(userRequest);
 
-            // Xóa token sau khi hoàn tất
-            passwordResetTokenRepo.delete(verificationToken);
+            // Lưu ảnh nếu có
+            if (image != null && !image.isEmpty()) {
+                String imageUrl = cloudinaryService.uploadFile(new MultipartFile[]{image}, "avatars").get(0);
+                newUser.setImageUrl(imageUrl); // Cập nhật URL ảnh vào response người dùng mới
+            }
 
-            result.put("success", true);
-            result.put("message", "User registered successfully!");
-            result.put("data", newUser);
+            // Xóa mã xác thực sau khi đăng ký thành công
+            registrationService.deleteToken(email);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            // Chuẩn bị response
+            response.put("success", true);
+            response.put("message", "User registered successfully!");
+            response.put("data", newUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "Failed to process role IDs.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "Failed to register user.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+
 //	Hòa
 
 }
