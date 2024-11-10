@@ -3,6 +3,7 @@ package poly.foodease.Controller.Api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,26 +24,25 @@ import poly.foodease.Service.HashtagService;
 @CrossOrigin("*")
 public class HashtagApi {
 
-
     @Autowired
     private HashtagService hashtagService;
     @Autowired
     private CloudinaryService cloudinaryService;
 
     @PostMapping
-    public ResponseEntity<HashtagResponse> createHashtag(@RequestBody
-    HashtagRequest hashtagRequest) {
-    return ResponseEntity.ok(hashtagService.createHashtag(hashtagRequest));
+    public ResponseEntity<HashtagResponse> createHashtag(@RequestBody HashtagRequest hashtagRequest) {
+        HashtagResponse existingHashtag = hashtagService.findByHashtagName(hashtagRequest.getHashtagName());
+        if (existingHashtag != null) {
+            return ResponseEntity.ok(existingHashtag); // Trả về hashtag nếu đã tồn tại
+        }
+        HashtagResponse newHashtag = hashtagService.createHashtag(hashtagRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newHashtag); // Tạo mới và trả về
     }
 
-    
     @GetMapping("get/{id}")
-    public ResponseEntity<HashtagResponse> getHashtagById(@PathVariable("id")
-    Integer hashtagId) {
-    return ResponseEntity.ok(hashtagService.getHashtagById(hashtagId));
+    public ResponseEntity<HashtagResponse> getHashtagById(@PathVariable("id") Integer hashtagId) {
+        return ResponseEntity.ok(hashtagService.getHashtagById(hashtagId));
     }
-
-    
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> deleteHashtag(@PathVariable("id") Integer hashtagId) {
@@ -55,5 +55,4 @@ public class HashtagApi {
         return ResponseEntity.ok(hashtagService.getHashtags());
     }
 
-    
 }

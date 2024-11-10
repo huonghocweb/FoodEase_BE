@@ -3,6 +3,7 @@ package poly.foodease.Controller.Api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import poly.foodease.Service.CartService;
 import poly.foodease.ServiceImpl.ShipServiceImpl;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 @CrossOrigin("*")
 @RestController
+@PreAuthorize("hasAnyRole('ADMIN','USER')")
 @RequestMapping("/api/cart")
 public class CartApi {
 
@@ -19,6 +21,7 @@ public class CartApi {
     @Autowired
     ShipServiceImpl ghnService;
 // ghi log ứng dụng
+
     @GetMapping("/{cartId}")
     public ResponseEntity<Object> getCartByCartId(@PathVariable("cartId") Integer cartId) throws JsonProcessingException {
         Map<String,Object> result = new HashMap<>();
@@ -33,6 +36,7 @@ public class CartApi {
         }
         return ResponseEntity.ok(result);
     }
+
 
     @PostMapping("/addCartItem/{cartId}/{foodVaId}/{quantity}")
     public ResponseEntity<Object> addItem(@PathVariable("cartId") Integer cartId,
@@ -66,6 +70,7 @@ public class CartApi {
         }
         return ResponseEntity.ok(result);
     }
+
     @GetMapping("/{cartId}/totalPrice")
     public ResponseEntity<Object> getToTalPriceByCartId(@PathVariable("cartId") Integer cartId){
         Map<String,Object> result = new HashMap<>();
@@ -80,6 +85,7 @@ public class CartApi {
         }
         return ResponseEntity.ok(result);
     }
+
 
     @DeleteMapping("/{cartId}/{foodVaId}")
     public ResponseEntity<Object> getToTalPriceByCartId(

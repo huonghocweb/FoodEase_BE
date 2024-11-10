@@ -31,8 +31,15 @@ public class PaymentMethod {
     @Column(name="update_at")
     private LocalDateTime updateAt;
 
+    @Column(name="image_url")
+    private String imageUrl;
+
     @JsonIgnore
     @OneToMany(mappedBy="paymentMethod")
     private List<Order> orders;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "paymentMethod")
+    private List<ReservationOrderPayment> reservationOrderPayments;
 
 }

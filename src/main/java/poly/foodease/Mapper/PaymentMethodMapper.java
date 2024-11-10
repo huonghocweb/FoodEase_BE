@@ -11,6 +11,7 @@ public class PaymentMethodMapper {
         return PaymentMethodResponse.builder()
                 .paymentId(paymentMethod.getPaymentMethodId())
                 .paymentName(paymentMethod.getPaymentName())
+                .imageUrl(paymentMethod.getImageUrl())
                 .build();
     }
 }

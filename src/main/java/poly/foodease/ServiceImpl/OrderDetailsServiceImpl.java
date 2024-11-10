@@ -3,6 +3,7 @@ package poly.foodease.ServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.OrderDetailsMapper;
 import poly.foodease.Model.Entity.OrderDetails;
@@ -27,6 +28,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     private OrderRepo orderRepo;
 
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
     @Override
     public Page<OrderDetailsResponse> getAllOrderDetails(Integer pageCurrent, Integer pageSize, String sortOrder, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "sortOrder") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
@@ -38,6 +40,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         return new PageImpl<>(orderDetails,pageable,pageOrderDetails.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF' , 'USER')")
     @Override
     public Optional<OrderDetailsResponse> getOrderDetails(Integer orderDetailsId) {
         return Optional.of(orderDetailsRepo.findById(orderDetailsId)
@@ -45,6 +48,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found OrderDetails"));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF', 'USER')")
     @Override
     public List<OrderDetailsResponse> getOrderDetailsByOrderId(Integer orderId) {
         List<OrderDetailsResponse> orderDetails = orderDetailsRepo.getOrderDetailsByOrderId(orderId).stream()
@@ -53,6 +57,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         return orderDetails;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF', 'USER')")
     @Override
     public OrderDetailsResponse createOrderDetails(OrderDetailsRequest orderDetailsRequest) {
         OrderDetails orderDetails = orderDetailsMapper.convertReqToEn(orderDetailsRequest);
@@ -60,6 +65,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         return orderDetailsMapper.convertEnToRes(orderDetailsCreated);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF', 'USER')")
     @Override
     public Optional<OrderDetailsResponse> updateOrderDetails(Integer orderDetailsId, OrderDetailsRequest orderDetailsRequest) {
         return Optional.of(orderDetailsRepo.findById(orderDetailsId).map(orderDetailsExists -> {
@@ -71,6 +77,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found OrderDetails"));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF', 'USER')")
     @Override
     public List<OrderDetails> findByOrderId(Integer orderId) {
         return orderDetailsRepo.getOrderDetailsByOrderId(orderId);

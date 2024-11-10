@@ -26,7 +26,8 @@ public abstract class BlogCommentMapper {
                 return BlogCommentResponse.builder()
                                 .commentId(blogComment.getCommentId())
                                 .commentContent(blogComment.getCommentContent())
-                                .createAt(blogComment.getCreateAt().now())
+                                .imageURL(blogComment.getImageURL() != null ? blogComment.getImageURL() : "")
+                                .createAt(blogComment.getCreateAt())
                                 .blog(blogMapper.convertEnToRes(blogComment.getBlog())) // Liên kết với BlogResponse
                                 .user(userMapper.convertEnToRes(blogComment.getUser())) // Liên kết với UserResponse
                                 .build();
@@ -35,7 +36,9 @@ public abstract class BlogCommentMapper {
         public BlogComment convertReqToEn(BlogCommentRequest blogCommentRequest) {
                 return BlogComment.builder()
                                 .commentContent(blogCommentRequest.getCommentContent())
-                                .createAt(blogCommentRequest.getCreateAt().now()) // Nếu cần thiết
+                                .imageURL(blogCommentRequest.getImageURL() != null ? blogCommentRequest.getImageURL()
+                                                : "")
+                                .createAt(blogCommentRequest.getCreateAt().now())
                                 .blog(blogRepo.findById(blogCommentRequest.getBlogId())
                                                 .orElseThrow(() -> new EntityNotFoundException("not found Blog")))
                                 .user(userRepo.findById(blogCommentRequest.getUserId())

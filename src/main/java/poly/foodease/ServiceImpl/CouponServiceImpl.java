@@ -3,6 +3,7 @@ package poly.foodease.ServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.CouponMapper;
 import poly.foodease.Model.Entity.Coupon;
@@ -23,6 +24,8 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponMapper couponMapper;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Page<CouponResponse> getAllCoupon(Integer pageCurrent, Integer pageSize, String orderBy, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(orderBy, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
@@ -34,6 +37,7 @@ public class CouponServiceImpl implements CouponService {
         return new PageImpl<>(couponResponses,pageable, couponsPage.getTotalElements());
     }
 
+
     @Override
     public Optional<CouponResponse> getCouponResponseById(Integer couponId) {
         Coupon coupon = couponRepo.findById(couponId)
@@ -41,6 +45,7 @@ public class CouponServiceImpl implements CouponService {
         return Optional.of(couponMapper.convertEnToResponse(coupon));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public CouponResponse createCoupon(CouponRequest couponRequest) {
         Coupon coupon = couponMapper.convertReqToEn(couponRequest);
@@ -48,6 +53,7 @@ public class CouponServiceImpl implements CouponService {
         return couponMapper.convertEnToResponse(couponCreated);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Optional<CouponResponse> updateCoupon(Integer couponId, CouponRequest couponRequest) {
         return Optional.of(couponRepo.findById(couponId)
@@ -60,11 +66,13 @@ public class CouponServiceImpl implements CouponService {
                 .orElseThrow(() -> new EntityNotFoundException("not found Coupon")));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public CouponResponse removeCoupon(Integer couponId) {
         return null;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN' , 'USER')")
     @Override
     public Optional<Object> checkCouponByCode(String code) {
         Coupon couponEn = couponRepo.findCouponByCode(code)

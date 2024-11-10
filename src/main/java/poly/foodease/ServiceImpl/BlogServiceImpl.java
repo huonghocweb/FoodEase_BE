@@ -10,15 +10,19 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Mapper.BlogMapper;
 import poly.foodease.Model.Entity.Blog;
+import poly.foodease.Model.Entity.Hashtag;
 import poly.foodease.Model.Request.BlogRequest;
 import poly.foodease.Model.Response.BlogResponse;
 import poly.foodease.Repository.BlogRepo;
+import poly.foodease.Repository.HashtagRepo;
 import poly.foodease.Service.BlogService;
 
 @Service
 public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogRepo blogRepo;
+    @Autowired
+    private HashtagRepo hashtagRepo;
 
     @Autowired
     private BlogMapper blogMapper;
@@ -26,6 +30,11 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogResponse createBlog(BlogRequest blogRequest) {
         Blog newBlog = blogMapper.convertReqToEn(blogRequest);
+        // Lưu hashtags nếu có hashtagIds trong blogRequest
+        if (blogRequest.getHashtagIds() != null && !blogRequest.getHashtagIds().isEmpty()) {
+            List<Hashtag> hashtags = hashtagRepo.findAllById(blogRequest.getHashtagIds());
+            newBlog.setHashtags(hashtags); // Giả sử Blog entity có phương thức setHashtags
+        }
         blogRepo.save(newBlog);
         return blogMapper.convertEnToRes(newBlog);
     }
@@ -36,10 +45,30 @@ public class BlogServiceImpl implements BlogService {
                 .map(existingBlog -> {
                     Blog blog = blogMapper.convertReqToEn(blogRequest);
                     blog.setBlogId(existingBlog.getBlogId());
+
+                    // Cập nhật hashtags nếu có hashtagIds trong blogRequest
+                    if (blogRequest.getHashtagIds() != null && !blogRequest.getHashtagIds().isEmpty()) {
+                        List<Hashtag> hashtags = hashtagRepo.findAllById(blogRequest.getHashtagIds());
+                        blog.setHashtags(hashtags); // Giả sử Blog entity có phương thức setHashtags
+                    } else {
+                        blog.setHashtags(existingBlog.getHashtags());
+                    }
+
                     Blog updatedBlog = blogRepo.save(blog);
                     return blogMapper.convertEnToRes(updatedBlog);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("not found Blog")));
+    }
+
+    @Override
+    public void saveHashtags(Integer blogId, List<Integer> hashtagIds) {
+        Blog blog = blogRepo.findById(blogId)
+                .orElseThrow(() -> new EntityNotFoundException("Blog not found"));
+
+        List<Hashtag> hashtags = hashtagRepo.findAllById(hashtagIds);
+        blog.setHashtags(hashtags); // Giả sử Blog entity có phương thức setHashtags
+
+        blogRepo.save(blog);
     }
 
     @Override
@@ -53,7 +82,7 @@ public class BlogServiceImpl implements BlogService {
     public void deleteBlog(Integer blogId) {
         Blog blog = blogRepo.findById(blogId)
                 .orElseThrow(() -> new EntityNotFoundException("Blog not found"));
-                blogRepo.delete(blog);
+        blogRepo.delete(blog);
     }
 
     @Override
@@ -62,7 +91,7 @@ public class BlogServiceImpl implements BlogService {
                 .map(blogMapper::convertEnToRes)
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public List<Blog> findBlogsByCategoryId(Integer categoryId) {
         return blogRepo.findByBlogCategory_BlogCategoryId(categoryId);

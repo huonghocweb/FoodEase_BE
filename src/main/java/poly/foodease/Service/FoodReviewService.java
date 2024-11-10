@@ -13,9 +13,8 @@ import java.util.List;
 @Service
 public interface FoodReviewService {
 	List<FoodReviewResponse> findFoodReviewByFoodId(Integer id);
-	FoodReviewResponse save(MultipartFile file,Integer rating,String review,Integer foodId);
 
 	FoodReview createReview(FoodReviewRequest request) throws IOException;
-	FoodReview save(FoodReview foodReview);
 	List<FoodReview>  findByFilter(Integer rating,Integer month,Integer year );
+	FoodReviewResponse save(MultipartFile file, Integer rating, String review, Integer foodId,Integer userId);
 }

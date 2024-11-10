@@ -60,11 +60,22 @@ public class JwtUtils {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public String generateTokenWithRoles(String username, List<String> roles) {
+        System.out.println("ROLE IN OAUTH2 TOKEN :  " + roles);
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("roles", roles)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Hết hạn sau 10 giờ
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
 
     public String generateToken(UserDetails userDetails){
         List<String > roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority:: getAuthority)
                 .collect(Collectors.toList());
+        System.out.println("ROLE IN TOKEN " + roles);
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .claim("roles",roles)

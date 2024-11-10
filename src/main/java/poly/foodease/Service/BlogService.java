@@ -20,5 +20,5 @@ public interface BlogService {
     
     List<Blog> findBlogsByCategoryId(Integer categoryId);
 
-    
+    void saveHashtags(Integer blogId, List<Integer> hashtagIds);
 }

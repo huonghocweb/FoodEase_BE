@@ -6,10 +6,13 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.OrderMapper;
+import poly.foodease.Mapper.PaymentMethodMapper;
 import poly.foodease.Model.Entity.MailInfo;
+import poly.foodease.Model.Entity.PaymentMethod;
 import poly.foodease.Model.Request.OrderDetailsRequest;
 import poly.foodease.Model.Request.OrderRequest;
 import poly.foodease.Model.Response.*;
+import poly.foodease.Repository.PaymentMethodRepo;
 import poly.foodease.Service.*;
 
 import java.io.File;
@@ -20,6 +23,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -35,6 +39,10 @@ public class PaymentServiceImpl implements PaymentService {
     private MailService mailService;
     @Autowired
     private QrCodeService qrCodeService;
+    @Autowired
+    private PaymentMethodRepo paymentMethodRepo;
+    @Autowired
+    private PaymentMethodMapper paymentMethodMapper;
 
     public PaymentInfo createPaymentInfo(String orderInfo, Integer paymentStatus, String totalPrice, String paymentDateTime, String transactionId){
         PaymentInfo paymentInfo = new PaymentInfo(orderInfo,paymentStatus,paymentDateTime,totalPrice,transactionId);
@@ -183,7 +191,7 @@ public class PaymentServiceImpl implements PaymentService {
         bodyBuilder.append("</ul>");
         bodyBuilder.append("<p>Quý khách có thể quét Mã QR để xem sản phẩm chi tiết.</p>");
         bodyBuilder.append("<p>Chúc quý khách có một ngày vui vẻ!</p>");
-        bodyBuilder.append("<p>Trân trọng,<br>Công ty HgShop</p>");
+        bodyBuilder.append("<p>Trân trọng,<br>Công ty Victory Restaurant.</p>");
         bodyBuilder.append("</body></html>");
 
         mail.setBody(bodyBuilder.toString());
@@ -197,5 +205,13 @@ public class PaymentServiceImpl implements PaymentService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<PaymentMethodResponse> getAllPaymentMethod() {
+        List<PaymentMethod> paymentMethods = paymentMethodRepo.findAll();
+        return paymentMethods.stream()
+                .map(paymentMethodMapper :: convertEnToRes)
+                .collect(Collectors.toList());
     }
 }

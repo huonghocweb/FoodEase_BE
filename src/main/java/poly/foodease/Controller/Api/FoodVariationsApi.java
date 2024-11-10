@@ -3,6 +3,7 @@ package poly.foodease.Controller.Api;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,14 +45,15 @@ public class FoodVariationsApi {
 	@GetMapping("/findFoodVariationByMainDishes")
 	public ResponseEntity<Page<FoodVariationResponse>> findFoodVariationByMainDishes(@RequestParam("page")Optional<Integer>  page)
 	{
-		Pageable pageable = PageRequest.of(page.orElse(0), 3);
+		Pageable pageable = PageRequest.of(page.orElse(0), 6);
 		Page<FoodVariationResponse> ListfoodVariations = foodVariationsService.findByCategoryMainDishes(pageable);
 		return ResponseEntity.ok(ListfoodVariations);
 	}
 	@GetMapping("/findFoodVariationByDrink")
-	public ResponseEntity<List<FoodVariationResponse>> findFoodVariationByDrink()
+	public ResponseEntity<Page<FoodVariationResponse>> findFoodVariationByDrink(@RequestParam("page")Optional<Integer>  page)
 	{
-		List<FoodVariationResponse> ListfoodVariations = foodVariationsService.findByCategoryDrink();
+		Pageable pageable = PageRequest.of(page.orElse(0), 6);
+		Page<FoodVariationResponse> ListfoodVariations = foodVariationsService.findByCategoryDrink(pageable);
 		return ResponseEntity.ok(ListfoodVariations);
 	}
 	@GetMapping("/findVaritionById/{id}")
@@ -101,6 +103,12 @@ public class FoodVariationsApi {
 			@RequestParam("quantityStock") Integer quantityStock,@RequestParam("FoodSizeId") Integer FoodSizeId)
 	{
 		try {
+			  boolean exists = foodVariationsService.existsByFoodIdAndFoodSizeId(id, FoodSizeId);
+		        if (exists) {
+		            return ResponseEntity.status(org.springframework.http.HttpStatus.BAD_REQUEST)
+		                .body("FoodSizeId đã tồn tại cho foodId này, vui lòng chọn một giá trị khác.");
+		        }
+		        
 			FoodVariationResponse foodVariationResponse=foodVariationsService.Save(file, quantityStock, FoodSizeId, id);
 			System.out.println("Thêm  thành công foodVariation");
 			return ResponseEntity.ok(foodVariationResponse);
@@ -138,6 +146,7 @@ public class FoodVariationsApi {
 			System.out.println("Udpate không thành công foodVariation");
 			return null;
 		}
+		
 	}
-	
+
 }

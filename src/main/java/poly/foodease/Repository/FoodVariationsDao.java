@@ -18,7 +18,7 @@ public interface FoodVariationsDao extends JpaRepository<FoodVariations, Integer
     Page<FoodVariations> findByCategoryMainDishes(Pageable page);
 
     @Query("SELECT fv FROM FoodVariations fv where fv.food.categoryId = 2 and fv.foodSize.foodSizeId= 1")
-    List<FoodVariations> findByCategoryDrink();
+    Page<FoodVariations> findByCategoryDrink(Pageable page);
 
     @Query("SELECT fv FROM FoodVariations fv where fv.foodId = ?1 and fv.foodSize.foodSizeName like ?2")
     FoodVariations findFoodVariationBySize(Integer id, String sizeName);
@@ -37,4 +37,10 @@ public interface FoodVariationsDao extends JpaRepository<FoodVariations, Integer
     //ngọc
     @Query("SELECT fv FROM FoodVariations fv WHERE fv.foodId = ?1")
     List<FoodVariations> findFoodVariationByFoodId(Integer id);
+    @Query("SELECT COUNT(fv) > 0 FROM FoodVariations fv WHERE fv.foodId = ?1 AND fv.foodSizeId = ?2")
+    boolean existsByFoodIdAndFoodSizeId(Integer foodId, Integer foodSizeId);
+
+
+
+   
 }

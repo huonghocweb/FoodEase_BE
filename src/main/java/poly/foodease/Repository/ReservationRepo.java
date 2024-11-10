@@ -36,6 +36,6 @@ public interface ReservationRepo extends JpaRepository<Reservation, Integer> {
     Page<Reservation> getReservationByKeyWord(@Param("keyWord") String keyWord,
                                               Pageable pageable);
 
-    @Query("SELECT res FROM Reservation res JOIN res.reservationStatus resSta WHERE resSta.reservationStatusId = :reservationStatusId")
-    List<Reservation> getReservationByReservationStatusId(@Param("reservationStatusId") Integer reservationStatusId );
+    @Query("SELECT res FROM Reservation res JOIN res.reservationStatus resSta WHERE resSta.reservationStatusId IN :reservationStatusIds")
+    List<Reservation> getReservationByReservationStatusId(@Param("reservationStatusIds") List<Integer> reservationStatusIds );
 }

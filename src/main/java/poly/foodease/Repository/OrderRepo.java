@@ -15,6 +15,7 @@ import poly.foodease.Report.ReportUserBuy;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepo extends JpaRepository<Order ,Integer> {
 
@@ -57,7 +58,7 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
     Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
 
 
-    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice), COUNT(o.orderId)) " +
+    @Query("SELECT new poly.foodease.Model.Response.PaymentMethodRevenueResponse(pm.paymentName, SUM(o.totalPrice), COUNT(o.user.userId), COUNT(o.orderId)) " +
             "FROM Order o JOIN o.paymentMethod pm " +
             "WHERE (:year IS NULL OR FUNCTION('YEAR', o.orderDate) = :year) " +
             "AND (:month IS NULL OR FUNCTION('MONTH', o.orderDate) = :month) " +
@@ -72,7 +73,10 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
     @Query("SELECT new poly.foodease.Report.ReportUserBuy(o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email,SUM(o.totalQuantity),SUM(o.totalPrice))"
             + " FROM Order o  GROUP BY o.user.userId,o.orderDate,o.user.fullName,o.user.gender,o.user.phoneNumber,o.user.address,o.user.birthday,o.user.email")
     List<ReportUserBuy> findAllReportUserBuy();
-    
+
     @Query("SELECT o FROM Order o  WHERE MONTH(o.orderDate) = :month AND YEAR(o.orderDate) = :year")
     List<Order> findByDate(@Param("month") Integer month, @Param("year") Integer year);
+    @Query("SELECT o FROM Order o WHERE o.orderDate BETWEEN :startDate AND :endDate")
+    Page<Order> findOrdersByOrderDateBetween(@Param("startDate") Optional<LocalDate> date, @Param("endDate") Optional<LocalDate> endDate, Pageable page);
+
 }

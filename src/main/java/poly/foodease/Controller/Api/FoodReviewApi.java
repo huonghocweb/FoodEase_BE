@@ -33,10 +33,10 @@ public class FoodReviewApi {
 	
 	@PostMapping("/comment")
 	ResponseEntity<?>postComment (@RequestParam("file") MultipartFile file,@RequestParam("rating") Integer rating,@RequestParam("review") String review,
-			@RequestParam("foodId") Integer foodId)
+			@RequestParam("foodId") Integer foodId,@RequestParam("userId") Integer userId)
 	{
 		try {
-			FoodReviewResponse foodReviewResponse =foodReviewService.save(file, rating, review, foodId);
+			FoodReviewResponse foodReviewResponse =foodReviewService.save(file, rating, review, foodId,userId);
 			return ResponseEntity.ok(foodReviewResponse);
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -3,6 +3,7 @@ package poly.foodease.ServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.CouponStorageMapper;
 import poly.foodease.Model.Entity.CouponStorage;
@@ -23,6 +24,7 @@ public class CouponStorageServiceImpl implements CouponStorageService {
     @Autowired
     private CouponStorageMapper couponStorageMapper;
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public List<CouponStorageResponse> getAllCouponStorageByUserName(String userName) {
         List<CouponStorage> couponStorages = couponStorageRepo.getAllCouponStorageByUserName(userName);
@@ -34,6 +36,8 @@ public class CouponStorageServiceImpl implements CouponStorageService {
                 .collect(Collectors.toList());
     }
 
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Page<CouponStorageResponse> getCouponStorageByUserName(String userName , Integer pageCurrent, Integer pageSize, String orderBy, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(orderBy, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
@@ -45,11 +49,14 @@ public class CouponStorageServiceImpl implements CouponStorageService {
         return new PageImpl<>(couponStorageResponses,pageable,couponStoragesPage.getTotalElements());
     }
 
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Optional<CouponStorageResponse> getCouponStorageByCouponStorageId(Integer couponStorageId) {
         return Optional.empty();
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public CouponStorageResponse addCouponToCouponStorage(CouponStorageRequest couponStorageRequest) {
         CouponStorage couponStorage = couponStorageMapper.convertReqToEn(couponStorageRequest);
@@ -57,6 +64,7 @@ public class CouponStorageServiceImpl implements CouponStorageService {
         return couponStorageMapper.convertEnToRes(couponStorageCreated);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public CouponStorageResponse removeCouponInStorage(Integer couponStorageId) {
         CouponStorage couponStorage = couponStorageRepo.findById(couponStorageId)

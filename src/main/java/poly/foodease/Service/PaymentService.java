@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import poly.foodease.Model.Response.OrderDetailsResponse;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Model.Response.PaymentInfo;
+import poly.foodease.Model.Response.PaymentMethodResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,4 +19,5 @@ public interface PaymentService {
     void updateCouponStorageAndUsedCount(String username,String couponId);
     List<OrderDetailsResponse> createOrderDetail(String OrderInfo, Integer orderId);
     void sendEmail (String username , OrderResponse orderResponse, List<OrderDetailsResponse> orderDetailResponses ) throws IOException, WriterException;
+    List<PaymentMethodResponse> getAllPaymentMethod();
 }

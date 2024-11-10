@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,7 @@ public class ResTableServiceImpl implements ResTableService {
     private PasswordEncoder passwordEncoder;
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResTableResponse createResTable(ResTableRequest resTableRequest) {
         ResTable newTable = resTableMapper.convertReqToEn(resTableRequest);
@@ -64,6 +66,7 @@ public class ResTableServiceImpl implements ResTableService {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Optional<ResTableResponse> updateResTableNew(Integer tableId, ResTableRequest resTableRequest) {
         return Optional.of(resTableRepo.findById(tableId)
@@ -100,12 +103,14 @@ public class ResTableServiceImpl implements ResTableService {
         return Optional.of(resTableMapper.convertEnToRes(resTable));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deleteResTable(Integer tableId) {
         ResTable resTable = resTableRepo.findById(tableId)
                 .orElseThrow(() -> new EntityNotFoundException("Table not found"));
         resTableRepo.delete(resTable);
     }
+
 
     @Override
     public List<ResTableResponse> getAllResTables() {
@@ -125,6 +130,7 @@ public class ResTableServiceImpl implements ResTableService {
 
 
     // Huong
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ResTableResponse> getResTableByTableCategory(Integer tableCategoryId , Pageable pageable) {
         Page<ResTable> resTablesPage = resTableRepo.getResTableByCategoryId(tableCategoryId , pageable );
@@ -134,6 +140,7 @@ public class ResTableServiceImpl implements ResTableService {
         return new PageImpl<>(resTables, pageable , resTablesPage.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ResTableResponse>  getResTableByCapacity(Integer capacity, Pageable pageable) {
         Page<ResTable> resTablesPage = resTableRepo.getResTableByCapacity(capacity , pageable );
@@ -143,6 +150,7 @@ public class ResTableServiceImpl implements ResTableService {
         return new PageImpl<>(resTables, pageable , resTablesPage.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ResTableResponse>  getResTableByCapaAndCate(Integer tableCategoryId, Integer capacity, Pageable pageable) {
         Page<ResTable> resTablesPage = resTableRepo.getResTableByCategoryIdAndCapacity(tableCategoryId ,capacity , pageable );
@@ -152,6 +160,7 @@ public class ResTableServiceImpl implements ResTableService {
         return new PageImpl<>(resTables, pageable , resTablesPage.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime, List<Integer> serviceIds) throws IOException, WriterException, MessagingException {
         ResTableResponse resTable = this.getResTableByIdNew(tableId)
@@ -191,8 +200,9 @@ public class ResTableServiceImpl implements ResTableService {
                 bodyBuilder.append("<p>Thông tin chi tiết:</p>");
                 bodyBuilder.append("<ul>");
                 bodyBuilder.append("<strong>Mã bàn:</strong> ").append(reservationCreate.getResTable().getTableId()).append("<br>");
-                bodyBuilder.append("<strong>Giờ Check In:</strong> ").append(reservationCreate.getCheckinTime()).append("<br>");
-                bodyBuilder.append("<strong>Giờ Check Out:</strong> ").append(reservationCreate.getCheckoutTime()).append("<br>");
+                bodyBuilder.append("<strong>Ngày Check In : </strong> ").append(reservationCreate.getCheckinTime().toLocalDate()).append("<br>");
+                bodyBuilder.append("<strong>Giờ Check In:</strong> ").append(reservationCreate.getCheckinTime().toLocalTime()).append("<br>");
+                bodyBuilder.append("<strong>Giờ Check Out:</strong> ").append(reservationCreate.getCheckoutTime().toLocalTime()).append("<br>");
                 bodyBuilder.append("<strong>Tổng tiền cọc:</strong> ").append(reservationCreate.getTotalDeposit()).append(" VND</p>");
                 bodyBuilder.append("</ul>");
                 bodyBuilder.append("<p>Quý khách có thể quét Mã QR để xem thông tin mã checkin .</p>");

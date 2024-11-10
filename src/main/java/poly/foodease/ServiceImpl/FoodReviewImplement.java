@@ -51,9 +51,8 @@ public class FoodReviewImplement implements FoodReviewService {
 				.collect(Collectors.toList());
 	}
 
-
 	@Override
-		public FoodReviewResponse save(MultipartFile file, Integer rating, String review, Integer foodId) {
+		public FoodReviewResponse save(MultipartFile file, Integer rating, String review, Integer foodId,Integer userId) {
 		    try {
 		        FoodReview foodReview = new FoodReview();
 		        foodReview.setRating(rating);
@@ -66,7 +65,7 @@ public class FoodReviewImplement implements FoodReviewService {
 		            System.out.println("Tên file là: " + fileName);
 		        }
 		        
-		        foodReview.setUserId(2); 
+		        foodReview.setUserId(userId); 
 		        foodReview.setFoodId(foodId);
 		        
 		        FoodReview savedFoodReview = foodReviewDao.save(foodReview);
@@ -155,11 +154,6 @@ public class FoodReviewImplement implements FoodReviewService {
 
 
 	// Thêm phương thức save
-    @Override
-    public FoodReview save(FoodReview foodReview) {
-        return foodReviewDao.save(foodReview);
-    }
-
     // Thêm phương thức findByFilter
     @Override
     public List<FoodReview> findByFilter(Integer rating, Integer month, Integer year) {

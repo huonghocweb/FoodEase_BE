@@ -15,7 +15,7 @@ public interface FoodVariationsService {
 
 //	List<FoodVariationResponse> findByCategoryMainDishes();
 	Page<FoodVariationResponse> findByCategoryMainDishes(Pageable pageable);
-	List<FoodVariationResponse> findByCategoryDrink();
+	Page<FoodVariationResponse> findByCategoryDrink(Pageable pageable);
 	Optional<FoodVariationResponse> findById1(Integer id);
 	Optional<FoodVariations> findById(Integer id);
 	FoodVariationResponse findFoodVariationBySize(Integer id,String Size);
@@ -28,4 +28,6 @@ public interface FoodVariationsService {
 	FoodVariationResponse Save (MultipartFile[] file,Integer quantityStock,Integer FoodSizeId,Integer foodId);
 	FoodVariationResponse Update (Integer foodVariationId, MultipartFile[] file,Integer quantityStock,Integer FoodSizeId,Integer foodId);
 	void deletebyId(Integer id);
+	
+	boolean existsByFoodIdAndFoodSizeId(Integer foodId, Integer foodSizeId);
 }

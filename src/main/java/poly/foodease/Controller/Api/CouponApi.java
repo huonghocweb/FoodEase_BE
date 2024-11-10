@@ -1,8 +1,10 @@
 package poly.foodease.Controller.Api;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import poly.foodease.Model.Request.CouponRequest;
@@ -60,6 +62,7 @@ public class CouponApi {
         return ResponseEntity.ok(result);
     }
 
+
     @PostMapping("/{folder}")
     public ResponseEntity<Object> createCoupon(
             @PathVariable("folder") String folder,
@@ -85,6 +88,7 @@ public class CouponApi {
         }
         return ResponseEntity.ok(result);
     }
+
 
     @PutMapping("/{folder}/{couponId}")
     public ResponseEntity<Object> updateCoupon(
@@ -116,6 +120,7 @@ public class CouponApi {
         return ResponseEntity.ok(result);
     }
 
+
     @DeleteMapping("/{couponId}")
     public ResponseEntity<Object> removeCoupon(
             @PathVariable("couponId") Integer couponId
@@ -132,6 +137,7 @@ public class CouponApi {
         }
         return ResponseEntity.ok(result);
     }
+
 
     @GetMapping("/checkCoupon/{code}")
     public ResponseEntity<Object> checkCouponByCode(@PathVariable("code") String code){

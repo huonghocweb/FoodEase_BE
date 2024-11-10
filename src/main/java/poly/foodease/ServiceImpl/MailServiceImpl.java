@@ -31,24 +31,24 @@ public class MailServiceImpl implements MailService {
         // mesage : đối  tượng đại diện cho email được tạo ở trên
         // true : lựa chọn gửi kèm file, tệp
         // "utf-8" : định dạng hỗ trợ ngôn ngữ
-        MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
         helper.setFrom(mail.getFrom());
         helper.setTo(mail.getTo());
         helper.setSubject(mail.getSubject());
         // Cho phép nội dung sử dụng html
-        helper.setText(mail.getBody(),true);
+        helper.setText(mail.getBody(), true);
         helper.setReplyTo(mail.getFrom());
-        String [] cc = mail.getCc();
-        if(cc != null &&  cc.length > 0) {
+        String[] cc = mail.getCc();
+        if (cc != null && cc.length > 0) {
             helper.setCc(cc);
         }
-        String [] bcc = mail.getBcc();
-        if(bcc != null &&  bcc.length > 0) {
+        String[] bcc = mail.getBcc();
+        if (bcc != null && bcc.length > 0) {
             helper.setBcc(bcc);
         }
         List<File> files = mail.getFiles();
-        if(files.size() > 0){
-            for(File file : files){
+        if (files.size() > 0) {
+            for (File file : files) {
                 helper.addAttachment(file.getName(), file);
             }
         }
@@ -57,7 +57,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void send(String to, String subject, String body) throws MessagingException {
-        this.send(new MailInfo(to,subject,body));
+        this.send(new MailInfo(to, subject, body));
     }
 
     @Override
@@ -72,14 +72,52 @@ public class MailServiceImpl implements MailService {
 
     @Scheduled(fixedDelay = 100)
     public void run() throws MessagingException {
-        while (!listEmails.isEmpty()){
+        while (!listEmails.isEmpty()) {
             MailInfo mail = listEmails.remove(0);
             try {
                 this.send(mail);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+//    @Override
+//    public void sendResetPasswordEmail(String email, String token) throws MessagingException {
+//        String confirmYesUrl = "http://localhost:3000/reset-password-confirm?token=" + token + "&action=yes";
+//        String confirmNoUrl = "http://localhost:3000/reset-password-confirm?token=" + token + "&action=no";
+//
+//        String message = "<p>You requested to reset your password.</p>"
+//                + "<p>To confirm, click <a href=\"" + confirmYesUrl + "\">Yes</a>.</p>"
+//                + "<p>If this was not you, click <a href=\"" + confirmNoUrl + "\">No</a>.</p>";
+//
+//        // Cấu hình email gửi đi
+//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//
+//        helper.setTo(email);
+//        helper.setSubject("Reset Your Password");
+//        helper.setText(message, true); // Kích hoạt HTML
+//
+//        javaMailSender.send(mimeMessage);
+//    }
+//    Hòa
+@Override
+public void sendResetCodeEmail(String email, String code) throws MessagingException {
+    String message = "<p>Your password reset code is: <b>" + code + "</b></p>"
+            + "<p>This code will expire in 5 minutes.</p>";
+
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+
+    helper.setTo(email);
+    helper.setSubject("Your Password Reset Code");
+    helper.setText(message, true);
+
+    javaMailSender.send(mimeMessage);
 }
+//    Hòa
+
+}
+
 

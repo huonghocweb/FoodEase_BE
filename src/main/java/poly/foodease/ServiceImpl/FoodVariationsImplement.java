@@ -38,12 +38,10 @@ FoodVariationsDao foodVariationsDao;
 //	}
 
 	@Override
-	public List<FoodVariationResponse> findByCategoryDrink() {
+	public Page<FoodVariationResponse> findByCategoryDrink(Pageable pageable) {
 		// TODO Auto-generated method stub
-		List<FoodVariations>  list=foodVariationsDao.findByCategoryDrink();
-		return list.stream()
-				.map(foodVariationMapper :: converEnToReponse)
-				.collect(Collectors.toList());
+		Page<FoodVariations>  list=foodVariationsDao.findByCategoryDrink(pageable);
+		return  list.map(foodVariationMapper:: converEnToReponse);
 	}
 	@Override
 	public Optional<FoodVariationResponse> findById1(Integer Id) {
@@ -180,6 +178,12 @@ FoodVariationsDao foodVariationsDao;
 			 System.out.println("update thất bại");
 			return null;
 		}
+	}
+	@Override
+	public boolean existsByFoodIdAndFoodSizeId(Integer foodId, Integer foodSizeId) {
+		// TODO Auto-generated method stub
+		
+		return foodVariationsDao.existsByFoodIdAndFoodSizeId(foodId,foodSizeId);
 	}
 
 

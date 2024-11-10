@@ -30,4 +30,14 @@ public class AuthServiceImpl implements AuthService {
         authRes.setJwtToken(jwtToken);
         return authRes;
     }
+
+    @Override
+    public AuthResponse createAuthResponseOAuth2(String userName, List<String> roles, String jwtToken){
+        AuthResponse authRes= new AuthResponse();
+        authRes.setUserId(1);
+        authRes.setRoles(roles);
+        authRes.setUsername(userName);
+        authRes.setJwtToken(jwtToken);
+        return authRes;
+    }
 }

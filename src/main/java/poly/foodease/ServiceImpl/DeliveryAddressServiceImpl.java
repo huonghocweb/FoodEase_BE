@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.DeliveryAddressMapper;
 import poly.foodease.Model.Entity.DeliveryAddress;
@@ -25,6 +26,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     @Autowired
     private DeliveryAddressMapper deliveryAddressMapper;
 
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Page<DeliveryAddressResponse> getAllDeliveryAddress(Pageable pageable) {
         Page<DeliveryAddress> deliveryAddressPage = deliveryAddressRepo.findAll(pageable);
@@ -34,6 +37,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         return new PageImpl<>(deliveryAddressResponses,pageable,deliveryAddressPage.getTotalElements());
     }
 
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Page<DeliveryAddressResponse> getDeliveryAddressByUserName(String userName, Pageable pageable) {
         Page<DeliveryAddress> deliveryAddressePage = deliveryAddressRepo.getDeliveryAddressByUserName(userName,  pageable);
@@ -43,6 +48,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         return new PageImpl<>(deliveryAddressResponses, pageable, deliveryAddressePage.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Optional<DeliveryAddressResponse> getDeliveryAddressById(Integer deliveryAddressId) {
         DeliveryAddress deliveryAddress = deliveryAddressRepo.findById(deliveryAddressId)
@@ -50,6 +56,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         return Optional.of(deliveryAddressMapper.convertEnToRes(deliveryAddress));
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public DeliveryAddressResponse createDeliveryAddress(DeliveryAddressRequest deliveryAddressRequest) {
         DeliveryAddress deliveryAddress = deliveryAddressMapper.convertReqToEn(deliveryAddressRequest);
@@ -57,6 +64,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         return deliveryAddressMapper.convertEnToRes(deliveryAddressCreated);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
     public Optional<DeliveryAddressResponse> updateDeliveryAddress(Integer deliveryAddressId, DeliveryAddressRequest deliveryAddressRequest) {
         return Optional.of(deliveryAddressRepo.findById(deliveryAddressId).map(deliveryAddressExists -> {
@@ -67,6 +75,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         }).orElseThrow(() -> new EntityNotFoundException("Not found DeliveryAddress")));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Optional<DeliveryAddressResponse> removerDeliveryAddress(Integer deliveryAddressId) {
         return Optional.of(deliveryAddressRepo.findById(deliveryAddressId).map(deliveryAddressExists -> {

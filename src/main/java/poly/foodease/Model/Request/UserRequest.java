@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest {
-    private String username;
-    private String fullname;
+    private String userName;
+    private String fullName;
     private String password;
     private Boolean gender;
     private String address;
     private String imageUrl;
-    private String phonenumber;
+    private String phoneNumber;
     private LocalDate birthday;
     private String email;
     private Boolean status;

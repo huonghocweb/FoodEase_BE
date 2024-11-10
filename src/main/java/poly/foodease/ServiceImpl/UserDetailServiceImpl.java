@@ -29,7 +29,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("not found user by username");
         }
         List<GrantedAuthority> authorities= userResponse.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_"+ role.getRoleName()))
                 .collect(Collectors.toList());
         // tạo ra đối tượng User của userdetails trong spring , thêm các dữ liệu người dùng từ database vào.
         return new org.springframework.security.core.userdetails.User(userResponse.getUserName(), userResponse.getPassword(),authorities);

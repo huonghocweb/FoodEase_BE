@@ -43,5 +43,6 @@ public interface OrderService {
     Page<OrderResponse> findOrderByOrderDate(LocalDate date,Pageable page);
     Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
     List<ReportUserBuy> findAllReportUserBuy();
+    Page<OrderResponse> findOrdersByOrderDateBetween( Optional<LocalDate> date,  Optional<LocalDate> endDate, Pageable page);
  
 }

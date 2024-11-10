@@ -150,7 +150,6 @@ public class FoodsApi {
 			@RequestParam("sortBy") String sortBy
 	){
 		Map<String,Object> result = new HashMap<>();
-		System.out.println("Get Food By Huong");
 		Sort sort = Sort.by(new Sort.Order(Objects.equals("asc", sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
 		Pageable pageable = PageRequest.of(pageCurrent,  pageSize, sort);
 		try {

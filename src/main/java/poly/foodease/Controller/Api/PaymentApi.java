@@ -76,6 +76,7 @@ public class PaymentApi {
         try {
             result.put("success",true);
             result.put("message","Create Url Payment with PayPal");
+            System.out.println("Paypal" + payPalService.createPaymentUrl(totalPrice, orderResponse.getOrderId(), baseReturnUrl, baseReturnUrl));
             result.put("data",payPalService.createPaymentUrl(totalPrice, orderResponse.getOrderId(), baseReturnUrl, baseReturnUrl));
         }catch (Exception e){
             result.put("success",false);
@@ -202,6 +203,22 @@ public class PaymentApi {
             result.put("success",true);
             result.put("message","Get Payment Info By Stripe");
             result.put("data",stripeService.returnPaymentByStripe(request));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<Object> getAllPaymentMethod(){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println("Get All Payment Method");
+        try {
+            result.put("success",true);
+            result.put("message","Get All Payment Method");
+            result.put("data",paymentService.getAllPaymentMethod());
         }catch (Exception e){
             result.put("success",false);
             result.put("message",e.getMessage());
