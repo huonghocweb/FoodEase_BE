@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +16,6 @@ public class OrderDetailDTO {
     private String foodName;
     private double price;
     private int quantity;
+    private String size;
+    private List<String> topping;
 }

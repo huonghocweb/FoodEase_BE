@@ -14,9 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Entity.OrderDetails;
-import poly.foodease.Model.Response.OrderDTO;
-import poly.foodease.Model.Response.OrderDetailDTO;
-import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Model.Entity.Toppings;
+import poly.foodease.Model.Response.*;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
@@ -194,8 +193,12 @@ public class OrderApi {
 
         // Tạo OrderResponse
         OrderDTO orderResponse = new OrderDTO();
-        orderResponse.setUser(order.getUser().getFullName()); // Lấy tên người dùng từ Order
-        orderResponse.setOrderDate(order.getOrderDate().toString()); // Chuyển đổi ngày
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFullName(order.getUser().getFullName());
+        userDTO.setEmail(order.getUser().getEmail());
+        userDTO.setPhoneNumber(order.getUser().getPhoneNumber());
+        orderResponse.setUser(userDTO);
+        orderResponse.setOrderDate(order.getOrderDate().toString());
         orderResponse.setDeliveryAddress(order.getDeleveryAddress());
 
         // Chuyển đổi OrderDetails sang OrderDetailResponse
@@ -204,6 +207,13 @@ public class OrderApi {
             detailResponse.setFoodName(detail.getFoodVariations().getFood().getFoodName());
             detailResponse.setPrice(detail.getPrice());
             detailResponse.setQuantity(detail.getQuantity());
+            detailResponse.setSize(detail.getFoodVariations().getFoodSize().getFoodSizeName());
+
+            List<String> toppingNames = detail.getFoodVariations().getFoodVariationToppings().stream()
+                    .map(foodVariationTopping -> foodVariationTopping.getToppings().getToppingName())
+                    .collect(Collectors.toList());
+
+            detailResponse.setTopping(toppingNames);
             return detailResponse;
         }).collect(Collectors.toList());
 
