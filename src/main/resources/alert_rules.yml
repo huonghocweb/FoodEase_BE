@@ -1,0 +1,11 @@
+groups:
+  - name: spring-boot-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_server_requests_seconds_count{status=~"5.."}[5m]) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Tỷ lệ lỗi HTTP 5xx cao"
+          description: "Tỷ lệ lỗi HTTP 5xx vượt quá ngưỡng cho phép trong vòng 5 phút qua"
