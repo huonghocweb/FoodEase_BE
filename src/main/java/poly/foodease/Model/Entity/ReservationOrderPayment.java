@@ -27,9 +27,6 @@ public class ReservationOrderPayment {
     @Column(name="payment_datetime")
     private LocalDateTime paymentDateTime;
 
-    @Column(name="status")
-    private Boolean status;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="reservation_order_id")
@@ -39,4 +36,9 @@ public class ReservationOrderPayment {
     @ManyToOne
     @JoinColumn(name="payment_id")
     private PaymentMethod paymentMethod;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="reservation_payment_status_id")
+    private ReservationOrderPaymentStatus reservationPaymentStatus;
 }

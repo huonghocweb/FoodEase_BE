@@ -224,4 +224,14 @@ public class ResTableServiceImpl implements ResTableService {
 
         }
     }
+
+    @Override
+    public Page<ResTableResponse> checkResTableByCapacityAndCheckinTime(Pageable pageable, Integer capacity) {
+        LocalDateTime checkinTime = LocalDateTime.now();
+        Page<ResTable> resTablePages = resTableRepo.checkResTableByCapacityAndCheckinTime(pageable, capacity, checkinTime);
+        List<ResTableResponse> resTableResponses = resTablePages.getContent().stream()
+                .map(resTableMapper :: convertEnToRes)
+                .collect(Collectors.toList());
+        return new PageImpl<>(resTableResponses,pageable, resTablePages.getTotalElements());
+    }
 }

@@ -2,6 +2,7 @@ package poly.foodease.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +37,5 @@ public interface ResTableService {
     Page<ResTableResponse>  getResTableByCapacity(Integer capacity, Pageable pageable);
     Page<ResTableResponse>  getResTableByCapaAndCate(Integer tableCategoryId, Integer capacity, Pageable pageable);
     ReservationResponse checkResTableInReservation(Integer userId, Integer tableId, LocalDate checkinDate, LocalTime checkinTime, LocalTime checkoutTime, List<Integer> serviceIds) throws IOException, WriterException, MessagingException;
+    Page<ResTableResponse> checkResTableByCapacityAndCheckinTime(Pageable pageable, Integer capacity);
 }

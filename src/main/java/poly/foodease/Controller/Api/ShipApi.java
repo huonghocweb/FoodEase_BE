@@ -53,7 +53,6 @@ public class ShipApi {
             @PathVariable("districtId") Integer districtId
     ) throws JsonProcessingException {
         Map<String,Object> result = new HashMap<>();
-        System.out.println("Ward Id" +  shipService.getWard(districtId));
         try {
             result.put("success",true);
             result.put("message","get Ward");
@@ -71,7 +70,6 @@ public class ShipApi {
             @PathVariable("districtId") Integer districtId
     ) throws JsonProcessingException {
         Map<String,Object> result = new HashMap<>();
-        System.out.println("Get SHip Service" + shipService.getService(districtId));
         try {
             result.put("success",true);
             result.put("message","get Ship Service");

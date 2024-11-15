@@ -69,7 +69,7 @@ public class PaymentApi {
             @RequestParam("deliveryAddress") String deliveryAddress,
             @RequestParam("baseReturnUrl") String baseReturnUrl
     ){
-        System.out.println("Pay by PayPal");
+        System.out.println("Pay by PayPal : " +cartId );
         OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 2, 1, leadTime, shipFee, deliveryAddress);
         List<OrderDetailsResponse> orderDetailsResponses = paymentService.createOrderDetails(orderResponse.getOrderId(), cartId);
         Map<String,Object> result = new HashMap<>();
@@ -214,7 +214,6 @@ public class PaymentApi {
     @GetMapping("/getAll")
     public ResponseEntity<Object> getAllPaymentMethod(){
         Map<String,Object> result = new HashMap<>();
-        System.out.println("Get All Payment Method");
         try {
             result.put("success",true);
             result.put("message","Get All Payment Method");

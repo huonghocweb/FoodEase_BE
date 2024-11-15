@@ -52,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
     // Lưu thông tin hóa đơn trước khi thực hiện thanh toán với status là processing
     public OrderResponse createOrder(Integer cartId, Integer couponId , Integer paymentMethodId, Integer shipMethodId ,Integer leadTime,Integer shipFee, String deliveryAddress){
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setUserId(1);
+        orderRequest.setUserId(cartId);
         orderRequest.setTotalPrice(cartService.getTotalPrice(cartId));
         orderRequest.setTotalQuantity(cartService.getTotalQuantity(cartId) );
         // Lưu thông tin thanh toán với trạng thái Processing

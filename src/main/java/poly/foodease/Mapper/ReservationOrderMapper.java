@@ -19,6 +19,7 @@ public class ReservationOrderMapper {
                 .reservationOrderId(reservationOrder.getReservationOrderId())
                 .orderDateTime(reservationOrder.getOrderDateTime())
                 .totalPrice(reservationOrder.getTotalPrice())
+                .totalServicePrice(reservationOrder.getTotalServicePrice())
                 .totalQuantity(reservationOrder.getTotalQuantity())
                 .status(reservationOrder.getStatus())
                 .reservation(reservationOrder.getReservation() != null ?
@@ -35,6 +36,7 @@ public class ReservationOrderMapper {
                 .orderDateTime(reservationOrderRequest.getOrderDatTime())
                 .totalQuantity(reservationOrderRequest.getTotalQuantity())
                 .totalPrice(reservationOrderRequest.getTotalPrice())
+                .totalServicePrice(reservationOrderRequest.getTotalServicePrice())
                 .build();
     }
 }

@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 @CrossOrigin("*")
 @RestController
-@PreAuthorize("hasAnyRole('ADMIN','USER')")
 @RequestMapping("/api/cart")
 public class CartApi {
 
@@ -25,6 +24,7 @@ public class CartApi {
     @GetMapping("/{cartId}")
     public ResponseEntity<Object> getCartByCartId(@PathVariable("cartId") Integer cartId) throws JsonProcessingException {
         Map<String,Object> result = new HashMap<>();
+        System.out.println("Cart Id : " + cartId);
         try {
             result.put("success",true);
             result.put("message", "Get Cart By CartId");
@@ -43,7 +43,6 @@ public class CartApi {
                                           @PathVariable("quantity") Integer quantity,
                                           @PathVariable("foodVaId") Integer foodVaId){
         Map<String,Object> result = new HashMap<>();
-        System.out.println("Add To Cart");
         try {
             result.put("success",true);
             result.put("message", "Add Cart Item in Cart");

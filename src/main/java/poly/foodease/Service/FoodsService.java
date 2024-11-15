@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import poly.foodease.Model.Entity.Foods;
@@ -24,4 +25,6 @@ public interface FoodsService {
 
 	// Hưởng
 	Page<FoodResponse> fillAllFoodByHuong(Pageable pageable);
+	Page<FoodResponse> findFoodsByFoodName(String foodName,Pageable pageable);
+
 }

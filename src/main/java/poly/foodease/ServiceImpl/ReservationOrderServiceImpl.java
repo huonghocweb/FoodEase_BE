@@ -11,8 +11,10 @@ import poly.foodease.Mapper.ReservationOrderDetailMapper;
 import poly.foodease.Mapper.ReservationOrderMapper;
 import poly.foodease.Model.Entity.ReservationOrder;
 import poly.foodease.Model.Response.ReservationOrderResponse;
+import poly.foodease.Repository.ResTableRepo;
 import poly.foodease.Repository.ReservationOrderDetailRepo;
 import poly.foodease.Repository.ReservationOrderRepo;
+import poly.foodease.Repository.ReservationRepo;
 import poly.foodease.Service.ReservationOrderService;
 
 import java.util.List;
@@ -29,6 +31,10 @@ public class ReservationOrderServiceImpl implements ReservationOrderService {
     private ReservationOrderDetailRepo reservationOrderDetailRepo;
     @Autowired
     private ReservationOrderDetailMapper reservationOrderDetailMapper;
+    @Autowired
+    private ResTableRepo resTableRepo ;
+    @Autowired
+    private ReservationRepo reservationRepo;
 
 
     @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
@@ -55,5 +61,15 @@ public class ReservationOrderServiceImpl implements ReservationOrderService {
     public ReservationOrderResponse getReservationOrderByReservationId(Integer reservationId) {
         ReservationOrder reservationOrder = reservationOrderRepo.getReservationOrderByReservationId(reservationId);
         return reservationOrderMapper.convertEnToRes(reservationOrder);
+    }
+
+    @Override
+    public ReservationOrderResponse changeTableInReservationOrder(Integer reservationOrderId, Integer resTableId){
+        ReservationOrder reservationOrder = reservationOrderRepo.findById(reservationOrderId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Order"));
+        reservationOrder.getReservation().setResTable(resTableRepo.findById(resTableId)
+                .orElseThrow(() -> new EntityNotFoundException("not Found ResTable")));
+        ReservationOrder reservationOrderUpdated = reservationOrderRepo.save(reservationOrder);
+        return reservationOrderMapper.convertEnToRes(reservationOrderUpdated);
     }
 }

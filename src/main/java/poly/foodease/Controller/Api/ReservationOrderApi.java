@@ -34,4 +34,23 @@ public class ReservationOrderApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/changeTable/{reservationOrderId}/{resTableId}")
+    public ResponseEntity<Object> changeTableByResTableId(
+            @PathVariable("reservationOrderId") Integer reservationOrderId,
+            @PathVariable("resTableId") Integer resTableId
+    )
+    {
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Change Table By ResTableId");
+            result.put("data",reservationOrderService.changeTableInReservationOrder(reservationOrderId,resTableId));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

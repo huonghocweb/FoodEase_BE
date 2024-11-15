@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 public class ReservationOrderRequest {
     private Double totalPrice;
+    private Double totalServicePrice;
     private Integer totalQuantity;
     private LocalDateTime orderDatTime;
     private Boolean status;

@@ -15,6 +15,6 @@ public class ReservationOrderPaymentRequest {
     private Double totalAmount;
     private LocalDateTime paymentDateTime;
     private Integer paymentMethodId;
-    private Boolean status;
+    private Integer reservationOrderPaymentStatusId;
     private Integer reservationOrderId;
 }

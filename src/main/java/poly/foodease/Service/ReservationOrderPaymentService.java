@@ -10,6 +10,6 @@ import poly.foodease.Model.Response.ReservationOrderPaymentResponse;
 public interface ReservationOrderPaymentService {
     Page<ReservationOrderPaymentResponse> getAllReservationOrderPayment(Pageable pageable);
     ReservationOrderPaymentResponse getById(Integer reservationOrderPaymentId);
-    ReservationOrderPaymentResponse createReservationOrderPayment(Integer reservationOrderId, Integer paymentMethodId);
+    ReservationOrderPaymentResponse createReservationOrderPayment(Integer reservationOrderId, Integer paymentMethodId, Double totalAmount);
     ReservationOrderPaymentResponse getReservationOrderPaymentByReservationId(Integer reservationId);
 }
