@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +18,7 @@ import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Request.FoodReviewRequest;
 import poly.foodease.Model.Response.FoodResponse;
 import poly.foodease.Model.Response.FoodReviewResponse;
+import poly.foodease.Report.Rating;
 import poly.foodease.Repository.FoodReviewDao;
 import poly.foodease.Repository.FoodsDao;
 import poly.foodease.Repository.UserRepo;
@@ -43,6 +46,7 @@ public class FoodReviewImplement implements FoodReviewService {
 
 		@Autowired
 	UserRepo userRepository;
+
 		@Override
 	public List<FoodReviewResponse> findFoodReviewByFoodId(Integer id) {
 		// TODO Auto-generated method stub
@@ -52,18 +56,22 @@ public class FoodReviewImplement implements FoodReviewService {
 	}
 
 	@Override
-		public FoodReviewResponse save(MultipartFile file, Integer rating, String review, Integer foodId,Integer userId) {
+		public FoodReviewResponse save(MultipartFile[] file, Integer rating, String review, Integer foodId,Integer userId) {
 		    try {
 		        FoodReview foodReview = new FoodReview();
 		        foodReview.setRating(rating);
 		        foodReview.setReview(review);
 		        foodReview.setReviewDate(new Date());
 		        
-		        if (!file.isEmpty()) {
-		            String fileName = uploadFileService.uploadFile(file);
-		            foodReview.setImageUrl(fileName);
-		            System.out.println("Tên file là: " + fileName);
-		        }
+		        if (file != null) {
+		        	foodReview.setImageUrl(cloudinaryService.uploadFile(file, "restables").get(0));
+			            // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
+					  System.out.println(foodReview.getImageUrl());
+			        } else {
+			            System.out.println("file null");
+			            foodReview.setImageUrl(" ");
+			        }
+		       
 		        
 		        foodReview.setUserId(userId); 
 		        foodReview.setFoodId(foodId);
@@ -80,6 +88,24 @@ public class FoodReviewImplement implements FoodReviewService {
 		        throw new RuntimeException("Lỗi khi lưu review", e);
 		    }
 		}
+
+
+	@Override
+	public Rating AVGRating(Integer foodId) {
+		// TODO Auto-generated method stub
+		return foodReviewDao.AVGRating(foodId);
+	}
+
+
+	@Override
+	public Page<poly.foodease.Report.FoodRating> FoodRating(Pageable page) {
+		// TODO Auto-generated method stub
+		Page<poly.foodease.Report.FoodRating> list= foodReviewDao.FoodRating(page);
+		return list;
+	}
+	
+		
+			
 
 	@Override
 	public FoodReview createReview(FoodReviewRequest request) throws IOException {

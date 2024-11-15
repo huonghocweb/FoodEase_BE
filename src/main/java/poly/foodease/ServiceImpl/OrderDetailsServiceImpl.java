@@ -9,6 +9,7 @@ import poly.foodease.Mapper.OrderDetailsMapper;
 import poly.foodease.Model.Entity.OrderDetails;
 import poly.foodease.Model.Request.OrderDetailsRequest;
 import poly.foodease.Model.Response.OrderDetailsResponse;
+import poly.foodease.Report.FoodBuyMost;
 import poly.foodease.Repository.OrderDetailsRepo;
 import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Service.OrderDetailsService;
@@ -82,4 +83,20 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     public List<OrderDetails> findByOrderId(Integer orderId) {
         return orderDetailsRepo.getOrderDetailsByOrderId(orderId);
     }
+
+	@Override
+	public Page<poly.foodease.Report.FoodBuyMost> FoodBuyMost(Pageable page) {
+		// TODO Auto-generated method stub
+		Page<FoodBuyMost> list=orderDetailsRepo.FoodBuyMost(page);
+		return list;
+	}
+
+	@Override
+	public poly.foodease.Report.FoodBuyMost FoodSold(Integer foodId) {
+		// TODO Auto-generated method stub
+		FoodBuyMost list=orderDetailsRepo.FoodSold(foodId);
+		return list;
+	}
+
+	
 }

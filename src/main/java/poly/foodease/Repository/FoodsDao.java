@@ -13,4 +13,5 @@ public interface FoodsDao extends JpaRepository<Foods, Integer>{
 	List<Foods> findByCategoryMainDishes();
 	@Query("SELECT f FROM Foods f where f.category.categoryId = 2")
 	List<Foods> findByCategoryDrink();
+	
 }

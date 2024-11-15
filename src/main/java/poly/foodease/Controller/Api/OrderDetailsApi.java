@@ -1,12 +1,19 @@
 package poly.foodease.Controller.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Entity.OrderDetails;
 import poly.foodease.Model.Response.OrderDetailsResponse;
 import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Report.FoodBuyMost;
 import poly.foodease.Repository.OrderDetailsRepo;
 import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Service.OrderDetailsService;
@@ -15,6 +22,7 @@ import poly.foodease.Service.OrderService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin("*")
@@ -29,7 +37,7 @@ public class OrderDetailsApi {
 
     @Autowired
     OrderDetailsRepo orderDetailsRepository;
-
+    @Autowired OrderDetailsRepo orderDetailsRepo;
     @Autowired
     OrderRepo orderRepository;
 
@@ -51,6 +59,30 @@ public class OrderDetailsApi {
         return ResponseEntity.ok(result);
     }
 
-
-
+   
+    
+    @GetMapping("/foodBuyMost")
+    public ResponseEntity<Page<FoodBuyMost>> foodBuyMost(@RequestParam("page") Optional<Integer> page
+    		 ,@RequestParam(value = "sortBy", required = false, defaultValue = "countFood") String sortBy,
+		        @RequestParam(value = "sortDirection", required = false, defaultValue = "DESC") String sortDirection
+    		){
+    	try {
+    		Pageable pageable = PageRequest.of(page.orElse(0), 5,Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+    		
+        	Page<FoodBuyMost> list=orderDetailsService.FoodBuyMost(pageable);
+        	return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+		}
+    	
+    } 
+    @GetMapping("/findSold")
+    public ResponseEntity<FoodBuyMost> sold(@RequestParam("foodId") Integer foodId)
+    {
+    	
+    	FoodBuyMost list=orderDetailsService.FoodSold(foodId);
+    	return ResponseEntity.ok(list);
+    }
 }
