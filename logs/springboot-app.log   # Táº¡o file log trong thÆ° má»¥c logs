@@ -10674,3 +10674,53 @@ Action:
 
 Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
 
+2024-11-15 18:59:18 - Starting FoodEaseApplication using Java 17.0.10 with PID 19504 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-11-15 18:59:18 - No active profile set, falling back to 1 default profile: "default"
+2024-11-15 18:59:20 - Starting service [Tomcat]
+2024-11-15 18:59:20 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-11-15 18:59:20 - Initializing Spring embedded WebApplicationContext
+2024-11-15 18:59:21 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-15 18:59:21 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-11-15 18:59:21 - HHH000406: Using bytecode reflection optimizer
+2024-11-15 18:59:21 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-15 18:59:21 - HikariPool-1 - Starting...
+2024-11-15 18:59:21 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: c877d53c-7cc9-4059-adad-9e7b3031db95
+2024-11-15 18:59:21 - HikariPool-1 - Start completed.
+2024-11-15 18:59:22 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-15 18:59:23 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-11-15 18:59:27 - Started FoodEaseApplication in 10.254 seconds (process running for 11.228)
+2024-11-15 18:59:27 - Scheduled update for changing order statuses to delivered
+2024-11-15 18:59:28 - Total orders to update: 4
+2024-11-15 18:59:28 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-15 19:00:21 - HikariPool-1 - Shutdown initiated...
+2024-11-15 19:00:21 - HikariPool-1 - Shutdown completed.
+2024-11-15 19:00:21 - Starting FoodEaseApplication using Java 17.0.10 with PID 19504 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-11-15 19:00:21 - No active profile set, falling back to 1 default profile: "default"
+2024-11-15 19:00:22 - Starting service [Tomcat]
+2024-11-15 19:00:22 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-11-15 19:00:22 - Initializing Spring embedded WebApplicationContext
+2024-11-15 19:00:22 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-15 19:00:22 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-15 19:00:22 - HikariPool-2 - Starting...
+2024-11-15 19:00:22 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: 3135840c-5ba4-4af0-a6f5-2896c88651aa
+2024-11-15 19:00:22 - HikariPool-2 - Start completed.
+2024-11-15 19:00:22 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-15 19:00:22 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-11-15 19:00:25 - HikariPool-2 - Shutdown initiated...
+2024-11-15 19:00:25 - HikariPool-2 - Shutdown completed.
+2024-11-15 19:00:25 - Stopping service [Tomcat]
+2024-11-15 19:00:25 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method setFilterChains in org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration required a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
