@@ -3,12 +3,9 @@ package poly.foodease.Mapper;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.EntityNotFoundException;
 import poly.foodease.Model.Entity.BlogLike;
 import poly.foodease.Model.Request.BlogLikeRequest;
 import poly.foodease.Model.Response.BlogLikeResponse;
-import poly.foodease.Repository.BlogRepo;
-import poly.foodease.Repository.UserRepo;
 
 @Mapper(componentModel = "spring")
 public abstract class BlogLikeMapper {
@@ -17,11 +14,8 @@ public abstract class BlogLikeMapper {
         private BlogMapper blogMapper;
         @Autowired
         private UserMapper userMapper;
-        @Autowired
-        private BlogRepo blogRepo;
-        @Autowired
-        private UserRepo userRepo;
 
+        // Chuyển đối tượng BlogLike từ Entity sang Response
         public BlogLikeResponse convertEnToRes(BlogLike blogLike) {
                 return BlogLikeResponse.builder()
                                 .likeId(blogLike.getLikeId())
@@ -31,13 +25,11 @@ public abstract class BlogLikeMapper {
                                 .build();
         }
 
+        // Chuyển đối tượng BlogLikeRequest thành BlogLike Entity
         public BlogLike convertReqToEn(BlogLikeRequest blogLikeRequest) {
-                return BlogLike.builder()
-                                .isLike(blogLikeRequest.getIsLike())
-                                .blog(blogRepo.findById(blogLikeRequest.getBlogId())
-                                                .orElseThrow(() -> new EntityNotFoundException("not found Blog")))
-                                .user(userRepo.findById(blogLikeRequest.getUserId())
-                                                .orElseThrow(() -> new EntityNotFoundException("not found User")))
-                                .build();
+                BlogLike blogLike = new BlogLike();
+                blogLike.setIsLike(blogLikeRequest.getIsLike());
+                // Blog và User sẽ được thiết lập trong service, không ánh xạ trực tiếp ở đây
+                return blogLike;
         }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +46,7 @@ public class BlogCommentApi {
             // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
         } else {
             System.out.println("file null");
-            blogCommentRequest.setImageURL(" ");
+            blogCommentRequest.setImageURL(null);
         }
         try {
             result.put("success", true);
@@ -106,15 +104,9 @@ public class BlogCommentApi {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> deleteBlogComment(@PathVariable("id") Integer commentId, @RequestBody Integer userId) {
+    public ResponseEntity<Void> deleteBlogComment(@PathVariable("id") Integer commentId) {
         BlogCommentResponse blogCommentResponse = blogCommentService.getBlogCommentById(commentId)
                 .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
-
-        // Kiểm tra quyền của người dùng
-        if (!blogCommentResponse.getUser().getUserId().equals(userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Không có quyền
-        }
-
         blogCommentService.deleteBlogComment(commentId);
         return ResponseEntity.noContent().build();
     }
