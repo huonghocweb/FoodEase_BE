@@ -15,9 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Entity.OrderDetails;
-import poly.foodease.Model.Response.OrderDTO;
-import poly.foodease.Model.Response.OrderDetailDTO;
-import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Model.Entity.Toppings;
+import poly.foodease.Model.Response.*;
 import poly.foodease.Report.ReportOrder;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
@@ -115,94 +114,150 @@ public class OrderApi {
 		return ResponseEntity.ok(list);
 	}
 
-	@GetMapping("/findTotalPriceAndQuantityByOrderDate")
-	public ResponseEntity<List<ReportOrder>> findTotalPriceAndQuantityByOrderDate() {
-		try {
-			List<ReportOrder> list = orderService.findTotalPriceAndQuantityByOrderDate();
-			return ResponseEntity.ok(list);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
+//<<<<<<< HEAD
+//	@GetMapping("/findTotalPriceAndQuantityByOrderDate")
+//	public ResponseEntity<List<ReportOrder>> findTotalPriceAndQuantityByOrderDate() {
+//		try {
+//			List<ReportOrder> list = orderService.findTotalPriceAndQuantityByOrderDate();
+//=======
 
-	}
+    @GetMapping("/findTotalPriceAndQuantityByOrderDate")
+    public ResponseEntity<List<ReportOrder>> findTotalPriceAndQuantityByOrderDate()
+    {
+        try {
+            List<ReportOrder> list=orderService.findTotalPriceAndQuantityByOrderDate();
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
 
-	@GetMapping("/ReportRevenueByMonth")
-	public ResponseEntity<List<ReportRevenueByMonth>> ReportRevenueByMonth() {
-		try {
-			List<ReportRevenueByMonth> list = orderService.getRevenueByMonth();
-			return ResponseEntity.ok(list);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
+    }
+    @GetMapping("/ReportRevenueByMonth")
+    public ResponseEntity<List<ReportRevenueByMonth>> ReportRevenueByMonth()
+    {
+        try {
+            List<ReportRevenueByMonth> list=orderService.getRevenueByMonth();
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
 
-	}
+    }
+    @GetMapping("/ReportRevenueByYear")
+    public ResponseEntity<List<ReportRevenueByYear>> ReportRevenueByYear(){
+        try {
+            List<ReportRevenueByYear> list=orderService.ReportRevenueByYear();
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
 
-	@GetMapping("/ReportRevenueByYear")
-	public ResponseEntity<List<ReportRevenueByYear>> ReportRevenueByYear() {
-		try {
-			List<ReportRevenueByYear> list = orderService.ReportRevenueByYear();
-			return ResponseEntity.ok(list);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
 
-	}
+    }
+    @GetMapping("/ReportUserBuy")
+    public ResponseEntity<Page<ReportUserBuy>> ReportUserBuy(@RequestParam("date") Optional<LocalDate> date,
+    		@RequestParam("page") Optional<Integer> page){
+        try {
+            Pageable pageable = PageRequest.of(page.orElse(0), 3);
+            LocalDate dateToday=date.orElse(LocalDate.now());
+            Page<ReportUserBuy> list=orderService.findReportUserBuy(dateToday,pageable);
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
 
-	@GetMapping("/ReportUserBuy")
-	public ResponseEntity<Page<ReportUserBuy>> ReportUserBuy(@RequestParam("date") Optional<LocalDate> date,
-			@RequestParam("page") Optional<Integer> page) {
-		try {
-			Pageable pageable = PageRequest.of(page.orElse(0), 3);
-			LocalDate dateToday = date.orElse(LocalDate.now());
-			Page<ReportUserBuy> list = orderService.findReportUserBuy(dateToday, pageable);
-			return ResponseEntity.ok(list);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
+    }
 
-	}
+    @GetMapping("/{orderId}/details")
+    public ResponseEntity<OrderDTO> getOrderWithDetails(@PathVariable Integer orderId) {
+        // Lấy Order entity từ service
+        Order order = orderService.getOrderById(orderId);
 
-	@GetMapping("/{orderId}/details")
-	public ResponseEntity<OrderDTO> getOrderWithDetails(@PathVariable Integer orderId) {
-		// Lấy Order entity từ service
-		Order order = orderService.getOrderById(orderId);
+        // Kiểm tra xem đơn hàng có tồn tại không
+        if (order == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-		// Kiểm tra xem đơn hàng có tồn tại không
-		if (order == null) {
-			return ResponseEntity.notFound().build();
-		}
+        // Lấy danh sách OrderDetails entity
+        List<OrderDetails> orderDetailsList = orderDetailsService.findByOrderId(orderId);
 
-		// Lấy danh sách OrderDetails entity
-		List<OrderDetails> orderDetailsList = orderDetailsService.findByOrderId(orderId);
+        // Tạo OrderResponse
+        OrderDTO orderResponse = new OrderDTO();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFullName(order.getUser().getFullName());
+        userDTO.setEmail(order.getUser().getEmail());
+        userDTO.setPhoneNumber(order.getUser().getPhoneNumber());
+        orderResponse.setUser(userDTO);
+        orderResponse.setOrderDate(order.getOrderDate().toString());
+        orderResponse.setDeliveryAddress(order.getDeleveryAddress());
 
-		// Tạo OrderResponse
-		OrderDTO orderResponse = new OrderDTO();
-		orderResponse.setUser(order.getUser().getFullName()); // Lấy tên người dùng từ Order
-		orderResponse.setOrderDate(order.getOrderDate().toString()); // Chuyển đổi ngày
-		orderResponse.setDeliveryAddress(order.getDeleveryAddress());
+        // Chuyển đổi OrderDetails sang OrderDetailResponse
+        List<OrderDetailDTO> details = orderDetailsList.stream().map(detail -> {
+            OrderDetailDTO detailResponse = new OrderDetailDTO();
+            detailResponse.setFoodName(detail.getFoodVariations().getFood().getFoodName());
+            detailResponse.setPrice(detail.getPrice());
+            detailResponse.setQuantity(detail.getQuantity());
+            detailResponse.setSize(detail.getFoodVariations().getFoodSize().getFoodSizeName());
 
-		// Chuyển đổi OrderDetails sang OrderDetailResponse
-		List<OrderDetailDTO> details = orderDetailsList.stream().map(detail -> {
-			OrderDetailDTO detailResponse = new OrderDetailDTO();
-			detailResponse.setFoodName(detail.getFoodVariations().getFood().getFoodName());
-			detailResponse.setPrice(detail.getPrice());
-			detailResponse.setQuantity(detail.getQuantity());
-			return detailResponse;
-		}).collect(Collectors.toList());
+            List<String> toppingNames = detail.getFoodVariations().getFoodVariationToppings().stream()
+                    .map(foodVariationTopping -> foodVariationTopping.getToppings().getToppingName())
+                    .collect(Collectors.toList());
 
-		orderResponse.setOrderDetails(details);
+            detailResponse.setTopping(toppingNames);
+            return detailResponse;
+        }).collect(Collectors.toList());
 
-		// Trả về OrderResponse
-		return ResponseEntity.ok(orderResponse);
-	}
+        orderResponse.setOrderDetails(details);
+
+        // Trả về OrderResponse
+        return ResponseEntity.ok(orderResponse);
+    }
+
+
+
+
+
+//	@GetMapping("/{orderId}/details")
+//	public ResponseEntity<OrderDTO> getOrderWithDetails(@PathVariable Integer orderId) {
+//		// Lấy Order entity từ service
+//		Order order = orderService.getOrderById(orderId);
+//
+//		// Kiểm tra xem đơn hàng có tồn tại không
+//		if (order == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//
+//		// Lấy danh sách OrderDetails entity
+//		List<OrderDetails> orderDetailsList = orderDetailsService.findByOrderId(orderId);
+//
+//		// Tạo OrderResponse
+//		OrderDTO orderResponse = new OrderDTO();
+//		orderResponse.setUser(order.getUser().getFullName()); // Lấy tên người dùng từ Order
+//		orderResponse.setOrderDate(order.getOrderDate().toString()); // Chuyển đổi ngày
+//		orderResponse.setDeliveryAddress(order.getDeleveryAddress());
+//
+//		// Chuyển đổi OrderDetails sang OrderDetailResponse
+//		List<OrderDetailDTO> details = orderDetailsList.stream().map(detail -> {
+//			OrderDetailDTO detailResponse = new OrderDetailDTO();
+//			detailResponse.setFoodName(detail.getFoodVariations().getFood().getFoodName());
+//			detailResponse.setPrice(detail.getPrice());
+//			detailResponse.setQuantity(detail.getQuantity());
+//			return detailResponse;
+//		}).collect(Collectors.toList());
+//
+//		orderResponse.setOrderDetails(details);
+//
+//		// Trả về OrderResponse
+//		return ResponseEntity.ok(orderResponse);
+//	}
 
 	@GetMapping("/ReportOrderByToday")
 	public ResponseEntity<Page<ReportOrder>> ReportOrderByToday(@RequestParam("date") Optional<LocalDate> date,

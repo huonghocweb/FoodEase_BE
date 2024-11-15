@@ -5,16 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class OrderDTO {
-    private UserDTO user;
-    private String orderDate;
-    private String deliveryAddress;
-    private List<OrderDetailDTO> orderDetails;
+public class UserDTO {
+    private String fullName;
+    private String email;
+    private String phoneNumber;
 }
