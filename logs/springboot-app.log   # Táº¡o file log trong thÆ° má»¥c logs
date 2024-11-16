@@ -5000,3 +5000,39 @@ jakarta.persistence.NonUniqueResultException: query did not return a unique resu
 2024-11-16 19:45:02 - Total orders to update: 3
 2024-11-16 19:46:02 - Scheduled update for changing order statuses to delivered
 2024-11-16 19:46:02 - Total orders to update: 3
+2024-11-16 19:47:02 - Scheduled update for changing order statuses to delivered
+2024-11-16 19:47:02 - Total orders to update: 3
+2024-11-16 19:48:02 - Scheduled update for changing order statuses to delivered
+2024-11-16 19:48:02 - Total orders to update: 3
+2024-11-16 19:48:50 - HikariPool-1 - Shutdown initiated...
+2024-11-16 19:48:50 - HikariPool-1 - Shutdown completed.
+2024-11-16 19:48:50 - Starting FoodEaseApplication using Java 17.0.10 with PID 18456 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-11-16 19:48:50 - No active profile set, falling back to 1 default profile: "default"
+2024-11-16 19:48:51 - Starting service [Tomcat]
+2024-11-16 19:48:51 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-11-16 19:48:51 - Initializing Spring embedded WebApplicationContext
+2024-11-16 19:48:51 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-16 19:48:51 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-16 19:48:51 - HikariPool-2 - Starting...
+2024-11-16 19:48:51 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: b43bf8bd-b453-4da1-9240-e20a1c84bcc6
+2024-11-16 19:48:51 - HikariPool-2 - Start completed.
+2024-11-16 19:48:51 - HHH000021: Bytecode provider name : bytebuddy
+2024-11-16 19:48:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-11-16 19:48:55 - HikariPool-2 - Shutdown initiated...
+2024-11-16 19:48:55 - HikariPool-2 - Shutdown completed.
+2024-11-16 19:48:55 - Stopping service [Tomcat]
+2024-11-16 19:48:55 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method setFilterChains in org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration required a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
