@@ -65,17 +65,21 @@ public class ReservationOrderPaymentApi {
         }
         return ResponseEntity.ok(result);
     }
-    @PostMapping("/{reservationOrderId}/{paymentMethod}")
+
+
+    @PostMapping("/{reservationOrderId}/{paymentMethod}/{totalAmount}")
     public ResponseEntity<Object> getReservationById(
             @PathVariable("reservationOrderId") Integer reservationOrderId,
-            @PathVariable("paymentMethod") Integer paymentMethod
+            @PathVariable("paymentMethod") Integer paymentMethod,
+            @PathVariable("totalAmount") Double totalAmount
     ){
         Map<String,Object> result = new HashMap<>();
         System.out.println("reservationOrderId " + reservationOrderId + "pay method " + paymentMethod);
         try {
             result.put("success",true);
             result.put("message","Get Reservation By Reservation Id");
-            ReservationOrderPaymentResponse reservationOrderPayment = reservationOrderPaymentService.createReservationOrderPayment(reservationOrderId, paymentMethod);
+
+            ReservationOrderPaymentResponse reservationOrderPayment = reservationOrderPaymentService.createReservationOrderPayment(reservationOrderId, paymentMethod ,totalAmount);
             if (reservationOrderPayment != null){
                 reservationService.checkoutReservation(reservationOrderPayment.getReservationOrder().getReservation().getReservationId());
             }else{

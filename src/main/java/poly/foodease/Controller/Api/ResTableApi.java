@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.hibernate.query.sqm.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -212,6 +213,31 @@ public class ResTableApi {
             result.put("success", false);
             result.put("message", e.getMessage());
             result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getResTableByCapiAndCheckinTime/{capacity}")
+    public ResponseEntity<Object> getResTableByCapiAndCheckinTime(
+            @PathVariable("capacity") Integer capacity,
+            @RequestParam("pageCurrent") Integer pageCurrent,
+            @RequestParam("pageSize") Integer pageSize,
+            @RequestParam("sortOrder") String sortOrder,
+            @RequestParam("sortBy") String sortBy
+    ){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println("Capacity");
+        Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
+        Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
+        System.out.println("Capacity" + capacity + "Data" +resTableService.checkResTableByCapacityAndCheckinTime(pageable, capacity) );
+        try {
+            result.put("success",true);
+            result.put("message","Get ResTable By Capacity And CheckinTime");
+            result.put("data",resTableService.checkResTableByCapacityAndCheckinTime(pageable,capacity));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
         }
         return ResponseEntity.ok(result);
     }

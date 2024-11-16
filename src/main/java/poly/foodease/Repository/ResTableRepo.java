@@ -24,8 +24,6 @@ public interface ResTableRepo extends JpaRepository<ResTable, Integer> {
     Page<ResTable> getResTableByCapacity(@Param("capacity") Integer capacity,
                                                Pageable pageable);
 
-
-
     @Query("SELECT rtb FROM ResTable rtb JOIN rtb.reservations res " +
             "WHERE rtb.tableId = :tableId " +
             "AND (:checkinTime BETWEEN res.checkinTime AND res.checkoutTime " +
@@ -35,4 +33,15 @@ public interface ResTableRepo extends JpaRepository<ResTable, Integer> {
     List<ResTable> checkResTableIsAvailable(@Param("tableId") Integer tableId,
                                          @Param("checkinTime") LocalDateTime checkinTime,
                                          @Param("checkoutTime") LocalDateTime checkoutTime);
+
+    @Query("SELECT rtb FROM ResTable rtb " +
+            "WHERE rtb.capacity >= :capacity " +
+            "AND NOT EXISTS (" +
+            "    SELECT res FROM rtb.reservations res " +
+            "    WHERE :checkinTime BETWEEN res.checkinTime AND res.checkoutTime" +
+            ")")
+    Page<ResTable> checkResTableByCapacityAndCheckinTime(
+            Pageable pageable,
+            @Param("capacity") Integer capacity,
+            @Param("checkinTime") LocalDateTime checkinTime);
 }

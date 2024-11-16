@@ -10,4 +10,5 @@ public interface ReservationOrderService {
     Page<ReservationOrderResponse> getAllReservationOrder(Pageable pageable);
     ReservationOrderResponse getReservationOrderById(Integer reservationOrderId);
     ReservationOrderResponse getReservationOrderByReservationId(Integer reservationId);
+     ReservationOrderResponse changeTableInReservationOrder(Integer reservationOrderId, Integer resTableId);
 }

@@ -48,7 +48,8 @@ public class BlogCommentApi {
             // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
         } else {
             System.out.println("file null");
-            blogCommentRequest.setImageURL(" ");
+
+            blogCommentRequest.setImageURL(null);
         }
         try {
             result.put("success", true);
@@ -106,15 +107,10 @@ public class BlogCommentApi {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> deleteBlogComment(@PathVariable("id") Integer commentId, @RequestBody Integer userId) {
+
+    public ResponseEntity<Void> deleteBlogComment(@PathVariable("id") Integer commentId) {
         BlogCommentResponse blogCommentResponse = blogCommentService.getBlogCommentById(commentId)
                 .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
-
-        // Kiểm tra quyền của người dùng
-        if (!blogCommentResponse.getUser().getUserId().equals(userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Không có quyền
-        }
-
         blogCommentService.deleteBlogComment(commentId);
         return ResponseEntity.noContent().build();
     }

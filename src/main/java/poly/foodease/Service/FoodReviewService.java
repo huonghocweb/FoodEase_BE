@@ -23,4 +23,5 @@ public interface FoodReviewService {
 	FoodReviewResponse save(MultipartFile[] file,Integer rating,String review,Integer foodId,Integer userId);
 	Rating AVGRating(Integer foodId);
 	Page<FoodRating> FoodRating(Pageable page);
+
 }

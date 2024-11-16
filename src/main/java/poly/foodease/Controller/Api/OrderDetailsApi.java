@@ -9,10 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import poly.foodease.Model.Entity.Order;
-import poly.foodease.Model.Entity.OrderDetails;
-import poly.foodease.Model.Response.OrderDetailsResponse;
-import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Report.FoodBuyMost;
 import poly.foodease.Repository.OrderDetailsRepo;
 import poly.foodease.Repository.OrderRepo;
@@ -20,10 +16,8 @@ import poly.foodease.Service.OrderDetailsService;
 import poly.foodease.Service.OrderService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -38,6 +32,7 @@ public class OrderDetailsApi {
     @Autowired
     OrderDetailsRepo orderDetailsRepository;
     @Autowired OrderDetailsRepo orderDetailsRepo;
+
     @Autowired
     OrderRepo orderRepository;
 
@@ -59,8 +54,7 @@ public class OrderDetailsApi {
         return ResponseEntity.ok(result);
     }
 
-   
-    
+
     @GetMapping("/foodBuyMost")
     public ResponseEntity<Page<FoodBuyMost>> foodBuyMost(@RequestParam("page") Optional<Integer> page
     		 ,@RequestParam(value = "sortBy", required = false, defaultValue = "countFood") String sortBy,
@@ -85,4 +79,6 @@ public class OrderDetailsApi {
     	FoodBuyMost list=orderDetailsService.FoodSold(foodId);
     	return ResponseEntity.ok(list);
     }
+
+
 }

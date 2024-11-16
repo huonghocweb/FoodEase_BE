@@ -15,6 +15,7 @@ public class ReservationOrderResponse {
         private Integer reservationOrderId;
         private Double totalPrice;
         private Integer totalQuantity;
+        private Double totalServicePrice;
         private LocalDateTime orderDateTime;
         private Boolean status;
         private ReservationResponse reservation;

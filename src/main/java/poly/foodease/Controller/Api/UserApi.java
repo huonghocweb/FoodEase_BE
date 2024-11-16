@@ -420,4 +420,102 @@ public class  UserApi {
 
 //	Hòa
 
+
+
+    // Ngoc
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportUsers() {
+        List<User> userList = userService.getAllUsers(); // Lấy tất cả người dùng từ DB
+        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+            var sheet = workbook.createSheet("Users");
+
+            // Tạo tiêu đề cột
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("User Name");
+            headerRow.createCell(1).setCellValue("Full Name");
+            headerRow.createCell(2).setCellValue("Password");
+            headerRow.createCell(3).setCellValue("Gender");
+            headerRow.createCell(4).setCellValue("Address");
+            headerRow.createCell(5).setCellValue("Phone Number");
+            headerRow.createCell(6).setCellValue("Image URL");
+            headerRow.createCell(7).setCellValue("Birthday");
+            headerRow.createCell(8).setCellValue("Email");
+            headerRow.createCell(9).setCellValue("Status");
+
+            // Điền dữ liệu vào file
+            int rowNum = 1;
+            for (User user : userList) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(user.getUserName());
+                row.createCell(1).setCellValue(user.getFullName());
+                row.createCell(2).setCellValue(user.getPassword());
+                row.createCell(3).setCellValue(user.getGender());
+                row.createCell(4).setCellValue(user.getAddress());
+                row.createCell(5).setCellValue(user.getPhoneNumber());
+                row.createCell(6).setCellValue(user.getImageUrl());
+                row.createCell(7).setCellValue(user.getBirthday().toString());
+                row.createCell(8).setCellValue(user.getEmail());
+                row.createCell(9).setCellValue(user.getStatus());
+            }
+
+            // Ghi dữ liệu vào byte array
+            try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                workbook.write(out);
+                byte[] bytes = out.toByteArray();
+                return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=users.xlsx").body(bytes);
+            }
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // ngoc
+
+
+    @PostMapping("/importUser")
+    public ResponseEntity<String> importUserBuy(@RequestParam("file") MultipartFile file) {
+        System.out.println("Import ");
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tệp không hợp lệ.");
+        }
+// Nhawsc
+        String directoryPath = "C:\\Users\\ASUS\\Downloads\\files\\";
+        String filePath = directoryPath + file.getOriginalFilename(); // Đường dẫn đầy đủ đến tệp
+
+        // Tạo thư mục nếu chưa tồn tại
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // Tạo thư mục và tất cả thư mục con nếu cần
+        }
+
+        try {
+            // Lưu tệp tải lên tạm thời
+            File tempFile = new File(filePath);
+            file.transferTo(tempFile);
+
+            // Tạo đối tượng ExcelImporter và gọi importExcelData
+            UserImportExcel excelImporter = new UserImportExcel(userService);
+            excelImporter.importExcelData(tempFile.getAbsolutePath());
+
+            return ResponseEntity.ok("Dữ liệu đã được nhập thành công.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nhập dữ liệu thất bại.");
+        }
+
+    }
+    @GetMapping("/exportUser")
+    public void exportUserBuy(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        List<User> list = userService.getAllUsers();
+        UserExportExcel excelExporter = new UserExportExcel(list);
+
+        excelExporter.export(response);
+
+    }
 }

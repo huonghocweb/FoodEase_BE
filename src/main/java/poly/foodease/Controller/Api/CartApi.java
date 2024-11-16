@@ -43,7 +43,6 @@ public class CartApi {
                                           @PathVariable("quantity") Integer quantity,
                                           @PathVariable("foodVaId") Integer foodVaId){
         Map<String,Object> result = new HashMap<>();
-        System.out.println("Add To Cart");
         try {
             result.put("success",true);
             result.put("message", "Add Cart Item in Cart");

@@ -22,4 +22,5 @@ public interface OrderDetailsService {
     List<OrderDetails> findByOrderId(Integer orderId);
     Page<FoodBuyMost> FoodBuyMost(Pageable page);
     FoodBuyMost FoodSold(Integer foodId);
+
 }

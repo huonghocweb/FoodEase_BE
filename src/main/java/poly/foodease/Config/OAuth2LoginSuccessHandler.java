@@ -30,10 +30,7 @@ import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,8 +47,20 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+       // System.out.println("OAuth2User attributes: " + oAuth2User.getAttributes());
         String email = oAuth2User.getAttribute("email");
-        System.out.println("Email: " + email);
+
+// Kiểm tra xem email có null hoặc rỗng không
+        if (email == null || email.isEmpty()) {
+            // Nếu email không có, lấy tên đăng nhập (login) và gán mặc định email
+            String login = oAuth2User.getAttribute("login");
+            if (login != null) {
+                email = login + "@gmail.com";  // Sử dụng login để tạo email mặc định
+            } else {
+                email = "default@example.com";  // Nếu không có login, gán email mặc định
+            }
+        }
+      //  System.out.println("Email: " + email);
         List<String> roles = new ArrayList<>();
         // Tìm người dùng trong database
         Optional<User> userExist = userRepo.findUserByEmail(email);
@@ -61,26 +70,29 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         Integer userId ;
         if (userExist.isPresent()) {
             User user = userExist.get();
-            System.out.println("TIm Thay USER");
+         //   System.out.println("User Da Ton Tai ");
          //   System.out.println(user);
             // Giả sử User có phương thức getRoles() trả về danh sách các vai trò
             roles = user.getRoles().stream()
                     .map(role -> "ROLE_" + role.getRoleName()) // Thêm "ROLE_" vào trước tên vai trò
                     .collect(Collectors.toList());
-            System.out.println("ROLE In success : " + roles);
+
+           // System.out.println("ROLE In success : " + roles);
             userId= user.getUserId();
         } else {
+            System.out.println("USER MOI ");
             // Nếu người dùng chưa tồn tại, tạo người dùng mới và gán vai trò mặc định
             UserRequest userRequest = new UserRequest();
             userRequest.setUserName(email);
             userRequest.setEmail(email);
+            userRequest.setPassword("123");
             userRequest.setRoleIds(List.of(2));  // Giả sử 1 là ID của ROLE_USER
             System.out.println("KHONG THAY USER");
             // Tạo người dùng mới và lưu vào cơ sở dữ liệu
             roles.add("ROLE_USER");
             newUser = userRepo.save(userMapper.convertReqToEn(userRequest));
             userId= newUser.getUserId();
-            System.out.println("userId" + userId);
+           // System.out.println("userId : " + userId);
         }
 
         // Tạo JWT token
@@ -89,7 +101,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         // Tạo đối tượng AuthResponse chứa thông tin người dùng và token
         AuthResponse authResponse = new AuthResponse();
-       authResponse.setUserId(userId);
+        authResponse.setUserId(userId);
         authResponse.setUsername(email);
         authResponse.setRoles(roles);
         authResponse.setJwtToken(token);

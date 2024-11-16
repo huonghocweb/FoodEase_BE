@@ -18,7 +18,6 @@ public class UserPointApi {
     @GetMapping("/{userName}")
     public ResponseEntity<Object> getUserPointByUserId(@PathVariable("userName") String userName){
         Map<String,Object> result = new HashMap<>();
-        System.out.println("getUserPointByUserId");
         try {
             result.put("success", true);
             result.put("message","get UserPoint By UserId");

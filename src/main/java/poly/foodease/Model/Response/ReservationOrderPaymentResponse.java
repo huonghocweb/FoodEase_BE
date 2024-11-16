@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import poly.foodease.Model.Entity.ReservationOrderPaymentStatus;
 
 import java.time.LocalDateTime;
 
@@ -18,5 +19,6 @@ public class ReservationOrderPaymentResponse {
     private LocalDateTime paymentDateTime;
     private PaymentMethodResponse paymentMethod;
     private Boolean status;
+    private ReservationOrderPaymentStatusResponse reservationOrderPaymentStatus;
     private ReservationOrderResponse reservationOrder;
 }

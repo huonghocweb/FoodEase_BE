@@ -7,6 +7,9 @@ import poly.foodease.Model.Entity.ReservationOrderDetail;
 
 public interface ReservationOrderDetailRepo extends JpaRepository<ReservationOrderDetail, Integer> {
     @Query("SELECT resOD FROM ReservationOrderDetail resOD JOIN resOD.foods f " +
-            " WHERE f.foodId = :foodId")
-    ReservationOrderDetail getReservationOrderDetailByFoodId(@Param("foodId") Integer foodId);
+
+            " WHERE f.foodId = :foodId AND resOD.reservationOrder.reservationOrderId = :reservationOrderId")
+    ReservationOrderDetail getReservationOrderDetailByFoodId(
+            @Param("foodId") Integer foodId,
+            @Param("reservationOrderId") Integer reservationOrderId);
 }

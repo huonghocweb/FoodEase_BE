@@ -25,12 +25,12 @@ public class OrderDetails {
     @Column(name="quantity")
     private Integer quantity;
 
- 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="order_id")
     private Order order;
 
-    
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="food_variation_id")
     private FoodVariations foodVariations;

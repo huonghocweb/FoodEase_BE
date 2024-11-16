@@ -7,6 +7,7 @@ import poly.foodease.Model.Entity.ReservationOrderPayment;
 import poly.foodease.Model.Request.ReservationOrderPaymentRequest;
 import poly.foodease.Model.Response.ReservationOrderPaymentResponse;
 import poly.foodease.Repository.PaymentMethodRepo;
+import poly.foodease.Repository.ReservationOrderPaymentStatusRepo;
 import poly.foodease.Repository.ReservationOrderRepo;
 
 import java.time.LocalDateTime;
@@ -23,14 +24,20 @@ public abstract class ReservationOrderPaymentMapper {
     @Autowired
     private PaymentMethodRepo paymentMethodRepo;
 
+    @Autowired
+    private ReservationOrderPaymentStatusMapper reservationPaymentStatusMapper;
+    @Autowired
+    private ReservationOrderPaymentStatusRepo reservationOrderPaymentStatusRepo;
+
     public ReservationOrderPaymentResponse convertEnToRes(ReservationOrderPayment reservationOrderPayment){
         return ReservationOrderPaymentResponse.builder()
                 .reservationOrderPaymentId(reservationOrderPayment.getReservationOrderPaymentId())
                 .paymentMethod(reservationOrderPayment.getPaymentMethod() != null ?
                         paymentMethodMapper.convertEnToRes(reservationOrderPayment.getPaymentMethod()) : null)
                 .paymentDateTime(reservationOrderPayment.getPaymentDateTime())
-                .status(reservationOrderPayment.getStatus())
                 .totalAmount(reservationOrderPayment.getTotalAmount())
+                .reservationOrderPaymentStatus(reservationOrderPayment.getReservationPaymentStatus() != null ?
+                        reservationPaymentStatusMapper.convertEnToRes(reservationOrderPayment.getReservationPaymentStatus()) : null)
                 .reservationOrder(reservationOrderPayment.getReservationOrder() != null ?
                         reservationOrderMapper.convertEnToRes(reservationOrderPayment.getReservationOrder()) : null)
                 .build();
@@ -47,7 +54,9 @@ public abstract class ReservationOrderPaymentMapper {
                 .reservationOrder(reservationOrderPaymentRequest.getReservationOrderId() != null ?
                         reservationOrderRepo.findById(reservationOrderPaymentRequest.getReservationOrderId())
                                 .orElseThrow(() -> new EntityNotFoundException("Not found ReservationOrder")) : null)
-                .status(reservationOrderPaymentRequest.getStatus() != null ? reservationOrderPaymentRequest.getStatus() : true)
+                .reservationPaymentStatus(reservationOrderPaymentRequest.getReservationOrderPaymentStatusId() != null ?
+                        reservationOrderPaymentStatusRepo.findById(reservationOrderPaymentRequest.getReservationOrderPaymentStatusId())
+                                .orElseThrow(() -> new EntityNotFoundException("not found ReservationOrderPayment Status")): null)
                 .build();
     }
 }

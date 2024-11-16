@@ -45,13 +45,14 @@ public class ReservationOrderPaymentServiceImpl implements ReservationOrderPayme
     }
 
     @Override
-    public ReservationOrderPaymentResponse createReservationOrderPayment( Integer reservationOrderId, Integer paymentMethodId) {
+
+    public ReservationOrderPaymentResponse createReservationOrderPayment( Integer reservationOrderId, Integer paymentMethodId, Double totalAmount) {
         ReservationOrder reservationOrder = reservationOrderRepo.findById(reservationOrderId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found ReservationOrder"));
         ReservationOrderPaymentRequest reservationOrderPaymentRequest = new ReservationOrderPaymentRequest();
         reservationOrderPaymentRequest.setReservationOrderId(reservationOrderId);
         reservationOrderPaymentRequest.setPaymentMethodId(paymentMethodId);
-        reservationOrderPaymentRequest.setTotalAmount(reservationOrder.getTotalPrice() - reservationOrder.getReservation().getTotalDeposit());
+        reservationOrderPaymentRequest.setTotalAmount(totalAmount);
         ReservationOrderPayment reservationOrderPayment = reservationOrderPaymentMapper.convertReqToEn(reservationOrderPaymentRequest);
         ReservationOrderPayment reservationOrderPaymentCreated = reservationOrderPaymentRepo.save(reservationOrderPayment);
         return reservationOrderPaymentMapper.convertEnToRes(reservationOrderPaymentCreated);

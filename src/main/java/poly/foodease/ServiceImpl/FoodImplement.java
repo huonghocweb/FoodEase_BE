@@ -128,6 +128,9 @@ public class FoodImplement implements FoodsService {
 	
 	}
 
+
+
+	//Huong
 	@Override
 	public Page<FoodResponse> fillAllFoodByHuong(Pageable pageable) {
 		Page<Foods> foodsPage = foodsDao.findAll(pageable);
@@ -136,5 +139,16 @@ public class FoodImplement implements FoodsService {
 				.collect(Collectors.toList());
 		return new PageImpl<>(foodResponses,pageable , foodsPage.getTotalElements());
 	}
+
+
+	@Override
+	public Page<FoodResponse> findFoodsByFoodName(String foodName, Pageable pageable) {
+		Page<Foods> foodsByFoodName = foodsDao.findFoodsByFoodName(foodName, pageable);
+		List<FoodResponse> foodResponses = foodsByFoodName.getContent().stream()
+				.map(foodMapper :: converEntoResponse)
+				.collect(Collectors.toList());
+		return new PageImpl<>(foodResponses,pageable,foodsByFoodName.getTotalElements());
+	}
+	//Huong
 
 }

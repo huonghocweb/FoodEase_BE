@@ -46,7 +46,6 @@ public class FoodReviewImplement implements FoodReviewService {
 
 		@Autowired
 	UserRepo userRepository;
-
 		@Override
 	public List<FoodReviewResponse> findFoodReviewByFoodId(Integer id) {
 		// TODO Auto-generated method stub
@@ -62,7 +61,6 @@ public class FoodReviewImplement implements FoodReviewService {
 		        foodReview.setRating(rating);
 		        foodReview.setReview(review);
 		        foodReview.setReviewDate(new Date());
-		        
 		        if (file != null) {
 		        	foodReview.setImageUrl(cloudinaryService.uploadFile(file, "restables").get(0));
 			            // couponRequest.setImageUrl(fileManageUtils.save(folder,files).get(0));
@@ -71,14 +69,10 @@ public class FoodReviewImplement implements FoodReviewService {
 			            System.out.println("file null");
 			            foodReview.setImageUrl(" ");
 			        }
-		       
-		        
-		        foodReview.setUserId(userId); 
+		        foodReview.setUserId(userId);
 		        foodReview.setFoodId(foodId);
-		        
 		        FoodReview savedFoodReview = foodReviewDao.save(foodReview);
 		        System.out.println("Đã thực hiện comment");
-		        
 		        // Chuyển đổi savedFoodReview sang FoodReviewResponse
 		        FoodReviewResponse response = foodReviewMapper.converEnToRespon(savedFoodReview) ;
 		        return response;
@@ -88,7 +82,6 @@ public class FoodReviewImplement implements FoodReviewService {
 		        throw new RuntimeException("Lỗi khi lưu review", e);
 		    }
 		}
-
 
 	@Override
 	public Rating AVGRating(Integer foodId) {
@@ -104,9 +97,6 @@ public class FoodReviewImplement implements FoodReviewService {
 		return list;
 	}
 	
-		
-			
-
 	@Override
 	public FoodReview createReview(FoodReviewRequest request) throws IOException {
 		FoodReview review = new FoodReview();

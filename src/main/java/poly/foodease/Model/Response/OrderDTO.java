@@ -13,7 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OrderDTO {
+//<<<<<<< HEAD
     private UserDTO user;
+//=======
+//    private String user;
+//>>>>>>> origin/HUONG_BE_NEW
     private String orderDate;
     private String deliveryAddress;
     private List<OrderDetailDTO> orderDetails;

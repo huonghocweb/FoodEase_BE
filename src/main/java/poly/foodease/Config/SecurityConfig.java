@@ -43,6 +43,9 @@ public class SecurityConfig {
 //                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Thêm bộ lọc JWT
 //        return httpSecurity.build();
 //    }
+
+    private final String [] PUBLIC_ENDPOINT = {"/api/user/food/**", "/api/user/foodSize/**","/api/user/foodvariation/**","/api/user/topping/**",
+"/api/tablecategories/**", "/api/restables/**"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -53,6 +56,7 @@ public class SecurityConfig {
                         "/api/user/register","/api/user/confirm-registration-code",
                         "/api/user/confirm-reset-password","/api/user/request-reset-password",
                         "/api/user/reset-password", "/api/authenticate/**").permitAll()
+                                .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
                 )

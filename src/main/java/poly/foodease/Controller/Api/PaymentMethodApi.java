@@ -53,7 +53,8 @@ public class PaymentMethodApi {
                 result.put("data",momoService.createPaymentRequest(Integer.valueOf(reservationOrderId), totalPrice, baseUrlReturn, userName));
             }else if(paymentMethodId == 5){
                 System.out.println("Cash");
-                ReservationOrderPaymentResponse reservationOrderPaymentResponse= reservationOrderPaymentService.createReservationOrderPayment(Integer.valueOf(reservationOrderId), paymentMethodId);
+
+                ReservationOrderPaymentResponse reservationOrderPaymentResponse= reservationOrderPaymentService.createReservationOrderPayment(Integer.valueOf(reservationOrderId), paymentMethodId, Double.valueOf(totalPrice));
                 if (reservationOrderPaymentResponse != null){
                     result.put("data", reservationService.checkoutReservation(reservationOrderPaymentResponse.getReservationOrder().getReservation().getReservationId()));
                 }else {

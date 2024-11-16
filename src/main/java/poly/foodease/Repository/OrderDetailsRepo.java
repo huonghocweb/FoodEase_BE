@@ -17,7 +17,7 @@ public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Integer> {
     List<OrderDetails> getOrderDetailsByOrderId(@Param("orderId") Integer orderId);
 
     List<OrderDetails> findByOrder(Order order);
-    
+
 	    @Query("SELECT new poly.foodease.Report.FoodBuyMost(count(od.foodVariations.foodId) as countFood,od.foodVariations.food)"
 	    		+ " from OrderDetails od group by od.foodVariations.foodId ,od.foodVariations.food "
 	    		)  
@@ -28,4 +28,5 @@ public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Integer> {
 	    		)  
 	    FoodBuyMost FoodSold(Integer foodId);
 }
+
 

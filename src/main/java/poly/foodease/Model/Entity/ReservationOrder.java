@@ -31,6 +31,9 @@ public class ReservationOrder {
     @Column(name="order_datetime")
     private LocalDateTime orderDateTime;
 
+    @Column(name="total_service_price")
+    private Double totalServicePrice;
+
     @Column(name="status")
     private Boolean status;
 
