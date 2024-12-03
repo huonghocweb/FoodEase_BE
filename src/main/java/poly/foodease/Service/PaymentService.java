@@ -16,8 +16,15 @@ public interface PaymentService {
     OrderResponse createOrder(Integer cartId, Integer couponId , Integer paymentMethodId, Integer shipMethodId , Integer leadTime, Integer shipFee, String deliveryAddress);
     OrderResponse updatePaymentSuccess(Integer orderId);
     List<OrderDetailsResponse> createOrderDetails(Integer orderId, Integer cartId);
-    void updateCouponStorageAndUsedCount(String username,String couponId);
+
+    void updateCouponStorageAndUsedCount(OrderResponse order);
+
+    public void updateQuantityStock(Integer orderId);
+
     List<OrderDetailsResponse> createOrderDetail(String OrderInfo, Integer orderId);
-    void sendEmail (String username , OrderResponse orderResponse, List<OrderDetailsResponse> orderDetailResponses ) throws IOException, WriterException;
+
+    // Xử Lý nghiệp vụ liên quan đến coupon
+    void sendEmail(OrderResponse orderResponse) throws IOException, WriterException;
+
     List<PaymentMethodResponse> getAllPaymentMethod();
 }

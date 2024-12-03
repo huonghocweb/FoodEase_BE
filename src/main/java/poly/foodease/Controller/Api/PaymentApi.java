@@ -133,7 +133,7 @@ public class PaymentApi {
         try {
             result.put("success",true);
             result.put("message","Create Payment With Momo");
-            result.put("data",momoService.createUrlPaymentMomo(cartId,totalPrice,baseReturnUrl,username));
+            result.put("data",momoService.createUrlPaymentMomo(orderResponse.getOrderId(),totalPrice,baseReturnUrl,username));
         }catch (Exception e){
             result.put("success",false);
             result.put("message",e.getMessage());

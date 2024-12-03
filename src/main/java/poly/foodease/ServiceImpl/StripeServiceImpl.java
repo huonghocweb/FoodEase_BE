@@ -65,10 +65,12 @@ public class StripeServiceImpl {
         if(session.getPaymentStatus().equals("paid")){
             paymentStatus=1;
              OrderResponse orderResponse = paymentService.updatePaymentSuccess(Integer.valueOf(orderInfo_Parameter));
-             List<OrderDetailsResponse> orderDetailsResponses = orderDetailsService.getOrderDetailsByOrderId(Integer.valueOf(orderInfo_Parameter));
-             paymentService.sendEmail(username, orderResponse, orderDetailsResponses);
+             paymentService.sendEmail( orderResponse);
             // Xử lý cập nhật nghiệp vụ coupon
-          //  paymentService.updateCouponStorageAndUsedCount(username, couponId);
+            paymentService.updateQuantityStock(orderResponse.getOrderId());
+            if (orderResponse.getCoupon() != null){
+                paymentService.updateCouponStorageAndUsedCount(orderResponse);
+            }
         }else{
             paymentStatus =0;
         }

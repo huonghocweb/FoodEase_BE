@@ -84,10 +84,12 @@ public class PayPalServiceImpl {
             paymentStatus= 1;
             System.out.println("Payment By Paypal Success");
             OrderResponse orderResponse = paymentService.updatePaymentSuccess(Integer.valueOf(orderInfo_parameter));
-            List<OrderDetailsResponse> orderDetailsResponses = orderDetailsService.getOrderDetailsByOrderId(Integer.valueOf(orderInfo_parameter));
             // Xử lý nghiệp vụ CouponCout và CouponStorage
-//            paymentService.updateCouponStorageAndUsedCount(username, couponId);
-            paymentService.sendEmail(username, orderResponse, orderDetailsResponses);
+            paymentService.sendEmail( orderResponse);
+            paymentService.updateQuantityStock(orderResponse.getOrderId());
+            if (orderResponse.getCoupon() != null){
+                paymentService.updateCouponStorageAndUsedCount(orderResponse);
+            }
         }else{
             System.out.println("Thất Bại");
             paymentStatus = 0;

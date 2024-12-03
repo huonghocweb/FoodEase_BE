@@ -7,11 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Entity.User;
 import poly.foodease.Model.Response.OrderDetailsResponse;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Model.Response.PaymentInfo;
 import poly.foodease.Model.Response.UserResponse;
+import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Repository.UserRepo;
 import poly.foodease.Service.*;
 import poly.foodease.Utils.JwtUtils;
@@ -40,6 +42,8 @@ public class VnPayServiceImpl {
     private JwtUtils jwtUtils;
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderRepo orderRepo;
 
     // Tạo giao dịch bằng và trả về đường dẫn giúp dẫn tới trang thanh toán của VnPay
     public String createPaymentUrl(int totalPrice, String orderInfo, String returnUrl ) throws UnsupportedEncodingException {
@@ -67,21 +71,31 @@ public class VnPayServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException("not found User"));
         Integer orderId = Integer.valueOf(vnp_OrderInfo);
         if(paymentStatus ==1 ){
-            System.out.println("Payment Success");
-            paymentInfo = paymentService.createPaymentInfo(vnp_OrderInfo, paymentStatus, vnp_PayDate, totalPrice, vnp_TransactionId);
+          //  System.out.println("Payment Success");
             // Xử lý Coupon usedCount và CouponStorage
 //           paymentService.updateCouponStorageAndUsedCount(username,couponId);
             // Nếu thanh toán thành công chuyển trạng thái thành Shipping
+            System.out.println("ORDER ID : " + orderId);
+//            Order order = orderRepo.findById(orderId).get();
+//            System.out.println("ORDER REPO " + order.getOrderDetails().size());
             OrderResponse orderResponse = paymentService.updatePaymentSuccess(orderId);
-            List<OrderDetailsResponse> orderDetailsResponses = orderDetailsService.getOrderDetailsByOrderId(orderId);
-            paymentService.sendEmail(user.getUserName(),orderResponse ,orderDetailsResponses );
+            // System.out.println("ORDER : " + orderResponse);
+            paymentInfo = paymentService.createPaymentInfo(vnp_OrderInfo, paymentStatus, vnp_PayDate, String.valueOf(orderResponse.getTotalPrice()), vnp_TransactionId);
+          //  List<OrderDetailsResponse> orderDetailsResponses = orderDetailsService.getOrderDetailsByOrderId(orderId);
+            System.out.println("ORDER DETAILS : " + orderResponse.getOrderDetails().size());
+            paymentService.updateQuantityStock(orderResponse.getOrderId());
+            if (orderResponse.getCoupon() != null ){
+                paymentService.updateCouponStorageAndUsedCount(orderResponse);
+            }
+            paymentService.sendEmail(orderResponse );
             System.out.println("Payment Success");
         }else{
             System.out.println("Payment Failed");
             paymentInfo.setPaymentStatus(0);
         }
         cartService.removeCart(user.getUserId());
-        System.out.println(paymentInfo + "Payment Info Return");
+       // System.out.println(paymentInfo + "Payment Info Return");
+        System.out.println("122");
         return paymentInfo;
     }
 

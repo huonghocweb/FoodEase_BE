@@ -14,4 +14,8 @@ public interface CouponStorageRepo extends JpaRepository<CouponStorage, Integer>
     Page<CouponStorage> getCouponStorageByUserName(@Param("userName") String userName , Pageable pageable);
     @Query("SELECT cps FROM CouponStorage  cps JOIN cps.user u WHERE u.userName = :userName")
     List<CouponStorage> getAllCouponStorageByUserName(@Param("userName") String userName );
+    @Query("SELECT cps FROM CouponStorage cps JOIN cps.user u JOIN cps.coupon cp " +
+            " WHERE u.userName= :userName AND cp.couponId=:couponId ")
+    CouponStorage getCouponStorageByUserNameAndCouponId(@Param("userName") String userName,
+                                                        @Param("couponId") Integer couponId);
 }

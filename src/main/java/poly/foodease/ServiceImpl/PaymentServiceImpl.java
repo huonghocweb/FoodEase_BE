@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.OrderMapper;
 import poly.foodease.Mapper.PaymentMethodMapper;
-import poly.foodease.Model.Entity.MailInfo;
-import poly.foodease.Model.Entity.PaymentMethod;
+import poly.foodease.Model.Entity.*;
 import poly.foodease.Model.Request.OrderDetailsRequest;
 import poly.foodease.Model.Request.OrderRequest;
 import poly.foodease.Model.Response.*;
-import poly.foodease.Repository.PaymentMethodRepo;
+import poly.foodease.Repository.*;
 import poly.foodease.Service.*;
 
 import java.io.File;
@@ -43,6 +42,18 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentMethodRepo paymentMethodRepo;
     @Autowired
     private PaymentMethodMapper paymentMethodMapper;
+    @Autowired
+    private OrderRepo orderRepo;
+    @Autowired
+    private OrderStatusRepo orderStatusRepo;
+    @Autowired
+    private CouponStorageRepo couponStorageRepo;
+    @Autowired
+    private CouponStorageService couponStorageService;
+    @Autowired
+    private CouponRepo couponRepo;
+    @Autowired
+    private FoodVariationsDao foodVariationsDao;
 
     public PaymentInfo createPaymentInfo(String orderInfo, Integer paymentStatus, String totalPrice, String paymentDateTime, String transactionId){
         PaymentInfo paymentInfo = new PaymentInfo(orderInfo,paymentStatus,paymentDateTime,totalPrice,transactionId);
@@ -74,13 +85,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     // Cập nhật thông tin sau khi thanh toán thành công
     public OrderResponse updatePaymentSuccess(Integer orderId){
-        OrderResponse orderResponse = orderService.getOrderByOrderId(orderId)
+        Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found Order"));
-        OrderRequest orderRequest= orderMapper.convertResToReq(orderResponse);
-        orderRequest.setPaymentDateTime(LocalDateTime.now());
-        orderRequest.setOrderStatusId(2);
-        orderRequest.setEstimatedDeliveryDateTime(LocalDateTime.now().plusHours(orderRequest.getLeadTime()));
-        return orderService.updateOrder(orderId, orderRequest).get();
+        order.setPaymentDatetime(LocalDateTime.now());
+        order.setOrderStatus(orderStatusRepo.findById(2)
+                .orElseThrow(() -> new EntityNotFoundException("NOT found Order Status")));
+        order.setEstimatedDeliveryDateTime(LocalDateTime.now().plusHours(order.getLeadTime()));
+        return orderMapper.convertEnToRes(orderRepo.save(order));
     }
     public List<OrderDetailsResponse> createOrderDetails(Integer orderId, Integer cartId){
         OrderDetailsRequest orderDetailsRequest = new OrderDetailsRequest();
@@ -99,8 +110,34 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void updateCouponStorageAndUsedCount(String username, String couponId) {
+    public void updateCouponStorageAndUsedCount(OrderResponse order) {
+        String userName = order.getUser().getUserName();
+        Integer couponId= order.getCoupon().getCouponId();
+        Coupon coupon = couponRepo.findById(couponId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Coupon"));
+        coupon.setUsedCount(coupon.getUsedCount() + 1);
+        CouponStorage couponStorage= couponStorageRepo.getCouponStorageByUserNameAndCouponId(userName, couponId);
+        couponStorageService.removeCouponInStorage(couponStorage.getCouponStorageId());
 
+    }
+
+    @Override
+    public void updateQuantityStock(Integer orderId) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Order"));
+        List<FoodVariations> updatedVariations = new ArrayList<>();
+
+        order.getOrderDetails().forEach(orderDetails -> {
+            FoodVariations foodVariations = foodVariationsDao.findById(orderDetails.getFoodVariations().getFoodVariationId())
+                    .orElseThrow(() -> new EntityNotFoundException("Not found Food Variations"));
+            if (foodVariations.getQuantityStock() < orderDetails.getQuantity()) {
+                throw new IllegalArgumentException("Insufficient stock for Food Variation ID: " + foodVariations.getFoodVariationId());
+            }
+            foodVariations.setQuantityStock(foodVariations.getQuantityStock() - orderDetails.getQuantity());
+            updatedVariations.add(foodVariations);
+        });
+
+        foodVariationsDao.saveAll(updatedVariations);
     }
 
     //    @Override
@@ -162,7 +199,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     // Xử Lý nghiệp vụ liên quan đến coupon
     @Override
-    public void sendEmail (String username , OrderResponse orderResponse, List<OrderDetailsResponse> orderDetailResponses ) throws IOException, WriterException {
+    public void sendEmail(OrderResponse orderResponse) throws IOException, WriterException {
         MailInfo mail= new MailInfo();
 //        UserResponse user = userService.getUserByUsername(username)
 //                .orElseThrow(()-> new EntityNotFoundException("not foud user"));
@@ -181,7 +218,7 @@ public class PaymentServiceImpl implements PaymentService {
         bodyBuilder.append("<ul>");
 
         // Vòng lặp để hiển thị từng sản phẩm
-        orderDetailResponses.forEach(orderDetail -> {
+        orderResponse.getOrderDetails().forEach(orderDetail -> {
             bodyBuilder.append("<li><strong>Tên Sản Phẩm:</strong> ")
                     .append(orderDetail.getFoodVariations().getFood().getFoodName())
                     .append("<br><strong>Số Lượng:</strong> ").append(orderDetail.getQuantity())
