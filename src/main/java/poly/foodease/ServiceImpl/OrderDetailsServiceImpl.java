@@ -10,6 +10,7 @@ import poly.foodease.Model.Entity.OrderDetails;
 import poly.foodease.Model.Request.OrderDetailsRequest;
 import poly.foodease.Model.Response.OrderDetailsResponse;
 import poly.foodease.Report.FoodBuyMost;
+import poly.foodease.Report.FoodSold;
 import poly.foodease.Repository.OrderDetailsRepo;
 import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Service.OrderDetailsService;
@@ -96,6 +97,21 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 		// TODO Auto-generated method stub
 		FoodBuyMost list=orderDetailsRepo.FoodSold(foodId);
 		return list;
+	}
+
+	@Override
+	public poly.foodease.Report.FoodSold FoodSoldByFoodVariationId(Integer id) {
+		// TODO Auto-generated method stub
+		poly.foodease.Report.FoodSold list= orderDetailsRepo.foodSoldByFoodVariation(id);
+		return list;
+	}
+
+	@Override
+	public poly.foodease.Report.FoodSold FoodSoldByFoodId(Integer id) {
+		// TODO Auto-generated method stub
+		FoodSold foodSoldByFoodId = orderDetailsRepo.foodSoldByfoodId(id);
+		
+		return foodSoldByFoodId;
 	}
 
 	
