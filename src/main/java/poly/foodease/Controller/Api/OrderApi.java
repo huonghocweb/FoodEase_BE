@@ -322,4 +322,21 @@ public class OrderApi {
 
 	}
 
+	@GetMapping("/byId/{orderId}")
+	public ResponseEntity<Object> getOrderById(
+			@PathVariable("orderId") Integer orderId
+	){
+		Map<String,Object> result = new HashMap<>();
+		try {
+			result.put("success",true);
+			result.put("message","get Order By Order Id");
+			result.put("data",orderService.getOrderByOrderId(orderId));
+		}catch (Exception e){
+			result.put("success",false);
+			result.put("message",e.getMessage());
+			result.put("data", null);
+		}
+		return ResponseEntity.ok(result);
+	}
+
 }

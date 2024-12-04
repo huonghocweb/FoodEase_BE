@@ -50,6 +50,9 @@ public class OrderServiceImpl implements OrderService {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
         Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
         Page<Order> orderPage = orderRepo.findAll(pageable);
+        if (pageCurrent >= (orderPage.getTotalPages() -1)){
+            pageable = PageRequest.of(orderPage.getTotalPages()-1, pageSize,sort);
+        }
         List<OrderResponse> orders = orderPage.getContent().stream()
                 .map(orderMapper::convertEnToRes)
                 .collect(Collectors.toList());
@@ -115,6 +118,9 @@ public class OrderServiceImpl implements OrderService {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy));
         Pageable pageable = PageRequest.of(pageCurrent, pageSize, sort);
         Page<Order> orderPage = orderRepo.getOrdersByUserName(userName,pageable);
+        if (pageCurrent >= (orderPage.getTotalPages() -1) ){
+            pageable = PageRequest.of(orderPage.getTotalPages()-1, pageSize,sort);
+        }
         List<OrderResponse> orders= orderPage.getContent().stream()
                 .map(orderMapper :: convertEnToRes)
                 .collect(Collectors.toList());
@@ -127,6 +133,9 @@ public class OrderServiceImpl implements OrderService {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
         Pageable pageable = PageRequest.of(pageCurrent,pageSize,sort);
         Page<Order> orderPage = orderRepo.getOrderByStatusId(userName, orderStatusId, pageable);
+        if (pageCurrent >= (orderPage.getTotalPages() -1) ){
+            pageable = PageRequest.of(orderPage.getTotalPages()-1, pageSize,sort);
+        }
         List<OrderResponse> orders = orderPage.getContent().stream()
                 .map(orderMapper :: convertEnToRes)
                 .collect(Collectors.toList());

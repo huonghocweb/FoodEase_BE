@@ -52,6 +52,7 @@ public class CartServiceImpl implements CartService {
         }
         cartItem.setFoodVariation(foodVariation);
         cartItem.setPrice(cartItem.getQuantity() * priceVa);
+        System.out.println("Price In CartItem : " + cartItem.getPrice());
         cart.getItems().put(foodVaId, cartItem);
         cart.setCartId(cartId);
         cartStore.put(cartId, cart);

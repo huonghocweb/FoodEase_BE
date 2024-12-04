@@ -1,18 +1,24 @@
 package poly.foodease.Controller.Api;
 
+import com.paypal.base.rest.PayPalRESTException;
 import com.stripe.exception.StripeException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Response.OrderDetailsResponse;
 import poly.foodease.Model.Response.OrderResponse;
+import poly.foodease.Repository.OrderRepo;
 import poly.foodease.Service.PaymentService;
 import poly.foodease.ServiceImpl.MomoServiceImpl;
 import poly.foodease.ServiceImpl.PayPalServiceImpl;
 import poly.foodease.ServiceImpl.StripeServiceImpl;
 import poly.foodease.ServiceImpl.VnPayServiceImpl;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +37,8 @@ public class PaymentApi {
     MomoServiceImpl momoService;
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    private OrderRepo orderRepo;
 
 
     @PostMapping("/byVnpay/{totalPrice}/{cartId}")
@@ -99,7 +107,7 @@ public class PaymentApi {
             @RequestBody List<Map<String,Object>> cartItems
     ) throws StripeException {
         System.out.println("Stripe " + cartItems);
-        OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 2, 1, leadTime, shipFee, deliveryAddress);
+        OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 4, 1, leadTime, shipFee, deliveryAddress);
         List<OrderDetailsResponse> orderDetailsResponses = paymentService.createOrderDetails(orderResponse.getOrderId(), cartId);
         Map<String,Object> result = new HashMap<>();
         try {
@@ -127,7 +135,7 @@ public class PaymentApi {
             @RequestParam("baseReturnUrl") String baseReturnUrl
     ){
         System.out.println("payment Momo " + baseReturnUrl );
-        OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 2, 1, leadTime, shipFee, deliveryAddress);
+        OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 3, 1, leadTime, shipFee, deliveryAddress);
         List<OrderDetailsResponse> orderDetailsResponses = paymentService.createOrderDetails(orderResponse.getOrderId(), cartId);
         Double totalPriceDouble = orderResponse.getTotalPrice(); // Giả sử đây là Double.
         if (totalPriceDouble == null) {
@@ -226,6 +234,46 @@ public class PaymentApi {
             result.put("success",true);
             result.put("message","Get All Payment Method");
             result.put("data",paymentService.getAllPaymentMethod());
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/paymentContinue/{orderId}")
+    public ResponseEntity<Object> paymentContinue(
+            @PathVariable("orderId") Integer orderId,
+            @RequestParam("baseUrlReturn") String baseUrlReturn
+    ) throws UnsupportedEncodingException, PayPalRESTException, StripeException {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("NOt found Entity"));
+        Integer paymentMethodId = order.getPaymentMethod().getPaymentMethodId();
+        List< Map<String,Object>> cartItems = new ArrayList<>();
+        String urlPaymentReturn = "";
+        Map<String,Object> cartItem = new HashMap<>();
+        order.getOrderDetails().forEach(orderDetails -> {
+            cartItem.put(String.valueOf(orderDetails.getFoodVariations().getFoodVariationId()), orderDetails.getQuantity());
+            cartItems.add(cartItem);
+            System.out.println(cartItem);
+        });
+        System.out.println("CartItems : " + cartItems);
+        int totalPriceInteger = Math.toIntExact(Math.round(order.getTotalPrice()));
+        if (paymentMethodId ==1){
+            urlPaymentReturn = vnPayService.createPaymentUrl(totalPriceInteger, String.valueOf(order.getOrderId()), baseUrlReturn);
+        }else if (paymentMethodId ==2 ){
+            urlPaymentReturn = payPalService.createPaymentUrl(totalPriceInteger, order.getOrderId(), baseUrlReturn, baseUrlReturn);
+        }else if(paymentMethodId == 4){
+            urlPaymentReturn = stripeService.createPaymentUrlByStripe(order.getOrderId(), totalPriceInteger, baseUrlReturn,cartItems );
+        } else if(paymentMethodId ==3){
+            urlPaymentReturn = momoService.createUrlPaymentMomo(order.getOrderId(), totalPriceInteger, baseUrlReturn, order.getUser().getUserName());
+        }
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Get All Payment Method");
+            result.put("data",urlPaymentReturn);
         }catch (Exception e){
             result.put("success",false);
             result.put("message",e.getMessage());

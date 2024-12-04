@@ -33,8 +33,8 @@ public class MomoService {
     private String ipnUrl;
 
     private static final String URL_RETURN = "/thanks/momo";
-   // private static final String PAYMENT_METHOD = "captureWallet";
-    private static final String PAYMENT_METHOD = "payWithATM";
+    private static final String PAYMENT_METHOD = "captureWallet";
+   // private static final String PAYMENT_METHOD = "payWithATM";
 
     public String createPaymentRequest(String orderInfo, long amount, String baseUrlReturn, String username) {
         String orderId = "MOMO" + UUID.randomUUID().toString().substring(0, 5);

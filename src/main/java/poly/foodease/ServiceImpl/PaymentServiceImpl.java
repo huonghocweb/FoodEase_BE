@@ -64,7 +64,7 @@ public class PaymentServiceImpl implements PaymentService {
     public OrderResponse createOrder(Integer cartId, Integer couponId , Integer paymentMethodId, Integer shipMethodId ,Integer leadTime,Integer shipFee, String deliveryAddress){
         OrderRequest orderRequest = new OrderRequest();
         orderRequest.setUserId(cartId);
-        orderRequest.setTotalPrice(cartService.getTotalPrice(cartId));
+        orderRequest.setTotalPrice(cartService.getTotalPrice(cartId) + shipFee );
         orderRequest.setTotalQuantity(cartService.getTotalQuantity(cartId) );
         // Lưu thông tin thanh toán với trạng thái Processing
         orderRequest.setOrderStatusId(1);
