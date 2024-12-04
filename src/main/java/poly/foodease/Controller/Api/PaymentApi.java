@@ -16,7 +16,7 @@ import poly.foodease.ServiceImpl.VnPayServiceImpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentApi {
@@ -126,9 +126,16 @@ public class PaymentApi {
             @RequestParam("deliveryAddress") String deliveryAddress,
             @RequestParam("baseReturnUrl") String baseReturnUrl
     ){
-        System.out.println("payment Momo");
+        System.out.println("payment Momo " + baseReturnUrl );
         OrderResponse orderResponse= paymentService.createOrder(cartId, couponId, 2, 1, leadTime, shipFee, deliveryAddress);
         List<OrderDetailsResponse> orderDetailsResponses = paymentService.createOrderDetails(orderResponse.getOrderId(), cartId);
+        Double totalPriceDouble = orderResponse.getTotalPrice(); // Giả sử đây là Double.
+        if (totalPriceDouble == null) {
+            throw new IllegalArgumentException("Total price is null");
+        }
+        // Chuyển Double sang Integer:
+        int totalPriceInteger = Math.toIntExact(Math.round(totalPriceDouble));
+
         Map<String,Object> result = new HashMap<>();
         try {
             result.put("success",true);

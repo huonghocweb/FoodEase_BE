@@ -50,7 +50,7 @@ public class PaymentMethodApi {
             }else if (paymentMethodId ==2){
                 result.put("data",payPalService.createPaymentUrl(totalPrice, Integer.valueOf(reservationOrderId), baseUrlReturn, baseUrlReturn));
             }else if(paymentMethodId ==3 ){
-                result.put("data",momoService.createPaymentRequest(Integer.valueOf(reservationOrderId), totalPrice, baseUrlReturn, userName));
+                result.put("data",momoService.createPaymentRequest(String.valueOf(Integer.valueOf(reservationOrderId)), totalPrice, baseUrlReturn, userName));
             }else if(paymentMethodId == 5){
                 System.out.println("Cash");
 

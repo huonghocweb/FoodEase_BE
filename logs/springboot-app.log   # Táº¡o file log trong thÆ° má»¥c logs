@@ -5369,3 +5369,986 @@ Consider defining a bean of type 'org.springframework.security.oauth2.client.reg
 2024-12-03 21:45:54 - Total orders to update: 22
 2024-12-03 21:46:51 - HikariPool-1 - Shutdown initiated...
 2024-12-03 21:46:51 - HikariPool-1 - Shutdown completed.
+2024-12-04 08:05:41 - Starting FoodEaseApplication using Java 17.0.10 with PID 19908 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 08:05:41 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 08:05:43 - Starting service [Tomcat]
+2024-12-04 08:05:43 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 08:05:43 - Initializing Spring embedded WebApplicationContext
+2024-12-04 08:05:44 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 08:05:44 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 08:05:44 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 08:05:44 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:05:44 - HikariPool-1 - Starting...
+2024-12-04 08:05:44 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 489b3a3e-e419-4291-ae4c-a852488a86c5
+2024-12-04 08:05:44 - HikariPool-1 - Start completed.
+2024-12-04 08:05:45 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:05:45 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 08:05:50 - Started FoodEaseApplication in 8.778 seconds (process running for 9.408)
+2024-12-04 08:05:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:05:50 - Total orders to update: 0
+2024-12-04 08:05:50 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 08:06:12 - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.web.client.HttpClientErrorException$BadRequest: 400 Bad Request: "{"code":400,"message":"Lỗi gọi API: corev2_tenant_order_calculate_fee - Lỗi gọi API: masterdata_district_v2_detail_by_id - Key: 'DistrictDetailRequest.DistrictID' Error:Field validation for 'DistrictID' failed on the 'required' tag","data":null,"code_message":"RECEIVE_DISTRICT_IS_INVALID","code_message_value":"Tuyến giao hàng tạm thời ngừng do ảnh hưởng của dịch bệnh"}<EOL>"] with root cause
+org.springframework.web.client.HttpClientErrorException$BadRequest: 400 Bad Request: "{"code":400,"message":"Lỗi gọi API: corev2_tenant_order_calculate_fee - Lỗi gọi API: masterdata_district_v2_detail_by_id - Key: 'DistrictDetailRequest.DistrictID' Error:Field validation for 'DistrictID' failed on the 'required' tag","data":null,"code_message":"RECEIVE_DISTRICT_IS_INVALID","code_message_value":"Tuyến giao hàng tạm thời ngừng do ảnh hưởng của dịch bệnh"}<EOL>"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:103)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:183)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:137)
+	at org.springframework.web.client.ResponseErrorHandler.handleError(ResponseErrorHandler.java:63)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:942)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:891)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:672)
+	at poly.foodease.ServiceImpl.ShipServiceImpl.calculateFee(ShipServiceImpl.java:134)
+	at poly.foodease.Controller.Api.ShipApi.calculateFee(ShipApi.java:92)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter.doFilterInternal(DefaultLogoutPageGeneratingFilter.java:58)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:189)
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:175)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at poly.foodease.Config.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:82)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-12-04 08:06:19 - Creating new order with request: OrderRequest(totalPrice=498000.0, totalQuantity=3, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=08:06:19.198777900, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 08:06:19 - Order created successfully with ID: 93
+2024-12-04 08:06:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:06:50 - Total orders to update: 0
+2024-12-04 08:07:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:07:50 - Total orders to update: 0
+2024-12-04 08:08:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:08:50 - Total orders to update: 0
+2024-12-04 08:09:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:09:50 - Total orders to update: 0
+2024-12-04 08:10:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:10:50 - Total orders to update: 0
+2024-12-04 08:11:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:11:50 - Total orders to update: 0
+2024-12-04 08:12:00 - HikariPool-1 - Shutdown initiated...
+2024-12-04 08:12:00 - HikariPool-1 - Shutdown completed.
+2024-12-04 08:12:03 - Starting FoodEaseApplication using Java 17.0.10 with PID 19624 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 08:12:03 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 08:12:05 - Starting service [Tomcat]
+2024-12-04 08:12:05 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 08:12:05 - Initializing Spring embedded WebApplicationContext
+2024-12-04 08:12:06 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 08:12:06 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 08:12:06 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 08:12:06 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:12:06 - HikariPool-1 - Starting...
+2024-12-04 08:12:06 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 94dbb1a9-066b-4b13-b6af-0869660bd981
+2024-12-04 08:12:06 - HikariPool-1 - Start completed.
+2024-12-04 08:12:06 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:12:07 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 08:12:12 - Started FoodEaseApplication in 10.286 seconds (process running for 11.025)
+2024-12-04 08:12:12 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:12:13 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 08:12:13 - Total orders to update: 0
+2024-12-04 08:12:48 - Creating new order with request: OrderRequest(totalPrice=498000.0, totalQuantity=3, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=08:12:48.056847700, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 08:12:48 - Order created successfully with ID: 94
+2024-12-04 08:13:12 - Scheduled update for changing order statuses to delivered
+2024-12-04 08:13:12 - Total orders to update: 0
+2024-12-04 08:14:07 - HikariPool-1 - Shutdown initiated...
+2024-12-04 08:14:07 - HikariPool-1 - Shutdown completed.
+2024-12-04 08:14:10 - Starting FoodEaseApplication using Java 17.0.10 with PID 19604 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 08:14:10 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 08:14:13 - Starting service [Tomcat]
+2024-12-04 08:14:13 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 08:14:13 - Initializing Spring embedded WebApplicationContext
+2024-12-04 08:14:13 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 08:14:13 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 08:14:13 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 08:14:13 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:14:13 - HikariPool-1 - Starting...
+2024-12-04 08:14:14 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: c5d83a83-1721-4884-988c-c27dd98efbb9
+2024-12-04 08:14:14 - HikariPool-1 - Start completed.
+2024-12-04 08:14:14 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 08:14:15 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 09:42:22 - Starting FoodEaseApplication using Java 17.0.10 with PID 10908 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 09:42:22 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 09:42:24 - Starting service [Tomcat]
+2024-12-04 09:42:24 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 09:42:24 - Initializing Spring embedded WebApplicationContext
+2024-12-04 09:42:25 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 09:42:25 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 09:42:25 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 09:42:25 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 09:42:25 - HikariPool-1 - Starting...
+2024-12-04 09:42:25 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: b42fca99-64ff-4b19-92aa-034af974447a
+2024-12-04 09:42:25 - HikariPool-1 - Start completed.
+2024-12-04 09:42:26 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 09:42:27 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 09:42:32 - Started FoodEaseApplication in 11.174 seconds (process running for 12.138)
+2024-12-04 09:42:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:42:33 - Total orders to update: 0
+2024-12-04 09:42:33 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 09:43:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:43:32 - Total orders to update: 0
+2024-12-04 09:44:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:44:32 - Total orders to update: 0
+2024-12-04 09:45:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:45:32 - Total orders to update: 0
+2024-12-04 09:46:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:46:32 - Total orders to update: 0
+2024-12-04 09:47:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:47:32 - Total orders to update: 0
+2024-12-04 09:48:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:48:32 - Total orders to update: 0
+2024-12-04 09:49:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:49:32 - Total orders to update: 0
+2024-12-04 09:50:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:50:32 - Total orders to update: 0
+2024-12-04 09:55:43 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:55:43 - Total orders to update: 0
+2024-12-04 09:55:43 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:55:43 - Total orders to update: 0
+2024-12-04 09:55:43 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:55:43 - Total orders to update: 0
+2024-12-04 09:55:43 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:55:43 - Total orders to update: 0
+2024-12-04 09:55:43 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:55:43 - Total orders to update: 0
+2024-12-04 09:56:08 - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m42s167ms597µs700ns).
+2024-12-04 09:56:12 - Creating new order with request: OrderRequest(totalPrice=166000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=09:56:12.792382300, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 09:56:12 - Order created successfully with ID: 95
+2024-12-04 09:56:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:56:32 - Total orders to update: 0
+2024-12-04 09:57:33 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:57:33 - Total orders to update: 0
+2024-12-04 09:58:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:58:32 - Total orders to update: 0
+2024-12-04 09:59:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 09:59:32 - Total orders to update: 0
+2024-12-04 10:00:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:00:32 - Total orders to update: 0
+2024-12-04 10:01:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:01:32 - Total orders to update: 0
+2024-12-04 10:02:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:02:32 - Total orders to update: 0
+2024-12-04 10:03:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:03:32 - Total orders to update: 0
+2024-12-04 10:04:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:04:32 - Total orders to update: 0
+2024-12-04 10:05:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:05:32 - Total orders to update: 0
+2024-12-04 10:06:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:06:33 - Total orders to update: 0
+2024-12-04 10:07:32 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:07:32 - Total orders to update: 0
+2024-12-04 10:07:49 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:07:49 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:07:53 - Starting FoodEaseApplication using Java 17.0.10 with PID 9696 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:07:53 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:07:56 - Starting service [Tomcat]
+2024-12-04 10:07:56 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:07:56 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:07:57 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:07:57 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:07:57 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:07:57 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:07:57 - HikariPool-1 - Starting...
+2024-12-04 10:07:57 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 10be22c5-ce97-46ca-8909-fb60457d08be
+2024-12-04 10:07:57 - HikariPool-1 - Start completed.
+2024-12-04 10:07:58 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:07:59 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:08:06 - Started FoodEaseApplication in 13.969 seconds (process running for 15.093)
+2024-12-04 10:08:06 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:08:07 - Total orders to update: 0
+2024-12-04 10:08:07 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:08:36 - Creating new order with request: OrderRequest(totalPrice=136000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:08:36.420948900, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:08:36 - Order created successfully with ID: 96
+2024-12-04 10:08:50 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:08:50 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:08:54 - Starting FoodEaseApplication using Java 17.0.10 with PID 19184 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:08:54 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:08:58 - Starting service [Tomcat]
+2024-12-04 10:08:58 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:08:58 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:08:58 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:08:58 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:08:58 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:08:58 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:08:58 - HikariPool-1 - Starting...
+2024-12-04 10:08:58 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 8b432a83-2e70-4336-b1df-0e6fe889df6a
+2024-12-04 10:08:58 - HikariPool-1 - Start completed.
+2024-12-04 10:08:59 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:00 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:09:06 - Started FoodEaseApplication in 12.353 seconds (process running for 13.35)
+2024-12-04 10:09:06 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:09:06 - Total orders to update: 0
+2024-12-04 10:09:07 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:09:17 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:09:17 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:09:18 - Starting FoodEaseApplication using Java 17.0.10 with PID 19184 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:09:18 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:09:19 - Starting service [Tomcat]
+2024-12-04 10:09:19 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:09:19 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:09:20 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:09:20 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:20 - HikariPool-2 - Starting...
+2024-12-04 10:09:20 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: de6856e4-49f5-4b86-a2b1-28454a9551fc
+2024-12-04 10:09:20 - HikariPool-2 - Start completed.
+2024-12-04 10:09:20 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:21 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:09:26 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:09:26 - Started FoodEaseApplication in 8.43 seconds (process running for 33.236)
+2024-12-04 10:09:26 - Total orders to update: 0
+2024-12-04 10:09:27 - HikariPool-2 - Shutdown initiated...
+2024-12-04 10:09:27 - HikariPool-2 - Shutdown completed.
+2024-12-04 10:09:28 - Starting FoodEaseApplication using Java 17.0.10 with PID 19184 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:09:28 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:09:29 - Starting service [Tomcat]
+2024-12-04 10:09:29 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:09:29 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:09:29 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:09:29 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:29 - HikariPool-3 - Starting...
+2024-12-04 10:09:29 - HikariPool-3 - Added connection ConnectionID:21 ClientConnectionId: 00ddc5a3-aced-4db8-ada2-bbb484910dba
+2024-12-04 10:09:29 - HikariPool-3 - Start completed.
+2024-12-04 10:09:29 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:30 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:09:34 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:09:34 - Started FoodEaseApplication in 6.146 seconds (process running for 40.972)
+2024-12-04 10:09:34 - Total orders to update: 0
+2024-12-04 10:09:34 - HikariPool-3 - Shutdown initiated...
+2024-12-04 10:09:34 - HikariPool-3 - Shutdown completed.
+2024-12-04 10:09:37 - Starting FoodEaseApplication using Java 17.0.10 with PID 13784 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:09:37 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:09:40 - Starting service [Tomcat]
+2024-12-04 10:09:40 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:09:40 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:09:41 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:09:41 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:09:41 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:09:41 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:41 - HikariPool-1 - Starting...
+2024-12-04 10:09:41 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 733243ac-ce17-4dec-8f71-a184f04c133a
+2024-12-04 10:09:41 - HikariPool-1 - Start completed.
+2024-12-04 10:09:42 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:09:43 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:09:49 - Started FoodEaseApplication in 12.038 seconds (process running for 12.984)
+2024-12-04 10:09:49 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:09:49 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:09:49 - Total orders to update: 0
+2024-12-04 10:10:08 - Creating new order with request: OrderRequest(totalPrice=50350.0, totalQuantity=1, deliveryAddress= Xã An Thuận Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:10:08.751910600, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:10:08 - Order created successfully with ID: 97
+2024-12-04 10:10:08 - Creating new order with request: OrderRequest(totalPrice=50350.0, totalQuantity=1, deliveryAddress= Xã An Thuận Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:10:08.979292, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:10:09 - Order created successfully with ID: 98
+2024-12-04 10:10:48 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:10:48 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:10:48 - Starting FoodEaseApplication using Java 17.0.10 with PID 13784 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:10:48 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:10:49 - Starting service [Tomcat]
+2024-12-04 10:10:49 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:10:49 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:10:49 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:10:49 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:10:49 - HikariPool-2 - Starting...
+2024-12-04 10:10:49 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: 964ad63d-0a1c-4999-95b6-e8ca80fa3526
+2024-12-04 10:10:49 - HikariPool-2 - Start completed.
+2024-12-04 10:10:49 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:10:49 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:10:53 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:10:53 - Started FoodEaseApplication in 5.249 seconds (process running for 77.099)
+2024-12-04 10:10:53 - Total orders to update: 0
+2024-12-04 10:10:54 - HikariPool-2 - Shutdown initiated...
+2024-12-04 10:10:54 - HikariPool-2 - Shutdown completed.
+2024-12-04 10:10:55 - Starting FoodEaseApplication using Java 17.0.10 with PID 13784 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:10:55 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:10:55 - Starting service [Tomcat]
+2024-12-04 10:10:55 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:10:55 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:10:56 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:10:56 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:10:56 - HikariPool-3 - Starting...
+2024-12-04 10:10:56 - HikariPool-3 - Added connection ConnectionID:21 ClientConnectionId: 451762e4-0d8f-4286-86b0-f970599c1e43
+2024-12-04 10:10:56 - HikariPool-3 - Start completed.
+2024-12-04 10:10:56 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:10:56 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:11:00 - Started FoodEaseApplication in 5.413 seconds (process running for 84.062)
+2024-12-04 10:11:00 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:11:00 - Total orders to update: 0
+2024-12-04 10:11:01 - HikariPool-3 - Shutdown initiated...
+2024-12-04 10:11:01 - HikariPool-3 - Shutdown completed.
+2024-12-04 10:11:01 - Starting FoodEaseApplication using Java 17.0.10 with PID 13784 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:11:01 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:11:02 - Starting service [Tomcat]
+2024-12-04 10:11:02 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:11:02 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:11:03 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:11:03 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:11:03 - HikariPool-4 - Starting...
+2024-12-04 10:11:03 - HikariPool-4 - Added connection ConnectionID:31 ClientConnectionId: 63bb9ee9-c57c-4d5e-967d-5a5b2e85c3a8
+2024-12-04 10:11:03 - HikariPool-4 - Start completed.
+2024-12-04 10:11:03 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:11:03 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:11:06 - Started FoodEaseApplication in 4.54 seconds (process running for 90.117)
+2024-12-04 10:11:06 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:11:06 - Total orders to update: 0
+2024-12-04 10:11:06 - HikariPool-4 - Shutdown initiated...
+2024-12-04 10:11:06 - HikariPool-4 - Shutdown completed.
+2024-12-04 10:11:09 - Starting FoodEaseApplication using Java 17.0.10 with PID 13556 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:11:09 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:11:12 - Starting service [Tomcat]
+2024-12-04 10:11:12 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:11:12 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:11:12 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:11:12 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:11:12 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:11:12 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:11:12 - HikariPool-1 - Starting...
+2024-12-04 10:11:13 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 8cd9623e-73c4-4341-b812-a6b6571c09e7
+2024-12-04 10:11:13 - HikariPool-1 - Start completed.
+2024-12-04 10:11:13 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:11:14 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:11:19 - Started FoodEaseApplication in 10.571 seconds (process running for 11.656)
+2024-12-04 10:11:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:11:19 - Total orders to update: 0
+2024-12-04 10:11:20 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:12:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:12:19 - Total orders to update: 0
+2024-12-04 10:12:41 - Creating new order with request: OrderRequest(totalPrice=117600.0, totalQuantity=1, deliveryAddress= Xã An Thạnh Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:12:41.039109400, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:12:41 - Order created successfully with ID: 99
+2024-12-04 10:13:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:13:19 - Total orders to update: 0
+2024-12-04 10:14:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:14:19 - Total orders to update: 0
+2024-12-04 10:15:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:15:19 - Total orders to update: 0
+2024-12-04 10:16:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:16:19 - Total orders to update: 0
+2024-12-04 10:17:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:17:19 - Total orders to update: 0
+2024-12-04 10:18:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:18:19 - Total orders to update: 0
+2024-12-04 10:19:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:19:19 - Total orders to update: 0
+2024-12-04 10:20:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:20:19 - Total orders to update: 0
+2024-12-04 10:21:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:21:19 - Total orders to update: 0
+2024-12-04 10:22:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:22:19 - Total orders to update: 0
+2024-12-04 10:23:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:23:19 - Total orders to update: 0
+2024-12-04 10:24:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:24:19 - Total orders to update: 0
+2024-12-04 10:25:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:25:19 - Total orders to update: 0
+2024-12-04 10:26:19 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:26:19 - Total orders to update: 0
+2024-12-04 10:27:08 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:27:08 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:27:13 - Starting FoodEaseApplication using Java 17.0.10 with PID 12672 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:27:13 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:27:15 - Starting service [Tomcat]
+2024-12-04 10:27:15 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:27:16 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:27:16 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:27:16 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:27:16 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:27:16 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:27:16 - HikariPool-1 - Starting...
+2024-12-04 10:27:16 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 165c3f97-7efd-4c8e-a847-dc7e6dece94d
+2024-12-04 10:27:16 - HikariPool-1 - Start completed.
+2024-12-04 10:27:17 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:27:18 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:27:23 - Started FoodEaseApplication in 10.47 seconds (process running for 11.271)
+2024-12-04 10:27:23 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:27:23 - Total orders to update: 0
+2024-12-04 10:27:23 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:27:53 - Creating new order with request: OrderRequest(totalPrice=498000.0, totalQuantity=3, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:27:53.915140700, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:27:53 - Order created successfully with ID: 100
+2024-12-04 10:28:23 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:28:23 - Total orders to update: 0
+2024-12-04 10:29:23 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:29:23 - Total orders to update: 0
+2024-12-04 10:29:35 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:29:35 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:29:41 - Starting FoodEaseApplication using Java 17.0.10 with PID 22164 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:29:41 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:29:43 - Starting service [Tomcat]
+2024-12-04 10:29:43 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:29:43 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:29:43 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:29:43 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:29:43 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:29:44 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:29:44 - HikariPool-1 - Starting...
+2024-12-04 10:29:44 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: da495a54-c4f0-488d-bcec-25a92e8af1ac
+2024-12-04 10:29:44 - HikariPool-1 - Start completed.
+2024-12-04 10:29:44 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:29:45 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:29:51 - Started FoodEaseApplication in 10.538 seconds (process running for 11.254)
+2024-12-04 10:29:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:29:51 - Total orders to update: 0
+2024-12-04 10:29:51 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:30:15 - Creating new order with request: OrderRequest(totalPrice=498000.0, totalQuantity=3, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:30:15.427877100, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:30:15 - Order created successfully with ID: 101
+2024-12-04 10:30:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:30:51 - Total orders to update: 0
+2024-12-04 10:31:51 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:31:51 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:31:56 - Starting FoodEaseApplication using Java 17.0.10 with PID 23332 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:31:56 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:31:59 - Starting service [Tomcat]
+2024-12-04 10:31:59 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:31:59 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:32:00 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:32:00 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:32:00 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:32:00 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:32:00 - HikariPool-1 - Starting...
+2024-12-04 10:32:00 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: a66143d3-6ab9-4b94-ae45-fa138cdef2b6
+2024-12-04 10:32:00 - HikariPool-1 - Start completed.
+2024-12-04 10:32:01 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:32:02 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:32:06 - Started FoodEaseApplication in 10.559 seconds (process running for 11.439)
+2024-12-04 10:32:06 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:32:06 - Total orders to update: 0
+2024-12-04 10:32:07 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:32:15 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:32:15 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:32:20 - Starting FoodEaseApplication using Java 17.0.10 with PID 23644 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:32:20 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:32:22 - Starting service [Tomcat]
+2024-12-04 10:32:22 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:32:22 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:32:22 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:32:23 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:32:23 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:32:23 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:32:23 - HikariPool-1 - Starting...
+2024-12-04 10:32:23 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 66796ac9-4547-4f3e-8958-4d3de3d550a8
+2024-12-04 10:32:23 - HikariPool-1 - Start completed.
+2024-12-04 10:32:23 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:32:24 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:32:29 - Started FoodEaseApplication in 9.977 seconds (process running for 10.682)
+2024-12-04 10:32:29 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:32:30 - Total orders to update: 0
+2024-12-04 10:32:30 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:33:00 - Creating new order with request: OrderRequest(totalPrice=166000.0, totalQuantity=1, deliveryAddress= Xã An Thạnh Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:33:00.708384900, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:33:00 - Order created successfully with ID: 102
+2024-12-04 10:33:29 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:33:29 - Total orders to update: 0
+2024-12-04 10:33:38 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:33:38 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:33:42 - Starting FoodEaseApplication using Java 17.0.10 with PID 18208 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:33:42 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:33:45 - Starting service [Tomcat]
+2024-12-04 10:33:45 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:33:45 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:33:46 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:33:46 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:33:46 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:33:46 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:33:46 - HikariPool-1 - Starting...
+2024-12-04 10:33:46 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: f278fa2b-ded4-4599-bd5a-b08d8f540128
+2024-12-04 10:33:46 - HikariPool-1 - Start completed.
+2024-12-04 10:33:47 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:33:48 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:33:54 - Started FoodEaseApplication in 11.8 seconds (process running for 12.611)
+2024-12-04 10:33:54 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:33:54 - Total orders to update: 0
+2024-12-04 10:33:54 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:34:54 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:34:54 - Total orders to update: 0
+2024-12-04 10:35:43 - Creating new order with request: OrderRequest(totalPrice=147600.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:35:43.797999800, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:35:43 - Order created successfully with ID: 103
+2024-12-04 10:35:54 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:35:54 - Total orders to update: 0
+2024-12-04 10:36:49 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:36:49 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:36:54 - Starting FoodEaseApplication using Java 17.0.10 with PID 26384 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:36:54 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:36:57 - Starting service [Tomcat]
+2024-12-04 10:36:57 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:36:57 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:36:58 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:36:58 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:36:58 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:36:58 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:36:58 - HikariPool-1 - Starting...
+2024-12-04 10:36:58 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 875a3d1c-9e68-4a20-bde3-d7fa6f566456
+2024-12-04 10:36:58 - HikariPool-1 - Start completed.
+2024-12-04 10:36:59 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:37:00 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:37:08 - Started FoodEaseApplication in 14.495 seconds (process running for 15.692)
+2024-12-04 10:37:08 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:37:08 - Total orders to update: 0
+2024-12-04 10:37:08 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:37:28 - Creating new order with request: OrderRequest(totalPrice=147600.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:37:28.469295700, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:37:28 - Order created successfully with ID: 104
+2024-12-04 10:38:08 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:38:08 - Total orders to update: 0
+2024-12-04 10:38:38 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:38:38 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:39:24 - Starting FoodEaseApplication using Java 17.0.10 with PID 24596 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:39:24 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:39:44 - Starting service [Tomcat]
+2024-12-04 10:39:44 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:39:44 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:39:46 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:39:49 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:39:49 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:39:50 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:39:52 - HikariPool-1 - Starting...
+2024-12-04 10:40:00 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 456bbc2c-fa47-4372-85bd-0077417fcae8
+2024-12-04 10:40:00 - HikariPool-1 - Start completed.
+2024-12-04 10:40:03 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:40:15 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:40:25 - Started FoodEaseApplication in 62.234 seconds (process running for 65.24)
+2024-12-04 10:40:25 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:40:25 - Total orders to update: 0
+2024-12-04 10:40:25 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:40:27 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:40:27 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:41:13 - Starting FoodEaseApplication using Java 17.0.10 with PID 26904 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:41:13 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:41:15 - Starting service [Tomcat]
+2024-12-04 10:41:15 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:41:15 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:41:15 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:41:15 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:41:15 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:41:15 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:41:16 - HikariPool-1 - Starting...
+2024-12-04 10:41:16 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 28e23b24-335c-4c2a-86e4-ef411db710f6
+2024-12-04 10:41:16 - HikariPool-1 - Start completed.
+2024-12-04 10:41:16 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:41:17 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:41:24 - Started FoodEaseApplication in 11.572 seconds (process running for 12.5)
+2024-12-04 10:41:24 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:41:24 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:41:24 - Total orders to update: 0
+2024-12-04 10:41:51 - Creating new order with request: OrderRequest(totalPrice=272000.0, totalQuantity=2, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:41:51.592785400, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:41:51 - Order created successfully with ID: 105
+2024-12-04 10:42:24 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:42:24 - Total orders to update: 0
+2024-12-04 10:43:24 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:43:24 - Total orders to update: 0
+2024-12-04 10:43:28 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:43:28 - HikariPool-1 - Shutdown completed.
+2024-12-04 10:44:32 - Starting FoodEaseApplication using Java 17.0.10 with PID 27044 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 10:44:32 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 10:44:35 - Starting service [Tomcat]
+2024-12-04 10:44:35 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 10:44:35 - Initializing Spring embedded WebApplicationContext
+2024-12-04 10:44:35 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 10:44:36 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 10:44:36 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 10:44:36 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:44:36 - HikariPool-1 - Starting...
+2024-12-04 10:44:36 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 4d908b40-4693-4708-aec2-a98913d3e615
+2024-12-04 10:44:36 - HikariPool-1 - Start completed.
+2024-12-04 10:44:36 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 10:44:37 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 10:44:42 - Started FoodEaseApplication in 10.122 seconds (process running for 10.881)
+2024-12-04 10:44:42 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:44:42 - Total orders to update: 0
+2024-12-04 10:44:42 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 10:45:07 - Creating new order with request: OrderRequest(totalPrice=166000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=10:45:07.966486300, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 10:45:08 - Order created successfully with ID: 106
+2024-12-04 10:45:42 - Scheduled update for changing order statuses to delivered
+2024-12-04 10:45:42 - Total orders to update: 0
+2024-12-04 10:45:57 - HikariPool-1 - Shutdown initiated...
+2024-12-04 10:45:57 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:31:35 - Starting FoodEaseApplication using Java 17.0.10 with PID 15592 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:31:35 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:31:38 - Starting service [Tomcat]
+2024-12-04 12:31:38 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:31:38 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:31:38 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:31:38 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:31:38 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:31:39 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:31:39 - HikariPool-1 - Starting...
+2024-12-04 12:31:39 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: fb805206-a3ff-404e-857e-bd8893fd7846
+2024-12-04 12:31:39 - HikariPool-1 - Start completed.
+2024-12-04 12:31:39 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:31:41 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:31:46 - Started FoodEaseApplication in 10.999 seconds (process running for 11.842)
+2024-12-04 12:31:46 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:31:46 - Total orders to update: 0
+2024-12-04 12:31:46 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:32:46 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:32:46 - Total orders to update: 0
+2024-12-04 12:33:20 - Creating new order with request: OrderRequest(totalPrice=136000.0, totalQuantity=1, deliveryAddress= Xã An Thạnh Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:33:20.343440100, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:33:20 - Order created successfully with ID: 107
+2024-12-04 12:33:46 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:33:46 - Total orders to update: 0
+2024-12-04 12:34:36 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:34:36 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:34:39 - Starting FoodEaseApplication using Java 17.0.10 with PID 38460 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:34:39 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:34:42 - Starting service [Tomcat]
+2024-12-04 12:34:42 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:34:42 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:34:42 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:34:42 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:34:42 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:34:42 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:34:43 - HikariPool-1 - Starting...
+2024-12-04 12:34:43 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 9c6b8cb9-c408-422e-bed9-6de8426083c8
+2024-12-04 12:34:43 - HikariPool-1 - Start completed.
+2024-12-04 12:34:43 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:34:44 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:34:49 - Started FoodEaseApplication in 10.15 seconds (process running for 10.821)
+2024-12-04 12:34:49 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:34:49 - Total orders to update: 0
+2024-12-04 12:34:49 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:35:49 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:35:49 - Total orders to update: 0
+2024-12-04 12:36:41 - Creating new order with request: OrderRequest(totalPrice=166000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:36:41.130844100, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:36:41 - Order created successfully with ID: 108
+2024-12-04 12:36:49 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:36:49 - Total orders to update: 0
+2024-12-04 12:37:49 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:37:49 - Total orders to update: 0
+2024-12-04 12:37:55 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:37:55 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:37:59 - Starting FoodEaseApplication using Java 17.0.10 with PID 20092 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:37:59 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:38:01 - Starting service [Tomcat]
+2024-12-04 12:38:01 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:38:01 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:38:02 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:38:02 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:38:02 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:38:02 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:38:02 - HikariPool-1 - Starting...
+2024-12-04 12:38:02 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: e4acc389-2015-4018-8a46-56d928fd3967
+2024-12-04 12:38:02 - HikariPool-1 - Start completed.
+2024-12-04 12:38:02 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:38:03 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:38:09 - Started FoodEaseApplication in 10.235 seconds (process running for 10.849)
+2024-12-04 12:38:09 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:38:09 - Total orders to update: 0
+2024-12-04 12:38:09 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:39:01 - Creating new order with request: OrderRequest(totalPrice=259300.0, totalQuantity=2, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:39:01.715835800, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:39:01 - Order created successfully with ID: 109
+2024-12-04 12:39:09 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:39:09 - Total orders to update: 0
+2024-12-04 12:39:16 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:39:16 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:39:18 - Starting FoodEaseApplication using Java 17.0.10 with PID 12768 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:39:18 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:39:21 - Starting service [Tomcat]
+2024-12-04 12:39:21 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:39:21 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:39:21 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:39:21 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:39:21 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:39:21 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:39:21 - HikariPool-1 - Starting...
+2024-12-04 12:39:22 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 5433fcc1-8d45-415b-9777-c31571a3312d
+2024-12-04 12:39:22 - HikariPool-1 - Start completed.
+2024-12-04 12:39:22 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:39:23 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:39:27 - Started FoodEaseApplication in 9.44 seconds (process running for 10.294)
+2024-12-04 12:39:27 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:39:28 - Total orders to update: 0
+2024-12-04 12:39:28 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:39:40 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:39:40 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:39:42 - Starting FoodEaseApplication using Java 17.0.10 with PID 7252 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:39:42 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:39:45 - Starting service [Tomcat]
+2024-12-04 12:39:45 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:39:45 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:39:45 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:39:45 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:39:45 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:39:45 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:39:45 - HikariPool-1 - Starting...
+2024-12-04 12:39:45 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 2b96ac89-1568-4822-bfb1-eefa84cefc9f
+2024-12-04 12:39:45 - HikariPool-1 - Start completed.
+2024-12-04 12:39:46 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:39:47 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:39:51 - Started FoodEaseApplication in 9.273 seconds (process running for 9.895)
+2024-12-04 12:39:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:39:51 - Total orders to update: 0
+2024-12-04 12:39:52 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:40:10 - Creating new order with request: OrderRequest(totalPrice=117600.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:40:10.386929900, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:40:10 - Order created successfully with ID: 110
+2024-12-04 12:40:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:40:51 - Total orders to update: 0
+2024-12-04 12:41:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:41:51 - Total orders to update: 0
+2024-12-04 12:42:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:42:51 - Total orders to update: 0
+2024-12-04 12:43:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:43:51 - Total orders to update: 1
+2024-12-04 12:44:23 - Creating new order with request: OrderRequest(totalPrice=117600.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:44:23.922791200, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:44:23 - Order created successfully with ID: 111
+2024-12-04 12:44:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:44:51 - Total orders to update: 1
+2024-12-04 12:45:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:45:51 - Total orders to update: 1
+2024-12-04 12:46:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:46:51 - Total orders to update: 1
+2024-12-04 12:46:51 - Order ID: 110 status changing to Shipping
+2024-12-04 12:47:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:47:51 - Total orders to update: 1
+2024-12-04 12:48:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:48:51 - Total orders to update: 1
+2024-12-04 12:49:51 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:49:51 - Total orders to update: 1
+2024-12-04 12:50:22 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:50:22 - HikariPool-1 - Shutdown completed.
+2024-12-04 12:50:23 - Starting FoodEaseApplication using Java 17.0.10 with PID 7252 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:50:23 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:50:24 - Starting service [Tomcat]
+2024-12-04 12:50:24 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:50:24 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:50:24 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:50:24 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:50:24 - HikariPool-2 - Starting...
+2024-12-04 12:50:24 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: d530a7ab-d20f-4acd-b4eb-91214f0ece63
+2024-12-04 12:50:24 - HikariPool-2 - Start completed.
+2024-12-04 12:50:24 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:50:24 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:50:25 - HikariPool-2 - Shutdown initiated...
+2024-12-04 12:50:25 - HikariPool-2 - Shutdown completed.
+2024-12-04 12:50:25 - Stopping service [Tomcat]
+2024-12-04 12:50:25 - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'paymentApi': Unsatisfied dependency expressed through field 'momoService': Error creating bean with name 'momoServiceImpl' defined in file [D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes\poly\foodease\ServiceImpl\MomoServiceImpl.class]: Post-processing of merged bean definition failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.3.jar:3.3.3]
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'momoServiceImpl' defined in file [D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes\poly\foodease\ServiceImpl\MomoServiceImpl.class]: Post-processing of merged bean definition failed
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:577) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 25 common frames omitted
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [poly.foodease.ServiceImpl.MomoServiceImpl] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@5c688acd]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:757) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:689) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.buildPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:436) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:417) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findInjectionMetadata(PersistenceAnnotationBeanPostProcessor.java:376) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(PersistenceAnnotationBeanPostProcessor.java:353) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1103) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:574) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 34 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: poly/foodease/Service/MomoService
+	at java.base/java.lang.Class.getDeclaredFields0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredFields(Class.java:3297) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredFields(Class.java:2371) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:752) ~[spring-core-6.1.12.jar:6.1.12]
+	... 41 common frames omitted
+Caused by: java.lang.ClassNotFoundException: poly.foodease.Service.MomoService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 45 common frames omitted
+2024-12-04 12:50:41 - Starting FoodEaseApplication using Java 17.0.10 with PID 36256 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-04 12:50:41 - No active profile set, falling back to 1 default profile: "default"
+2024-12-04 12:50:43 - Starting service [Tomcat]
+2024-12-04 12:50:43 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-04 12:50:43 - Initializing Spring embedded WebApplicationContext
+2024-12-04 12:50:44 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-04 12:50:44 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-04 12:50:44 - HHH000406: Using bytecode reflection optimizer
+2024-12-04 12:50:44 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:50:44 - HikariPool-1 - Starting...
+2024-12-04 12:50:44 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 35a964ea-ff04-49e7-af4e-b3f9d5ea499f
+2024-12-04 12:50:44 - HikariPool-1 - Start completed.
+2024-12-04 12:50:44 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-04 12:50:45 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-04 12:50:50 - Started FoodEaseApplication in 8.927 seconds (process running for 9.52)
+2024-12-04 12:50:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:50:50 - Total orders to update: 1
+2024-12-04 12:50:50 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-04 12:51:18 - Creating new order with request: OrderRequest(totalPrice=136000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:51:18.339869400, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:51:18 - Order created successfully with ID: 112
+2024-12-04 12:51:24 - Creating new order with request: OrderRequest(totalPrice=136000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:51:24.572391400, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:51:24 - Order created successfully with ID: 113
+2024-12-04 12:51:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:51:50 - Total orders to update: 1
+2024-12-04 12:51:54 - Creating new order with request: OrderRequest(totalPrice=136000.0, totalQuantity=1, deliveryAddress= Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-04, orderTime=12:51:54.305157600, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-04 12:51:54 - Order created successfully with ID: 114
+2024-12-04 12:52:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:52:50 - Total orders to update: 1
+2024-12-04 12:53:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:53:50 - Total orders to update: 1
+2024-12-04 12:54:50 - Scheduled update for changing order statuses to delivered
+2024-12-04 12:54:50 - Total orders to update: 2
+2024-12-04 12:55:06 - HikariPool-1 - Shutdown initiated...
+2024-12-04 12:55:06 - HikariPool-1 - Shutdown completed.

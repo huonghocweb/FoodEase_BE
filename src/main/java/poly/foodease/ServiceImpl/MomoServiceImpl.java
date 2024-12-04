@@ -47,7 +47,7 @@ public class MomoServiceImpl {
 
 
     public String createUrlPaymentMomo( Integer orderInfo,long totalPrice, String baseUrlReturn,String username){
-        String urlPayment = momoService.createPaymentRequest( orderInfo, totalPrice, baseUrlReturn,username);
+        String urlPayment = momoService.createPaymentRequest(String.valueOf(orderInfo), totalPrice, baseUrlReturn,username);
         return urlPayment;
     }
 
