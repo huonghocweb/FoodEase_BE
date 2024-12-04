@@ -70,7 +70,7 @@ public class  UserApi {
     private CloudinaryService cloudinaryService;
     @Autowired
     private RoleRepo roleRepo;  // Inject roleRepo
-//  Hoa
+    //  Hoa
     @Autowired
     private RegistrationService registrationService;
     @Autowired
@@ -133,26 +133,14 @@ public class  UserApi {
             @RequestParam("gender") Boolean gender,
             @RequestParam("roleIds") String roleIdsJson,
             @RequestParam(value = "image", required = false) MultipartFile image) {
-
         try {
             // Log dữ liệu nhận được từ client
             System.out.println("Updating user with ID: " + id);
-            System.out.println("UserName: " + userName);
-            System.out.println("FullName: " + fullName);
-            System.out.println("PhoneNumber: " + phoneNumber);
-            System.out.println("Email: " + email);
-            System.out.println("Address: " + address);
-            System.out.println("Birthday: " + birthday);
-            System.out.println("Gender: " + gender);
             System.out.println("Role IDs JSON: " + roleIdsJson);
 
             // Tìm người dùng theo ID
-            Optional<User> optionalUser = userRepo.findById(id);
-            if (optionalUser.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-            }
-
-            User user = optionalUser.get();
+            User user = userRepo.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
 
             // Cập nhật các thuộc tính của người dùng
             user.setUserName(userName);
@@ -165,34 +153,44 @@ public class  UserApi {
 
             // Chuyển đổi roleIds từ JSON sang danh sách ID
             ObjectMapper objectMapper = new ObjectMapper();
-            List<Integer> roleIds = objectMapper.readValue(roleIdsJson, List.class);
+            List<Integer> roleIds;
+            try {
+                roleIds = objectMapper.readValue(roleIdsJson, List.class);
+            } catch (JsonProcessingException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid role IDs format");
+            }
 
             // Cập nhật vai trò của người dùng
             List<Role> roles = roleIds.stream()
                     .map(roleId -> roleRepo.findById(roleId)
-                            .orElseThrow(() -> new EntityNotFoundException("Role not found for ID: " + roleId)))
+                            .orElseThrow(() -> new EntityNotFoundException("Role not found with ID: " + roleId)))
                     .collect(Collectors.toList());
             user.setRoles(roles);
 
             // Cập nhật ảnh đại diện nếu có
             if (image != null && !image.isEmpty()) {
+                System.out.println("Processing new image upload: " + image.getOriginalFilename());
                 String imageUrl = cloudinaryService.uploadFile(new MultipartFile[]{image}, "avatars").get(0);
                 user.setImageUrl(imageUrl);
             }
 
             // Lưu người dùng sau khi cập nhật
-            userRepo.save(user);
+            User updatedUser = userRepo.save(user);
 
             // Trả về thông tin người dùng đã cập nhật
-            UserResponse userResponse = userMapper.convertEnToRes(user);
+            UserResponse userResponse = userMapper.convertEnToRes(updatedUser);
             return ResponseEntity.ok(userResponse);
 
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid role IDs format");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing image upload");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUserById(id);
@@ -299,7 +297,35 @@ public class  UserApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
-// Hoa
+    // Hoa
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable("id") Integer id) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User user = userRepo.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
+
+            // Lấy danh sách vai trò của người dùng
+            List<Role> roles = user.getRoles();
+
+            result.put("success", true);
+            result.put("message", "User details fetched successfully");
+            result.put("data", Map.of(
+                    "userId", user.getUserId(),
+                    "userName", user.getUserName(),
+                    "roles", roles.stream().map(role -> Map.of(
+                            "roleId", role.getRoleId(),
+                            "roleName", role.getRoleName()
+                    )).collect(Collectors.toList())
+            ));
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+    }
+    //Hoa
     @PostMapping("/request-registration-code")
     public ResponseEntity<?> requestRegistrationCode(@RequestBody Map<String, String> request) {
         String email = request.get("email");

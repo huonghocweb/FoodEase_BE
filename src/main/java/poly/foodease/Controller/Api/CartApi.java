@@ -25,6 +25,7 @@ public class CartApi {
     @GetMapping("/{cartId}")
     public ResponseEntity<Object> getCartByCartId(@PathVariable("cartId") Integer cartId) throws JsonProcessingException {
         Map<String,Object> result = new HashMap<>();
+        System.out.println("GET Cart By ID ; " + cartId);
         try {
             result.put("success",true);
             result.put("message", "Get Cart By CartId");
