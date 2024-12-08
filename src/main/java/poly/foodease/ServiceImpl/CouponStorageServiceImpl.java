@@ -6,10 +6,13 @@ import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import poly.foodease.Mapper.CouponStorageMapper;
+import poly.foodease.Model.Entity.Coupon;
 import poly.foodease.Model.Entity.CouponStorage;
 import poly.foodease.Model.Request.CouponStorageRequest;
 import poly.foodease.Model.Response.CouponStorageResponse;
+import poly.foodease.Repository.CouponRepo;
 import poly.foodease.Repository.CouponStorageRepo;
+import poly.foodease.Repository.UserRepo;
 import poly.foodease.Service.CouponStorageService;
 
 import java.util.List;
@@ -23,6 +26,10 @@ public class CouponStorageServiceImpl implements CouponStorageService {
     private  CouponStorageRepo couponStorageRepo;
     @Autowired
     private CouponStorageMapper couponStorageMapper;
+    @Autowired
+    private CouponRepo couponRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @PreAuthorize("hasAnyRole('USER','ADMIN', 'STAFF')")
     @Override
@@ -74,4 +81,25 @@ public class CouponStorageServiceImpl implements CouponStorageService {
         }
         return null;
     }
+
+
+    @Override
+    public CouponStorageResponse addCouponToCouponStorage(String userName, String code ) {
+        CouponStorage couponStorage = new CouponStorage();
+        Coupon coupon = couponRepo.findCouponByCode(code)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Coupon By Code"));
+        couponStorage.setUser( userRepo.findUserByUserName(userName)
+                .orElseThrow(() -> new EntityNotFoundException("not found User")));
+        couponStorage.setStatus(true);
+        if (coupon.getUsedCount() < coupon.getUseLimit()){
+            System.out.println("Coupon: " + coupon.getCouponId());
+            couponStorage.setCoupon(coupon);
+            CouponStorage couponStorageCreated = couponStorageRepo.save(couponStorage);
+            return couponStorageMapper.convertEnToRes(couponStorageCreated);
+        }
+        return null;
+    }
+
+
 }
+

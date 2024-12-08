@@ -90,4 +90,25 @@ public class CouponStorageApi {
         return ResponseEntity.ok(result);
     }
 
+
+    @GetMapping("/addCouponToStorage/{userName}")
+    public ResponseEntity<Object> addCouponToStorage(
+            @PathVariable("userName") String userName,
+            @RequestParam(value = "code",required = false) String code
+    ){
+        System.out.println("Claim Coupon ");
+        System.out.println(userName);
+        Map<String,Object> result = new HashMap<>();
+        try {
+            result.put("success",true);
+            result.put("message","Add Coupon To CouponStorage ");
+            result.put("data",couponStorageService.addCouponToCouponStorage(userName, code));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
 }

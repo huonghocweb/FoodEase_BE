@@ -17,4 +17,5 @@ public interface CouponStorageService {
     Optional<CouponStorageResponse> getCouponStorageByCouponStorageId(Integer couponStorageId);
     CouponStorageResponse addCouponToCouponStorage(CouponStorageRequest couponStorageRequest);
     CouponStorageResponse removeCouponInStorage(Integer couponStorageId);
+    CouponStorageResponse addCouponToCouponStorage(String userName, String code );
 }
