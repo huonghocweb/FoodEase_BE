@@ -8710,3 +8710,38 @@ Action:
 
 Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
 
+2024-12-10 11:22:24 - Starting FoodEaseApplication using Java 17.0.10 with PID 10496 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 11:22:24 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 11:22:26 - Starting service [Tomcat]
+2024-12-10 11:22:26 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 11:22:26 - Initializing Spring embedded WebApplicationContext
+2024-12-10 11:22:26 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 11:22:26 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 11:22:26 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 11:22:27 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 11:22:27 - HikariPool-1 - Starting...
+2024-12-10 11:22:27 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: bb562dad-73ce-4a77-bb10-28a9f0829e03
+2024-12-10 11:22:27 - HikariPool-1 - Start completed.
+2024-12-10 11:22:27 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 11:22:28 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 11:22:32 - Started FoodEaseApplication in 9.053 seconds (process running for 9.769)
+2024-12-10 11:22:32 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:22:33 - Total orders to update: 22
+2024-12-10 11:22:33 - Order ID: 1149 status changing to Shipping
+2024-12-10 11:22:33 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-10 11:22:56 - Successfully fetched 7 users
+2024-12-10 11:22:56 - Successfully fetched 7 users
+2024-12-10 11:22:56 - Successfully fetched 7 users
+2024-12-10 11:22:56 - Successfully fetched 7 users
+2024-12-10 11:23:30 - Successfully fetched 7 users
+2024-12-10 11:23:30 - Successfully fetched 7 users
+2024-12-10 11:23:30 - Successfully fetched 7 users
+2024-12-10 11:23:30 - Successfully fetched 7 users
+2024-12-10 11:23:32 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:23:32 - Total orders to update: 22
+2024-12-10 11:23:37 - Successfully fetched 7 users
+2024-12-10 11:23:37 - Successfully fetched 7 users
+2024-12-10 11:23:37 - Successfully fetched 7 users
+2024-12-10 11:23:37 - Successfully fetched 7 users
+2024-12-10 11:24:15 - HikariPool-1 - Shutdown initiated...
+2024-12-10 11:24:15 - HikariPool-1 - Shutdown completed.
