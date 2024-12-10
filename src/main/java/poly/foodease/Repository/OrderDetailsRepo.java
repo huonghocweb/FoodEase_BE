@@ -27,6 +27,14 @@ public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Integer> {
 	    		+ " from OrderDetails od where od.foodVariations.food.foodId = ?1 group by od.foodVariations.foodId ,od.foodVariations.food "
 	    		)  
 	    FoodBuyMost FoodSold(Integer foodId);
+	    
+	    @Query("SELECT new poly.foodease.Report.FoodSold(sum(od.quantity),od.foodVariations.foodVariationId)"
+	    		+ "from OrderDetails od where od.foodVariations.foodVariationId = ?1 group by od.foodVariations.foodVariationId")
+	    poly.foodease.Report.FoodSold foodSoldByFoodVariation(Integer foodVariationsId);
+	    
+	    @Query("SELECT new poly.foodease.Report.FoodSold(sum(quantity),od.foodVariations.food.foodId)"
+	    		+ "from   OrderDetails od where od.foodVariations.food.foodId =?1 group by od.foodVariations.food.foodId")
+	    poly.foodease.Report.FoodSold foodSoldByfoodId(Integer id);
 }
 
 

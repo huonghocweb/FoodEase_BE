@@ -507,7 +507,6 @@ public class  UserApi {
 // Nhawsc
         String directoryPath = "C:\\Users\\ASUS\\Downloads\\files\\";
         String filePath = directoryPath + file.getOriginalFilename(); // Đường dẫn đầy đủ đến tệp
-
         // Tạo thư mục nếu chưa tồn tại
         File directory = new File(directoryPath);
         if (!directory.exists()) {

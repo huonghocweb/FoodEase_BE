@@ -22,5 +22,7 @@ public interface OrderDetailsService {
     List<OrderDetails> findByOrderId(Integer orderId);
     Page<FoodBuyMost> FoodBuyMost(Pageable page);
     FoodBuyMost FoodSold(Integer foodId);
+    poly.foodease.Report.FoodSold FoodSoldByFoodVariationId(Integer id);
+    poly.foodease.Report.FoodSold FoodSoldByFoodId(Integer id);
 
 }
