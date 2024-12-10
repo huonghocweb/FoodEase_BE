@@ -8618,3 +8618,95 @@ Caused by: java.net.UnknownHostException: api.sandbox.paypal.com
 2024-12-10 10:53:15 - Total orders to update: 18
 2024-12-10 10:53:42 - HikariPool-3 - Shutdown initiated...
 2024-12-10 10:53:42 - HikariPool-3 - Shutdown completed.
+2024-12-10 10:53:45 - Starting FoodEaseApplication using Java 17.0.10 with PID 12912 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 10:53:45 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 10:53:47 - Starting service [Tomcat]
+2024-12-10 10:53:47 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 10:53:47 - Initializing Spring embedded WebApplicationContext
+2024-12-10 10:53:48 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 10:53:48 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 10:53:48 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 10:53:48 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:53:48 - HikariPool-1 - Starting...
+2024-12-10 10:53:48 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 012b617d-204a-44eb-9c7c-dd08f5243c22
+2024-12-10 10:53:48 - HikariPool-1 - Start completed.
+2024-12-10 10:53:48 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:53:49 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 10:53:54 - Started FoodEaseApplication in 9.706 seconds (process running for 10.334)
+2024-12-10 10:53:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:53:54 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-10 10:53:54 - Total orders to update: 18
+2024-12-10 10:54:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:54:54 - Total orders to update: 18
+2024-12-10 10:55:42 - Creating new order with request: OrderRequest(totalPrice=493900.0, totalQuantity=3, deliveryAddress=Thôn 7 Cao Hào  Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-10, orderTime=10:55:42.979603400, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=4, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-10 10:55:43 - Order created successfully with ID: 1146
+2024-12-10 10:55:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:55:54 - Total orders to update: 18
+2024-12-10 10:56:15 - Fetching order by ID: 1146
+2024-12-10 10:56:53 - Creating new order with request: OrderRequest(totalPrice=243300.0, totalQuantity=1, deliveryAddress=Thôn 7 Cao Hào  Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-10, orderTime=10:56:53.895983500, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=120000, leadTime=48, couponId=null, paymentMethodId=1, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-10 10:56:53 - Order created successfully with ID: 1147
+2024-12-10 10:56:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:56:54 - Total orders to update: 19
+2024-12-10 10:57:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:57:54 - Total orders to update: 19
+2024-12-10 10:58:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:58:54 - Total orders to update: 20
+2024-12-10 10:59:53 - Successfully fetched 7 users
+2024-12-10 10:59:53 - Successfully fetched 7 users
+2024-12-10 10:59:53 - Successfully fetched 7 users
+2024-12-10 10:59:53 - Successfully fetched 7 users
+2024-12-10 10:59:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:59:54 - Total orders to update: 20
+2024-12-10 10:59:54 - Order ID: 1146 status changing to Shipping
+2024-12-10 11:00:46 - Successfully fetched 7 users
+2024-12-10 11:00:46 - Successfully fetched 7 users
+2024-12-10 11:00:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:00:54 - Total orders to update: 20
+2024-12-10 11:01:26 - Creating new order with request: OrderRequest(totalPrice=187300.0, totalQuantity=1, deliveryAddress=Thôn 7 Cao Hào  Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-10, orderTime=11:01:26.444012900, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=2, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-10 11:01:26 - Order created successfully with ID: 1148
+2024-12-10 11:01:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:01:54 - Total orders to update: 20
+2024-12-10 11:01:54 - Order ID: 1147 status changing to Shipping
+2024-12-10 11:02:28 - Creating new order with request: OrderRequest(totalPrice=285601.0, totalQuantity=2, deliveryAddress=Thôn 7 Cao Hào  Xã Cao Sơn Huyện Mường Khương - Lào Cai, orderDate=2024-12-10, orderTime=11:02:28.176485800, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=39001, leadTime=48, couponId=null, paymentMethodId=4, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-10 11:02:28 - Order created successfully with ID: 1149
+2024-12-10 11:02:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:02:54 - Total orders to update: 21
+2024-12-10 11:03:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:03:54 - Total orders to update: 22
+2024-12-10 11:04:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:04:54 - Total orders to update: 22
+2024-12-10 11:05:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 11:05:54 - Total orders to update: 22
+2024-12-10 11:05:54 - Order ID: 1148 status changing to Shipping
+2024-12-10 11:06:27 - HikariPool-1 - Shutdown initiated...
+2024-12-10 11:06:27 - HikariPool-1 - Shutdown completed.
+2024-12-10 11:06:27 - Starting FoodEaseApplication using Java 17.0.10 with PID 12912 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 11:06:27 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 11:06:28 - Starting service [Tomcat]
+2024-12-10 11:06:28 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 11:06:28 - Initializing Spring embedded WebApplicationContext
+2024-12-10 11:06:28 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 11:06:28 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 11:06:28 - HikariPool-2 - Starting...
+2024-12-10 11:06:28 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: 87014eae-8222-4887-b176-ceb476eefc1e
+2024-12-10 11:06:28 - HikariPool-2 - Start completed.
+2024-12-10 11:06:28 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 11:06:29 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 11:06:31 - HikariPool-2 - Shutdown initiated...
+2024-12-10 11:06:31 - HikariPool-2 - Shutdown completed.
+2024-12-10 11:06:31 - Stopping service [Tomcat]
+2024-12-10 11:06:31 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method setFilterChains in org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration required a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
