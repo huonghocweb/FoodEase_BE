@@ -119,6 +119,9 @@ public class ReservationServiceImpl implements ReservationService {
     public List<ReservationResponse> getReservedByTableIdAndDate(Integer tableId, LocalDate localDate) {
         LocalDateTime startOfDay = localDate.atTime(LocalTime.of(9, 0));
         LocalDateTime endOfDay = localDate.atTime(LocalTime.of(22, 0));
+        System.out.println(localDate);
+        System.out.println("Start Date : " + startOfDay);
+        System.out.println("End Date: " + endOfDay);
         List<Reservation> reservations = reservationRepo.getReservationsByTableIdAndDate(tableId, startOfDay, endOfDay);
         return reservations.stream()
                 .map(reservationMapper :: convertEnToRes)

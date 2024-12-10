@@ -1,183 +1,589 @@
-2024-12-08 21:46:31 - Starting FoodEaseApplication using Java 17.0.10 with PID 9996 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
-2024-12-08 21:46:31 - No active profile set, falling back to 1 default profile: "default"
-2024-12-08 21:46:35 - Starting service [Tomcat]
-2024-12-08 21:46:35 - Starting Servlet engine: [Apache Tomcat/10.1.28]
-2024-12-08 21:46:35 - Initializing Spring embedded WebApplicationContext
-2024-12-08 21:46:35 - HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-08 21:46:35 - HHH000412: Hibernate ORM core version 6.2.5.Final
-2024-12-08 21:46:35 - HHH000406: Using bytecode reflection optimizer
-2024-12-08 21:46:36 - HHH000021: Bytecode provider name : bytebuddy
-2024-12-08 21:46:36 - HikariPool-1 - Starting...
-2024-12-08 21:46:37 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 27b11ab2-9a28-4475-9e94-8edc8aed3ac3
-2024-12-08 21:46:37 - HikariPool-1 - Start completed.
-2024-12-08 21:46:38 - HHH000021: Bytecode provider name : bytebuddy
-2024-12-08 21:46:39 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2024-12-08 21:46:46 - Started FoodEaseApplication in 15.266 seconds (process running for 16.53)
-2024-12-08 21:46:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:46:46 - Total orders to update: 4
-2024-12-08 21:46:46 - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-08 21:47:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:47:46 - Total orders to update: 4
-2024-12-08 21:48:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:48:46 - Total orders to update: 4
-2024-12-08 21:49:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:49:46 - Total orders to update: 4
-2024-12-08 21:50:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:50:46 - Total orders to update: 4
-2024-12-08 21:51:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:51:46 - Total orders to update: 4
-2024-12-08 21:52:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:52:46 - Total orders to update: 4
-2024-12-08 21:53:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:53:46 - Total orders to update: 4
-2024-12-08 21:54:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:54:46 - Total orders to update: 4
-2024-12-08 21:55:46 - Scheduled update for changing order statuses to delivered
-2024-12-08 21:55:46 - Total orders to update: 4
-2024-12-08 21:56:22 - HikariPool-1 - Shutdown initiated...
-2024-12-08 21:56:22 - HikariPool-1 - Shutdown completed.
-2024-12-08 22:01:39 - Starting FoodEaseApplication using Java 17.0.10 with PID 11796 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
-2024-12-08 22:01:39 - No active profile set, falling back to 1 default profile: "default"
-2024-12-08 22:01:42 - Starting service [Tomcat]
-2024-12-08 22:01:42 - Starting Servlet engine: [Apache Tomcat/10.1.28]
-2024-12-08 22:01:42 - Initializing Spring embedded WebApplicationContext
-2024-12-08 22:01:42 - HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-08 22:01:42 - HHH000412: Hibernate ORM core version 6.2.5.Final
-2024-12-08 22:01:42 - HHH000406: Using bytecode reflection optimizer
-2024-12-08 22:01:43 - HHH000021: Bytecode provider name : bytebuddy
-2024-12-08 22:01:43 - HikariPool-1 - Starting...
-2024-12-08 22:01:43 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 4db41bfa-8ce4-497c-841e-1748461f9cda
-2024-12-08 22:01:43 - HikariPool-1 - Start completed.
-2024-12-08 22:01:43 - HHH000021: Bytecode provider name : bytebuddy
-2024-12-08 22:01:44 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2024-12-08 22:01:50 - Started FoodEaseApplication in 11.286 seconds (process running for 11.94)
-2024-12-08 22:01:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:01:50 - Total orders to update: 4
-2024-12-08 22:01:50 - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-08 22:02:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:02:50 - Total orders to update: 4
-2024-12-08 22:03:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:03:50 - Total orders to update: 4
-2024-12-08 22:04:49 - Error parsing HTTP request header
- Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
-java.lang.IllegalArgumentException: Invalid character found in the request target [/api/couponStorage/addCouponToStorage/huongpham?code=[object+HTMLInputElement] ]. The valid characters are defined in RFC 7230 and RFC 3986
-	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:482)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:257)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	at java.base/java.lang.Thread.run(Thread.java:842)
-2024-12-08 22:04:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:04:50 - Total orders to update: 4
-2024-12-08 22:05:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:05:50 - Total orders to update: 4
-2024-12-08 22:06:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:06:50 - Total orders to update: 4
-2024-12-08 22:07:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:07:50 - Total orders to update: 4
-2024-12-08 22:08:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:08:50 - Total orders to update: 4
-2024-12-08 22:09:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:09:50 - Total orders to update: 4
-2024-12-08 22:10:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:10:50 - Total orders to update: 4
-2024-12-08 22:11:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:11:50 - Total orders to update: 4
-2024-12-08 22:12:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:12:50 - Total orders to update: 4
-2024-12-08 22:13:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:13:50 - Total orders to update: 4
-2024-12-08 22:14:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:14:50 - Total orders to update: 4
-2024-12-08 22:15:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:15:50 - Total orders to update: 4
-2024-12-08 22:16:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:16:50 - Total orders to update: 4
-2024-12-08 22:17:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:17:50 - Total orders to update: 4
-2024-12-08 22:18:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:18:50 - Total orders to update: 4
-2024-12-08 22:19:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:19:50 - Total orders to update: 4
-2024-12-08 22:20:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:20:50 - Total orders to update: 4
-2024-12-08 22:21:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:21:50 - Total orders to update: 4
-2024-12-08 22:22:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:22:50 - Total orders to update: 4
-2024-12-08 22:23:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:23:50 - Total orders to update: 4
-2024-12-08 22:24:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:24:50 - Total orders to update: 4
-2024-12-08 22:25:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:25:50 - Total orders to update: 4
-2024-12-08 22:26:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:26:50 - Total orders to update: 4
-2024-12-08 22:27:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:27:50 - Total orders to update: 4
-2024-12-08 22:28:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:28:50 - Total orders to update: 4
-2024-12-08 22:29:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:29:50 - Total orders to update: 4
-2024-12-08 22:30:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:30:50 - Total orders to update: 4
-2024-12-08 22:31:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:31:50 - Total orders to update: 4
-2024-12-08 22:32:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:32:50 - Total orders to update: 4
-2024-12-08 22:33:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:33:50 - Total orders to update: 4
-2024-12-08 22:34:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:34:50 - Total orders to update: 4
-2024-12-08 22:35:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:35:50 - Total orders to update: 4
-2024-12-08 22:36:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:36:50 - Total orders to update: 4
-2024-12-08 22:37:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:37:50 - Total orders to update: 4
-2024-12-08 22:38:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:38:50 - Total orders to update: 4
-2024-12-08 22:39:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:39:50 - Total orders to update: 4
-2024-12-08 22:40:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:40:50 - Total orders to update: 4
-2024-12-08 22:41:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:41:50 - Total orders to update: 4
-2024-12-08 22:42:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:42:50 - Total orders to update: 4
-2024-12-08 22:43:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:43:50 - Total orders to update: 4
-2024-12-08 22:44:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:44:50 - Total orders to update: 4
-2024-12-08 22:45:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:45:50 - Total orders to update: 4
-2024-12-08 22:46:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:46:50 - Total orders to update: 4
-2024-12-08 22:47:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:47:50 - Total orders to update: 4
-2024-12-08 22:48:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:48:50 - Total orders to update: 4
-2024-12-08 22:49:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:49:50 - Total orders to update: 4
-2024-12-08 22:50:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:50:50 - Total orders to update: 4
-2024-12-08 22:51:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:51:50 - Total orders to update: 4
-2024-12-08 22:52:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:52:50 - Total orders to update: 4
-2024-12-08 22:53:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:53:50 - Total orders to update: 4
-2024-12-08 22:54:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:54:50 - Total orders to update: 4
-2024-12-08 22:55:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:55:50 - Total orders to update: 4
-2024-12-08 22:56:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:56:50 - Total orders to update: 4
-2024-12-08 22:57:50 - Scheduled update for changing order statuses to delivered
-2024-12-08 22:57:50 - Total orders to update: 4
-2024-12-08 22:58:43 - HikariPool-1 - Shutdown initiated...
-2024-12-08 22:58:43 - HikariPool-1 - Shutdown completed.
+2024-12-10 09:04:29 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:04:29 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:04:31 - Starting service [Tomcat]
+2024-12-10 09:04:31 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:04:32 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:04:32 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:04:32 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 09:04:32 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 09:04:32 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:04:32 - HikariPool-1 - Starting...
+2024-12-10 09:04:32 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: ad31ef05-b49d-4ee7-b910-94407ea542ca
+2024-12-10 09:04:32 - HikariPool-1 - Start completed.
+2024-12-10 09:04:33 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:04:34 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:04:44 - Started FoodEaseApplication in 15.685 seconds (process running for 16.851)
+2024-12-10 09:04:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:04:44 - Total orders to update: 17
+2024-12-10 09:04:44 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-10 09:05:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:05:44 - Total orders to update: 17
+2024-12-10 09:06:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:06:44 - Total orders to update: 17
+2024-12-10 09:07:37 - Successfully fetched 5 users
+2024-12-10 09:07:37 - Successfully fetched 5 users
+2024-12-10 09:07:37 - Successfully fetched 5 users
+2024-12-10 09:07:37 - Successfully fetched 5 users
+2024-12-10 09:07:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:07:44 - Total orders to update: 17
+2024-12-10 09:08:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:08:44 - Total orders to update: 17
+2024-12-10 09:09:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:09:44 - Total orders to update: 17
+2024-12-10 09:10:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:10:44 - Total orders to update: 17
+2024-12-10 09:11:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:11:44 - Total orders to update: 17
+2024-12-10 09:12:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:12:44 - Total orders to update: 17
+2024-12-10 09:13:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:13:44 - Total orders to update: 17
+2024-12-10 09:14:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:14:44 - Total orders to update: 17
+2024-12-10 09:15:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:15:44 - Total orders to update: 17
+2024-12-10 09:16:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:16:44 - Total orders to update: 17
+2024-12-10 09:17:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:17:44 - Total orders to update: 17
+2024-12-10 09:18:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:18:44 - Total orders to update: 17
+2024-12-10 09:19:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:19:44 - Total orders to update: 17
+2024-12-10 09:20:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:20:44 - Total orders to update: 17
+2024-12-10 09:21:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:21:44 - Total orders to update: 17
+2024-12-10 09:22:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:22:44 - Total orders to update: 17
+2024-12-10 09:23:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:23:44 - Total orders to update: 17
+2024-12-10 09:24:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:24:44 - Total orders to update: 17
+2024-12-10 09:25:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:25:44 - Total orders to update: 17
+2024-12-10 09:26:13 - HikariPool-1 - Shutdown initiated...
+2024-12-10 09:26:13 - HikariPool-1 - Shutdown completed.
+2024-12-10 09:26:13 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:26:13 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:26:14 - Starting service [Tomcat]
+2024-12-10 09:26:14 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:26:14 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:26:14 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:26:14 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:26:14 - HikariPool-2 - Starting...
+2024-12-10 09:26:14 - HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: c869bb39-82fd-4d91-b048-42409440603a
+2024-12-10 09:26:14 - HikariPool-2 - Start completed.
+2024-12-10 09:26:14 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:26:15 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:26:17 - Started FoodEaseApplication in 4.702 seconds (process running for 1310.562)
+2024-12-10 09:26:17 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:26:17 - Total orders to update: 17
+2024-12-10 09:26:19 - HikariPool-2 - Shutdown initiated...
+2024-12-10 09:26:19 - HikariPool-2 - Shutdown completed.
+2024-12-10 09:26:19 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:26:19 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:26:20 - Starting service [Tomcat]
+2024-12-10 09:26:20 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:26:20 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:26:20 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:26:20 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:26:20 - HikariPool-3 - Starting...
+2024-12-10 09:26:20 - HikariPool-3 - Added connection ConnectionID:21 ClientConnectionId: 396e045b-62a4-42ce-b7b3-94be62c08740
+2024-12-10 09:26:20 - HikariPool-3 - Start completed.
+2024-12-10 09:26:20 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:26:20 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:26:23 - Started FoodEaseApplication in 4.284 seconds (process running for 1316.513)
+2024-12-10 09:26:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:26:23 - Total orders to update: 17
+2024-12-10 09:27:15 - HikariPool-3 - Shutdown initiated...
+2024-12-10 09:27:15 - HikariPool-3 - Shutdown completed.
+2024-12-10 09:27:15 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:27:15 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:27:16 - Starting service [Tomcat]
+2024-12-10 09:27:16 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:27:16 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:27:16 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:27:16 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:27:16 - HikariPool-4 - Starting...
+2024-12-10 09:27:16 - HikariPool-4 - Added connection ConnectionID:31 ClientConnectionId: 420fad0d-9eb0-4d11-a2fc-df47302dedd9
+2024-12-10 09:27:16 - HikariPool-4 - Start completed.
+2024-12-10 09:27:16 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:27:16 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:27:17 - HikariPool-4 - Shutdown initiated...
+2024-12-10 09:27:17 - HikariPool-4 - Shutdown completed.
+2024-12-10 09:27:17 - Stopping service [Tomcat]
+2024-12-10 09:27:17 - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'paymentApi' defined in file [D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes\poly\foodease\Controller\Api\PaymentApi.class]: Post-processing of merged bean definition failed
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:577) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.3.jar:3.3.3]
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [poly.foodease.Controller.Api.PaymentApi] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@6eda1793]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:757) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:689) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.buildPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:436) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:417) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findInjectionMetadata(PersistenceAnnotationBeanPostProcessor.java:376) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(PersistenceAnnotationBeanPostProcessor.java:353) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1103) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:574) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 20 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: poly/foodease/ServiceImpl/PayPalServiceImpl
+	at java.base/java.lang.Class.getDeclaredFields0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredFields(Class.java:3297) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredFields(Class.java:2371) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:752) ~[spring-core-6.1.12.jar:6.1.12]
+	... 27 common frames omitted
+Caused by: java.lang.ClassNotFoundException: poly.foodease.ServiceImpl.PayPalServiceImpl
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 31 common frames omitted
+2024-12-10 09:27:41 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:27:41 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:27:41 - Starting service [Tomcat]
+2024-12-10 09:27:41 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:27:41 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:27:42 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:27:42 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:27:42 - HikariPool-5 - Starting...
+2024-12-10 09:27:42 - HikariPool-5 - Added connection ConnectionID:41 ClientConnectionId: 6ca02d56-0b7c-4fda-a93d-3415a29fe953
+2024-12-10 09:27:42 - HikariPool-5 - Start completed.
+2024-12-10 09:27:42 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:27:42 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:27:44 - Started FoodEaseApplication in 3.822 seconds (process running for 1397.508)
+2024-12-10 09:27:44 - Scheduled update for changing order statuses to delivered
+2024-12-10 09:27:44 - Total orders to update: 17
+2024-12-10 09:28:22 - HikariPool-5 - Shutdown initiated...
+2024-12-10 09:28:22 - HikariPool-5 - Shutdown completed.
+2024-12-10 09:28:22 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:28:22 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:28:23 - Starting service [Tomcat]
+2024-12-10 09:28:23 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:28:23 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:28:23 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:28:23 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:28:23 - HikariPool-6 - Starting...
+2024-12-10 09:28:23 - HikariPool-6 - Added connection ConnectionID:51 ClientConnectionId: a87f7df2-6708-451b-a9e0-5f987d492e6c
+2024-12-10 09:28:23 - HikariPool-6 - Start completed.
+2024-12-10 09:28:23 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:28:24 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:28:25 - HikariPool-6 - Shutdown initiated...
+2024-12-10 09:28:25 - HikariPool-6 - Shutdown completed.
+2024-12-10 09:28:25 - Stopping service [Tomcat]
+2024-12-10 09:28:25 - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'paymentApi' defined in file [D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes\poly\foodease\Controller\Api\PaymentApi.class]: Post-processing of merged bean definition failed
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:577) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.3.jar:3.3.3]
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [poly.foodease.Controller.Api.PaymentApi] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@60beda74]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:757) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:689) ~[spring-core-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.buildPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:436) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findPersistenceMetadata(PersistenceAnnotationBeanPostProcessor.java:417) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.findInjectionMetadata(PersistenceAnnotationBeanPostProcessor.java:376) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(PersistenceAnnotationBeanPostProcessor.java:353) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1103) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:574) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 20 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: poly/foodease/ServiceImpl/PayPalServiceImpl
+	at java.base/java.lang.Class.getDeclaredFields0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredFields(Class.java:3297) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredFields(Class.java:2371) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:752) ~[spring-core-6.1.12.jar:6.1.12]
+	... 27 common frames omitted
+Caused by: java.lang.ClassNotFoundException: poly.foodease.ServiceImpl.PayPalServiceImpl
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.3.3.jar:3.3.3]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 31 common frames omitted
+2024-12-10 09:50:22 - Starting FoodEaseApplication using Java 17.0.10 with PID 25632 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 09:50:22 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 09:50:25 - Starting service [Tomcat]
+2024-12-10 09:50:25 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 09:50:25 - Initializing Spring embedded WebApplicationContext
+2024-12-10 09:50:25 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 09:50:25 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:50:25 - HikariPool-7 - Starting...
+2024-12-10 09:50:25 - HikariPool-7 - Added connection ConnectionID:61 ClientConnectionId: 70f93d14-1e7b-42ac-bdd0-c9600ca88407
+2024-12-10 09:50:25 - HikariPool-7 - Start completed.
+2024-12-10 09:50:25 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 09:50:26 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 09:50:28 - HikariPool-7 - Shutdown initiated...
+2024-12-10 09:50:28 - HikariPool-7 - Shutdown completed.
+2024-12-10 09:50:28 - Stopping service [Tomcat]
+2024-12-10 09:50:28 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field payPalService in poly.foodease.Controller.Api.PaymentApi required a bean of type 'poly.foodease.ServiceImpl.PayPalServiceImpl' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'poly.foodease.ServiceImpl.PayPalServiceImpl' in your configuration.
+
+2024-12-10 10:02:14 - Starting FoodEaseApplication using Java 17.0.10 with PID 13768 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 10:02:14 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 10:02:17 - Starting service [Tomcat]
+2024-12-10 10:02:17 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 10:02:17 - Initializing Spring embedded WebApplicationContext
+2024-12-10 10:02:17 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 10:02:17 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 10:02:17 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 10:02:17 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:02:17 - HikariPool-1 - Starting...
+2024-12-10 10:02:18 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: d4f0de0f-6db4-4d21-aac5-cacfdced6733
+2024-12-10 10:02:18 - HikariPool-1 - Start completed.
+2024-12-10 10:02:18 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:02:19 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 10:02:23 - Started FoodEaseApplication in 9.374 seconds (process running for 10.266)
+2024-12-10 10:02:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:02:23 - Total orders to update: 17
+2024-12-10 10:02:24 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-10 10:03:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:03:23 - Total orders to update: 17
+2024-12-10 10:04:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:04:23 - Total orders to update: 17
+2024-12-10 10:05:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:05:23 - Total orders to update: 17
+2024-12-10 10:06:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:06:23 - Total orders to update: 17
+2024-12-10 10:07:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:07:23 - Total orders to update: 17
+2024-12-10 10:08:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:08:23 - Total orders to update: 17
+2024-12-10 10:09:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:09:23 - Total orders to update: 17
+2024-12-10 10:10:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:10:23 - Total orders to update: 17
+2024-12-10 10:11:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:11:23 - Total orders to update: 17
+2024-12-10 10:12:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:12:23 - Total orders to update: 17
+2024-12-10 10:13:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:13:23 - Total orders to update: 17
+2024-12-10 10:14:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:14:23 - Total orders to update: 17
+2024-12-10 10:14:32 - Successfully fetched 5 users
+2024-12-10 10:14:32 - Successfully fetched 5 users
+2024-12-10 10:14:32 - Successfully fetched 5 users
+2024-12-10 10:14:32 - Successfully fetched 5 users
+2024-12-10 10:15:23 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:15:23 - Total orders to update: 17
+2024-12-10 10:15:52 - HikariPool-1 - Shutdown initiated...
+2024-12-10 10:15:52 - HikariPool-1 - Shutdown completed.
+2024-12-10 10:15:54 - Starting FoodEaseApplication using Java 17.0.10 with PID 16640 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 10:15:54 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 10:15:56 - Starting service [Tomcat]
+2024-12-10 10:15:56 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 10:15:56 - Initializing Spring embedded WebApplicationContext
+2024-12-10 10:15:56 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 10:15:57 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 10:15:57 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 10:15:57 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:15:57 - HikariPool-1 - Starting...
+2024-12-10 10:15:57 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 636ad197-079d-4cdf-bab7-685da680dde5
+2024-12-10 10:15:57 - HikariPool-1 - Start completed.
+2024-12-10 10:15:57 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:15:58 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 10:16:13 - Caught exception while handling error response
+java.net.UnknownHostException: api.sandbox.paypal.com
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:304)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:534)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:639)
+	at java.base/sun.net.www.protocol.https.HttpsClient.<init>(HttpsClient.java:266)
+	at java.base/sun.net.www.protocol.https.HttpsClient.New(HttpsClient.java:380)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(AbstractDelegateHttpsURLConnection.java:193)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1287)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1128)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:179)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1665)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1589)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:529)
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:308)
+	at com.paypal.base.HttpConnection.executeWithStream(HttpConnection.java:160)
+	at com.paypal.base.HttpConnection.execute(HttpConnection.java:67)
+	at com.paypal.base.rest.OAuthTokenCredential.generateOAuthToken(OAuthTokenCredential.java:228)
+	at com.paypal.base.rest.OAuthTokenCredential.generateAccessToken(OAuthTokenCredential.java:170)
+	at com.paypal.base.rest.OAuthTokenCredential.getAccessToken(OAuthTokenCredential.java:138)
+	at poly.foodease.Config.PayPalConfig.apiContext(PayPalConfig.java:38)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.CGLIB$apiContext$2(<generated>)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.apiContext(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+2024-12-10 10:16:13 -  Retry  No : 1...
+2024-12-10 10:16:14 - Caught exception while handling error response
+java.net.UnknownHostException: api.sandbox.paypal.com
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:2048)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:2043)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:2042)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1609)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1589)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:529)
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:308)
+	at com.paypal.base.HttpConnection.executeWithStream(HttpConnection.java:160)
+	at com.paypal.base.HttpConnection.execute(HttpConnection.java:67)
+	at com.paypal.base.rest.OAuthTokenCredential.generateOAuthToken(OAuthTokenCredential.java:228)
+	at com.paypal.base.rest.OAuthTokenCredential.generateAccessToken(OAuthTokenCredential.java:170)
+	at com.paypal.base.rest.OAuthTokenCredential.getAccessToken(OAuthTokenCredential.java:138)
+	at poly.foodease.Config.PayPalConfig.apiContext(PayPalConfig.java:38)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.CGLIB$apiContext$2(<generated>)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.apiContext(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.net.UnknownHostException: api.sandbox.paypal.com
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:304)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:534)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:639)
+	at java.base/sun.net.www.protocol.https.HttpsClient.<init>(HttpsClient.java:266)
+	at java.base/sun.net.www.protocol.https.HttpsClient.New(HttpsClient.java:380)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(AbstractDelegateHttpsURLConnection.java:193)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1287)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1128)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:179)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1665)
+	... 44 common frames omitted
+2024-12-10 10:16:14 -  Retry  No : 2...
+2024-12-10 10:16:15 - HikariPool-1 - Shutdown initiated...
+2024-12-10 10:16:15 - HikariPool-1 - Shutdown completed.
+2024-12-10 10:16:15 - Stopping service [Tomcat]
+2024-12-10 10:16:15 - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'apiContext' defined in class path resource [poly/foodease/Config/PayPalConfig.class]: Failed to instantiate [com.paypal.base.rest.APIContext]: Factory method 'apiContext' threw exception with message: retry fails..  check log for more information
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at poly.foodease.FoodEaseApplication.main(FoodEaseApplication.java:12)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.paypal.base.rest.APIContext]: Factory method 'apiContext' threw exception with message: retry fails..  check log for more information
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:178)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644)
+	... 24 common frames omitted
+Caused by: com.paypal.base.rest.PayPalRESTException: retry fails..  check log for more information
+	at com.paypal.base.rest.OAuthTokenCredential.generateOAuthToken(OAuthTokenCredential.java:247)
+	at com.paypal.base.rest.OAuthTokenCredential.generateAccessToken(OAuthTokenCredential.java:170)
+	at com.paypal.base.rest.OAuthTokenCredential.getAccessToken(OAuthTokenCredential.java:138)
+	at poly.foodease.Config.PayPalConfig.apiContext(PayPalConfig.java:38)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.CGLIB$apiContext$2(<generated>)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348)
+	at poly.foodease.Config.PayPalConfig$$SpringCGLIB$$0.apiContext(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146)
+	... 25 common frames omitted
+Caused by: com.paypal.base.exception.HttpErrorException: retry fails..  check log for more information
+	at com.paypal.base.HttpConnection.executeWithStream(HttpConnection.java:197)
+	at com.paypal.base.HttpConnection.execute(HttpConnection.java:67)
+	at com.paypal.base.rest.OAuthTokenCredential.generateOAuthToken(OAuthTokenCredential.java:228)
+	... 38 common frames omitted
+Caused by: java.net.UnknownHostException: api.sandbox.paypal.com
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:2048)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:2043)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:2042)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1609)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1589)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:529)
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:308)
+	at com.paypal.base.HttpConnection.executeWithStream(HttpConnection.java:160)
+	... 40 common frames omitted
+Caused by: java.net.UnknownHostException: api.sandbox.paypal.com
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:304)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:534)
+	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:639)
+	at java.base/sun.net.www.protocol.https.HttpsClient.<init>(HttpsClient.java:266)
+	at java.base/sun.net.www.protocol.https.HttpsClient.New(HttpsClient.java:380)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(AbstractDelegateHttpsURLConnection.java:193)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1287)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1128)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:179)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1665)
+	... 44 common frames omitted
+2024-12-10 10:16:45 - Starting FoodEaseApplication using Java 17.0.10 with PID 15728 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-10 10:16:45 - No active profile set, falling back to 1 default profile: "default"
+2024-12-10 10:16:47 - Starting service [Tomcat]
+2024-12-10 10:16:47 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-10 10:16:47 - Initializing Spring embedded WebApplicationContext
+2024-12-10 10:16:47 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-10 10:16:47 - HHH000412: Hibernate ORM core version 6.2.5.Final
+2024-12-10 10:16:47 - HHH000406: Using bytecode reflection optimizer
+2024-12-10 10:16:47 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:16:47 - HikariPool-1 - Starting...
+2024-12-10 10:16:47 - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 23425eab-d46c-4c7f-b0c1-2e5a46ae4b24
+2024-12-10 10:16:47 - HikariPool-1 - Start completed.
+2024-12-10 10:16:48 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-10 10:16:49 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-10 10:16:54 - Started FoodEaseApplication in 9.339 seconds (process running for 9.974)
+2024-12-10 10:16:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:16:54 - Total orders to update: 17
+2024-12-10 10:16:54 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-10 10:17:18 - Creating new order with request: OrderRequest(totalPrice=187300.0, totalQuantity=1, deliveryAddress=Thôn 7 Cao Hào  Xã An Quy Huyện Thạnh Phú - Bến Tre, orderDate=2024-12-10, orderTime=10:17:18.220302300, paymentDateTime=null, estimatedDeliveryDateTime=null, shipFee=34000, leadTime=48, couponId=null, paymentMethodId=3, shipMethodId=1, userId=1, orderStatusId=1)
+2024-12-10 10:17:18 - Order created successfully with ID: 1145
+2024-12-10 10:17:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:17:54 - Total orders to update: 18
+2024-12-10 10:18:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:18:54 - Total orders to update: 18
+2024-12-10 10:19:54 - Scheduled update for changing order statuses to delivered
+2024-12-10 10:19:54 - Total orders to update: 18
+2024-12-10 10:20:26 - HikariPool-1 - Shutdown initiated...
+2024-12-10 10:20:26 - HikariPool-1 - Shutdown completed.

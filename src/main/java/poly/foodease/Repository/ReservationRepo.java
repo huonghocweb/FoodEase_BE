@@ -15,7 +15,7 @@ public interface ReservationRepo extends JpaRepository<Reservation, Integer> {
     Page<Reservation> getReservationByReservationByUserName(@Param("userName") String userName, Pageable pageable);
 
     @Query("SELECT res FROM Reservation res JOIN res.resTable rtb JOIN res.reservationStatus resSta " +
-            "WHERE rtb.tableId = :tableId  AND resSta.reservationStatusId = 1 " +
+            "WHERE rtb.tableId = :tableId  AND resSta.reservationStatusId < 4 " +
             "AND res.checkinTime >= :startOfDay AND res.checkinTime < :endOfDay " )
     List<Reservation> getReservationsByTableIdAndDate(
             @Param("tableId") Integer tableId,

@@ -49,34 +49,37 @@ public class StripeServiceImpl {
     }
 
         public PaymentInfo returnPaymentByStripe(HttpServletRequest request) throws IOException, WriterException {
-        Session session = stripeService.returnPayment(request.getParameter("session_id"));
-        Integer paymentStatus ;
-        String orderInfo_Parameter =session.getMetadata().get("orderInfo");
-        String totalPrice_Parameter  =session.getMetadata().get("totalPrice");
-        String dateTime_Parameter = session.getMetadata().get("dateTime");
-        String transactionId_Parameter =  session.getId();
+            Session session = stripeService.returnPayment(request.getParameter("session_id"));
+            Integer paymentStatus;
+            String orderInfo_Parameter = session.getMetadata().get("orderInfo");
+            String totalPrice_Parameter = session.getMetadata().get("totalPrice");
+            String dateTime_Parameter = session.getMetadata().get("dateTime");
+            String transactionId_Parameter = session.getId();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        LocalDateTime dateTime = LocalDateTime.parse(dateTime_Parameter, formatter);
-        String jwtToken = request.getHeader("Authorization").substring(7);
-        String username = jwtUtils.extractUsername(jwtToken);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTime_Parameter, formatter);
+            String jwtToken = request.getHeader("Authorization").substring(7);
+            String username = jwtUtils.extractUsername(jwtToken);
             UserResponse userResponse = userService.getUserByUsername(username)
                     .orElseThrow(() -> new EntityNotFoundException("Not found User"));
-        if(session.getPaymentStatus().equals("paid")){
-            paymentStatus=1;
-             OrderResponse orderResponse = paymentService.updatePaymentSuccess(Integer.valueOf(orderInfo_Parameter));
-             paymentService.sendEmail( orderResponse);
-            // Xử lý cập nhật nghiệp vụ coupon
-            paymentService.updateQuantityStock(orderResponse.getOrderId());
-            if (orderResponse.getCoupon() != null){
-                paymentService.updateCouponStorageAndUsedCount(orderResponse);
+            OrderResponse orderResponse = null;
+            if (session.getPaymentStatus().equals("paid")) {
+                paymentStatus = 1;
+                orderResponse = paymentService.updatePaymentSuccess(Integer.valueOf(orderInfo_Parameter));
+                paymentService.sendEmail(orderResponse);
+                // Xử lý cập nhật nghiệp vụ coupon
+                paymentService.updateQuantityStock(orderResponse.getOrderId());
+                if (orderResponse.getCoupon() != null) {
+                    paymentService.updateCouponStorageAndUsedCount(orderResponse);
+                }
+            } else {
+                paymentStatus = 0;
             }
-        }else{
-            paymentStatus =0;
+            // Xóa thông tin giỏ hàng khi hoàn tất
+            cartService.removeCart(userResponse.getUserId());
+            System.out.println("Transaction : " + transactionId_Parameter.substring(0,15));
+            return paymentService.createPaymentInfo(orderInfo_Parameter, paymentStatus, String.valueOf(LocalDateTime.now()), String.valueOf(orderResponse.getTotalPrice()), transactionId_Parameter.substring(0,15));
+          //   paymentService.createPaymentInfo(orderInfo_Parameter, paymentStatus, dateTime_Parameter, String.valueOf(orderResponse.getTotalPrice()), transactionId_Parameter.substring(7));
         }
-        // Xóa thông tin giỏ hàng khi hoàn tất
-        cartService.removeCart(userResponse.getUserId());
-        return paymentService.createPaymentInfo(orderInfo_Parameter, paymentStatus, dateTime_Parameter , totalPrice_Parameter , transactionId_Parameter );
-    }
 }
 

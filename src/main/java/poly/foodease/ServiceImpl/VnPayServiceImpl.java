@@ -45,6 +45,7 @@ public class VnPayServiceImpl {
     @Autowired
     private OrderRepo orderRepo;
 
+
     // Tạo giao dịch bằng và trả về đường dẫn giúp dẫn tới trang thanh toán của VnPay
     public String createPaymentUrl(int totalPrice, String orderInfo, String returnUrl ) throws UnsupportedEncodingException {
         System.out.println("returnUrlr" + returnUrl);
@@ -80,7 +81,7 @@ public class VnPayServiceImpl {
 //            System.out.println("ORDER REPO " + order.getOrderDetails().size());
             OrderResponse orderResponse = paymentService.updatePaymentSuccess(orderId);
             // System.out.println("ORDER : " + orderResponse);
-            paymentInfo = paymentService.createPaymentInfo(vnp_OrderInfo, paymentStatus, vnp_PayDate, String.valueOf(orderResponse.getTotalPrice()), vnp_TransactionId);
+            paymentInfo = paymentService.createPaymentInfo(vnp_OrderInfo, paymentStatus, String.valueOf(LocalDateTime.now()), String.valueOf(orderResponse.getTotalPrice()), vnp_TransactionId);
           //  List<OrderDetailsResponse> orderDetailsResponses = orderDetailsService.getOrderDetailsByOrderId(orderId);
             System.out.println("ORDER DETAILS : " + orderResponse.getOrderDetails().size());
             paymentService.updateQuantityStock(orderResponse.getOrderId());

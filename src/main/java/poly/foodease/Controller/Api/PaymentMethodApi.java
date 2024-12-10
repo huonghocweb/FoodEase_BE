@@ -1,5 +1,6 @@
 package poly.foodease.Controller.Api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import poly.foodease.Model.Entity.ReservationOrderPayment;
 import poly.foodease.Model.Response.ReservationOrderPaymentResponse;
 import poly.foodease.Service.*;
 import poly.foodease.ServiceImpl.PayPalServiceImpl;
+import poly.foodease.ServiceImpl.VnPayServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class PaymentMethodApi {
 
     @Autowired
-    private VnPayService vnPayService;
+    private VnPayServiceImpl vnPayService;
     @Autowired
     private PayPalServiceImpl payPalService;
     @Autowired
@@ -45,15 +47,15 @@ public class PaymentMethodApi {
             result.put("success",true);
             result.put("message","Payment By MethodId");
             if (paymentMethodId ==1 ){
-                System.out.println("Vn Pay " + vnPayService.createOrder(totalPrice, reservationOrderId, baseUrlReturn));
-                result.put("data", vnPayService.createOrder(totalPrice, reservationOrderId, baseUrlReturn));
+                System.out.println("Vn Pay " + vnPayService.createPaymentUrl(totalPrice, reservationOrderId, baseUrlReturn));
+                result.put("data", vnPayService.createPaymentUrl(totalPrice, reservationOrderId, baseUrlReturn));
             }else if (paymentMethodId ==2){
-                result.put("data",payPalService.createPaymentUrl(totalPrice, Integer.valueOf(reservationOrderId), baseUrlReturn, baseUrlReturn));
+                System.out.println("Check out By PayPal");
+                result.put("data",payPalService.createPaymenResertUrl(totalPrice, Integer.valueOf(reservationOrderId), baseUrlReturn, baseUrlReturn));
             }else if(paymentMethodId ==3 ){
                 result.put("data",momoService.createPaymentRequest(String.valueOf(Integer.valueOf(reservationOrderId)), totalPrice, baseUrlReturn, userName));
             }else if(paymentMethodId == 5){
                 System.out.println("Cash");
-
                 ReservationOrderPaymentResponse reservationOrderPaymentResponse= reservationOrderPaymentService.createReservationOrderPayment(Integer.valueOf(reservationOrderId), paymentMethodId, Double.valueOf(totalPrice));
                 if (reservationOrderPaymentResponse != null){
                     result.put("data", reservationService.checkoutReservation(reservationOrderPaymentResponse.getReservationOrder().getReservation().getReservationId()));
@@ -65,6 +67,22 @@ public class PaymentMethodApi {
             result.put("success",false);
             result.put("message",e.getMessage());
             result.put("data" , null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/byPaypal/getPaymentInfoReser")
+    public ResponseEntity<Object> getPaymentInfoReserByPaypal(HttpServletRequest request){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println("Get Payment Reser Info PayPal");
+        try {
+            result.put("success",true);
+            result.put("message","Get Payment Reser Info By PayPal");
+            result.put("data",payPalService.returnPaymentReser(request));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message",e.getMessage());
+            result.put("data",null);
         }
         return ResponseEntity.ok(result);
     }
