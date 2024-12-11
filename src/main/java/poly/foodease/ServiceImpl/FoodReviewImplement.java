@@ -174,6 +174,13 @@ public class FoodReviewImplement implements FoodReviewService {
     @Override
     public List<FoodReview> findByFilter(Integer rating, Integer month, Integer year) {
         return foodReviewDao.findByFilter(rating, month, year);
-    }	
+    }
+
+	@Override
+	public Void DeleteById(Integer id) {
+		// TODO Auto-generated method stub
+		foodReviewDao.deleteById(id);
+		return null;
+	}	
 
 }
