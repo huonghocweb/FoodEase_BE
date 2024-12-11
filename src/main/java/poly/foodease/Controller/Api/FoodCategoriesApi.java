@@ -3,6 +3,7 @@ package poly.foodease.Controller.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import poly.foodease.Model.Entity.FoodCategories;
 import poly.foodease.Model.Response.FoodCategoriesReponse;

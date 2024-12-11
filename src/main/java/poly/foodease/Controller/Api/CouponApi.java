@@ -26,6 +26,8 @@ public class CouponApi {
     @Autowired
     private CloudinaryService cloudinaryService;
 
+
+    @PreAuthorize("hasAnyRole('ADMIN' , 'STAFF')")
     @GetMapping
     public ResponseEntity<Object> getAllCoupon(
             @RequestParam("pageCurrent") Integer pageCurrent,
@@ -63,6 +65,7 @@ public class CouponApi {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{folder}")
     public ResponseEntity<Object> createCoupon(
             @PathVariable("folder") String folder,
@@ -90,6 +93,7 @@ public class CouponApi {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{folder}/{couponId}")
     public ResponseEntity<Object> updateCoupon(
             @PathVariable("folder") String folder,
@@ -121,6 +125,7 @@ public class CouponApi {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{couponId}")
     public ResponseEntity<Object> removeCoupon(
             @PathVariable("couponId") Integer couponId

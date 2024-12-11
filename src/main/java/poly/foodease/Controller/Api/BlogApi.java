@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,8 @@ public class BlogApi {
     @Autowired
     private CloudinaryService cloudinaryService;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{folder}")
     public ResponseEntity<Object> createBlog(
             @PathVariable("folder") String folder,
@@ -67,6 +70,8 @@ public class BlogApi {
         return ResponseEntity.ok(result);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{folder}/{id}")
     public ResponseEntity<Object> updateBlog(
             @PathVariable("folder") String folder,
@@ -125,6 +130,7 @@ public class BlogApi {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
     @GetMapping
     public ResponseEntity<List<BlogResponse>> getAllBlogs() {
         return ResponseEntity.ok(blogService.getAllBlogs());

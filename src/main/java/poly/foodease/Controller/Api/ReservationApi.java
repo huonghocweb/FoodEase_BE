@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import poly.foodease.Model.Request.ReservationRequest;
 import poly.foodease.Service.ReservationService;
@@ -25,6 +26,8 @@ public class ReservationApi {
     @Autowired
     private ReservationService reservationService;
 
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping
     public ResponseEntity<Object> getAllReservation(
             @RequestParam("pageCurrent") Integer pageCurrent,
@@ -101,6 +104,7 @@ public class ReservationApi {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Object> createReservation(
             @RequestPart("reservationRequest") ReservationRequest reservationRequest
@@ -118,6 +122,8 @@ public class ReservationApi {
         return ResponseEntity.ok(result);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{reservationId}")
     public ResponseEntity<Object> updateReservation(
             @PathVariable("reservationId") Integer reservationId,

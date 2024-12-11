@@ -10,9 +10,14 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import poly.foodease.Mapper.ReservationOrderPaymentMapper;
+import poly.foodease.Model.Entity.Reservation;
+import poly.foodease.Model.Entity.ReservationOrder;
+import poly.foodease.Model.Entity.ReservationOrderPayment;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Model.Response.PaymentInfo;
 import poly.foodease.Model.Response.UserResponse;
+import poly.foodease.Repository.*;
 import poly.foodease.Service.*;
 import poly.foodease.Utils.JwtUtils;
 
@@ -37,11 +42,19 @@ public class PayPalServiceImpl {
     @Autowired
     private JwtUtils jwtUtils;
     @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderDetailsService orderDetailsService;
-    @Autowired
     private UserService userService;
+    @Autowired
+    private ReservationOrderRepo reservationOrderRepo;
+    @Autowired
+    private ReservationOrderPaymentRepo reservationOrderPaymentRepo;
+    @Autowired
+    private ReservationOrderPaymentStatusRepo reservationOrderPaymentStatusRepo;
+    @Autowired
+    private ReservationOrderPaymentMapper reservationOrderPaymentMapper;
+    @Autowired
+    private ReservationStatusRepo reservationStatusRepo;
+    @Autowired
+    private ReservationRepo reservationRepo;
 
     public String createPaymenResertUrl(Integer totalPrice,Integer orderInfo,String cancelUrl,String successUrl) throws PayPalRESTException {
         String urlPayment = "";
@@ -70,19 +83,40 @@ public class PayPalServiceImpl {
     }
 
     public Object returnPaymentReser(HttpServletRequest request) throws PayPalRESTException {
+        System.out.println("1111" + request);
         Payment payment = paypalService.executePayment(request);
+    //    System.out.println("Payment " + payment);
+        System.out.println("saasas");
         String paymentId = payment.getId();
+        String orderInfo_parameter = "";
+        for (Transaction transaction : payment.getTransactions()) {
+             orderInfo_parameter = transaction.getDescription();
+        }
+        System.out.println("123: " + orderInfo_parameter);
+        ReservationOrderPayment reservationOrderPayment = reservationOrderPaymentRepo.findById(Integer.valueOf(orderInfo_parameter))
+                .orElseThrow(() -> new EntityNotFoundException("not found ReservationOrderPayment"));
+        Reservation reservation= reservationOrderPayment.getReservationOrder().getReservation();
+        reservation.setReservationStatus(reservationStatusRepo.findById(7)
+                .orElseThrow(() -> new EntityNotFoundException("not found Reservation Status") ));
+        System.out.println("State Payment : " + payment.getState());
         if(payment.getState().equals("approved")){
             System.out.println("Payment Success");
+            reservationOrderPayment.setReservationPaymentStatus(reservationOrderPaymentStatusRepo.findById(3)
+                    .get());
+            reservationRepo.save(reservation);
         }else {
             System.out.println("Payment Failed");
+            reservationOrderPayment.setReservationPaymentStatus(reservationOrderPaymentStatusRepo.findById(2)
+                    .get());
         }
-        return null;
+        return reservationOrderPaymentMapper.convertEnToRes(reservationOrderPaymentRepo.save(reservationOrderPayment));
     }
 
     public PaymentInfo returnPayment(HttpServletRequest request) throws PayPalRESTException, IOException, WriterException {
         // Tạo ra đối tượng payment đại diện cho gia dịch
+        System.out.println("REquuest" + request);
         Payment payment = paypalService.executePayment(request);
+//        System.out.println("Payment : " + payment);
         // System.out.println(payment.toJSON());
         String paymentId = payment.getId();
         String datetime_parameter = payment.getCreateTime();

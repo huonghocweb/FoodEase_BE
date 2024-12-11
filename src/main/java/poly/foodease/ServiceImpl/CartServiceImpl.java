@@ -21,13 +21,11 @@ public class CartServiceImpl implements CartService {
     @Autowired
     FoodVariationsService foodVariationsService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     public Cart getCart(Integer cartId){
         Cart cart = cartStore.getOrDefault(cartId, new Cart());
         return cart;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     public Cart addCart(Integer cartId, Integer foodVaId, Integer quantity){
         Cart cart = cartStore.getOrDefault(cartId, new Cart());
         CartItem cartItem = cart.getItems().getOrDefault(foodVaId, new CartItem());
@@ -60,7 +58,6 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     @Override
     public Double getTotalPrice(Integer cartId) {
         Double totalPrice = 0.0;
@@ -72,7 +69,6 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     @Override
     public Integer getTotalQuantity(Integer cartId) {
         Cart cart = cartStore.getOrDefault(cartId, new Cart());
@@ -84,7 +80,6 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     @Override
     public Void removeCart(Integer cartId) {
         cartStore.remove(cartId);
@@ -92,7 +87,6 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'USER')")
     @Override
     public Void removeCartItem(Integer cartId, Integer foodVaId) {
         Cart cart = cartStore.get(cartId);

@@ -10,13 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import poly.foodease.Mapper.ReservationMapper;
+import poly.foodease.Mapper.ReservationOrderPaymentMapper;
 import poly.foodease.Model.Entity.MailInfo;
 import poly.foodease.Model.Entity.Reservation;
+import poly.foodease.Model.Entity.ReservationOrderPayment;
 import poly.foodease.Model.Request.ReservationRequest;
+import poly.foodease.Model.Response.ReservationOrderPaymentResponse;
 import poly.foodease.Model.Response.ReservationResponse;
-import poly.foodease.Repository.FoodsDao;
-import poly.foodease.Repository.ReservationRepo;
-import poly.foodease.Repository.ReservationStatusRepo;
+import poly.foodease.Repository.*;
 import poly.foodease.Service.MailService;
 import poly.foodease.Service.ReservationService;
 
@@ -45,6 +46,12 @@ public class ReservationServiceImpl implements ReservationService {
     private MailService mailService;
     @Autowired
     private MailInfo mailInfo;
+    @Autowired
+    private ReservationOrderPaymentRepo reservationOrderPaymentRepo;
+    @Autowired
+    private ReservationOrderPaymentStatusRepo reservationOrderPaymentStatusRepo;
+    @Autowired
+    private ReservationOrderPaymentMapper reservationOrderPaymentMapper;
 
 
     @PreAuthorize("hasAnyRole( 'ADMIN', 'STAFF')")
@@ -72,7 +79,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation =reservationRepo.findById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("not found Reservation"));
         if (LocalDateTime.now().plusHours(24).isBefore(reservation.getCheckinTime()) ){
-            reservation.setReservationStatus(reservationStatusRepo.findById(5)
+            reservation.setReservationStatus(reservationStatusRepo.findById(6)
                     .orElseThrow(() -> new EntityNotFoundException("Not found Reservation Status")));
             System.out.println("Change to cancel Reservation Success");
             Reservation reservationUpdated = reservationRepo.save(reservation);
@@ -239,13 +246,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     @PreAuthorize("hasAnyRole( 'ADMIN', 'STAFF')")
     @Override
-    public ReservationResponse checkoutReservation(Integer reservationId) {
+    public ReservationOrderPaymentResponse checkoutReservation(Integer reservationId , Integer reservationOrderPaymentId) {
         Reservation reservation = reservationRepo.findById(reservationId)
                 .orElseThrow(()-> new EntityNotFoundException("Not found Reservation"));
         reservation.setReservationStatus(reservationStatusRepo.findById(7)
                 .orElseThrow(() -> new EntityNotFoundException("not found ReservationStatus")));
         Reservation reservationUpdated = reservationRepo.save(reservation);
-        return reservationMapper.convertEnToRes(reservationUpdated);
+        ReservationOrderPayment reservationOrderPayment = reservationOrderPaymentRepo.findById(reservationOrderPaymentId)
+                .orElseThrow(()-> new EntityNotFoundException("not found Reservation Order Payment"));
+        reservationOrderPayment.setReservationPaymentStatus(reservationOrderPaymentStatusRepo.findById(7).get());
+        return reservationOrderPaymentMapper.convertEnToRes(reservationOrderPaymentRepo.save(reservationOrderPayment));
     }
 
 //    @Override

@@ -81,7 +81,7 @@ public class ReservationOrderPaymentApi {
 
             ReservationOrderPaymentResponse reservationOrderPayment = reservationOrderPaymentService.createReservationOrderPayment(reservationOrderId, paymentMethod ,totalAmount);
             if (reservationOrderPayment != null){
-                reservationService.checkoutReservation(reservationOrderPayment.getReservationOrder().getReservation().getReservationId());
+                reservationService.checkoutReservation(reservationOrderPayment.getReservationOrder().getReservation().getReservationId(), reservationOrderPayment.getReservationOrderPaymentId());
             }else{
                 System.out.println("Payment Failed");
             }

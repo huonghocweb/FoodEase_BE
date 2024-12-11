@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,7 +61,7 @@ public class FoodsApi {
 //		foodService.deleteFood(id);
 //		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //	}
-	
+
 	@GetMapping("/findMain")
 	public ResponseEntity<Page<Foods>> findAll(@RequestParam("page") Optional<Integer> page)
 	{
@@ -89,6 +90,7 @@ public class FoodsApi {
 		}
 
 	}
+
 	@GetMapping("foodAddFindAll")
 	public ResponseEntity<Page<FoodResponse>> foodAddFindAll(@RequestParam("page") Optional<Integer> page)
 	{
@@ -104,6 +106,8 @@ public class FoodsApi {
 		}
 		
 	}
+
+
 	@DeleteMapping("/deleteFood/{foodId}")
 	public ResponseEntity<Void> deleteFood(@PathVariable("foodId") Integer foodId){
 		try {
@@ -117,6 +121,7 @@ public class FoodsApi {
 		}
 		return null;
 	}
+
 	@PutMapping("/updateFood/{foodId}")
 	public ResponseEntity<?> updateFood(
 	        @PathVariable("foodId") Integer id,

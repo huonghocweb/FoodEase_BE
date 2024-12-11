@@ -95,6 +95,8 @@ public class  UserApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getUsers(
             @RequestParam(defaultValue = "0") Integer pageNumber,
@@ -111,6 +113,7 @@ public class  UserApi {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
         try {
@@ -121,6 +124,8 @@ public class  UserApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(
             @PathVariable Integer id,
@@ -191,6 +196,7 @@ public class  UserApi {
         }
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUserById(id);

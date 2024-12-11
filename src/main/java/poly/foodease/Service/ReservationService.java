@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import poly.foodease.Model.Entity.Reservation;
 import poly.foodease.Model.Request.ReservationRequest;
+import poly.foodease.Model.Response.ReservationOrderPaymentResponse;
 import poly.foodease.Model.Response.ReservationResponse;
 
 import java.time.LocalDate;
@@ -25,6 +26,6 @@ public interface ReservationService {
     Page<ReservationResponse> getReservationByBookDate(LocalDate startDate, LocalDate endDate, Pageable pageable);
     Page<ReservationResponse> getReservationByKeyWord(String keyWord, Pageable pageable);
      List<ReservationResponse> changeReservationStatusToWaitingCheckin();
-     ReservationResponse checkoutReservation(Integer reservationId);
+    ReservationOrderPaymentResponse checkoutReservation(Integer reservationId , Integer reservationOrderPaymentId);
    // ReservationResponse orderFootToReservation(Integer reservationId, List<Integer> foodIds);
 }

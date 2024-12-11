@@ -43,6 +43,7 @@ public class ReservationOrderApi {
     )
     {
         Map<String,Object> result = new HashMap<>();
+        System.out.println("Change Table : " + resTableId);
         try {
             result.put("success",true);
             result.put("message","Change Table By ResTableId");

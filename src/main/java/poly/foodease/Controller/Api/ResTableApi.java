@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,7 @@ public class ResTableApi {
     // return ResponseEntity.ok(resTableService.createResTable(resTableRequest));
     // }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{folder}")
     public ResponseEntity<Object> createResTable(
             @PathVariable("folder") String folder,
@@ -85,6 +87,7 @@ public class ResTableApi {
     // resTableRequest));
     // }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{folder}/{id}")
     public ResponseEntity<Object> updateResTable(
             @PathVariable("folder") String folder,
@@ -141,6 +144,7 @@ public class ResTableApi {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
     @GetMapping
     public ResponseEntity<List<ResTableResponse>> getAllResTables() {
         return ResponseEntity.ok(resTableService.getAllResTables());

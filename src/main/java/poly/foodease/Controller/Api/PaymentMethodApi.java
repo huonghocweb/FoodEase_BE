@@ -46,19 +46,21 @@ public class PaymentMethodApi {
         try {
             result.put("success",true);
             result.put("message","Payment By MethodId");
+            ReservationOrderPaymentResponse reservationOrderPaymentResponse=
+                    reservationOrderPaymentService.createReservationOrderPayment(Integer.valueOf(reservationOrderId), paymentMethodId, Double.valueOf(totalPrice));
             if (paymentMethodId ==1 ){
-                System.out.println("Vn Pay " + vnPayService.createPaymentUrl(totalPrice, reservationOrderId, baseUrlReturn));
+                System.out.println("Vn Pay " + vnPayService.createPaymentUrl(totalPrice, String.valueOf(reservationOrderPaymentResponse.getReservationOrderPaymentId()), baseUrlReturn));
                 result.put("data", vnPayService.createPaymentUrl(totalPrice, reservationOrderId, baseUrlReturn));
             }else if (paymentMethodId ==2){
                 System.out.println("Check out By PayPal");
-                result.put("data",payPalService.createPaymenResertUrl(totalPrice, Integer.valueOf(reservationOrderId), baseUrlReturn, baseUrlReturn));
+                result.put("data",payPalService.createPaymenResertUrl(totalPrice, reservationOrderPaymentResponse.getReservationOrderPaymentId(), baseUrlReturn, baseUrlReturn));
             }else if(paymentMethodId ==3 ){
                 result.put("data",momoService.createPaymentRequest(String.valueOf(Integer.valueOf(reservationOrderId)), totalPrice, baseUrlReturn, userName));
             }else if(paymentMethodId == 5){
                 System.out.println("Cash");
-                ReservationOrderPaymentResponse reservationOrderPaymentResponse= reservationOrderPaymentService.createReservationOrderPayment(Integer.valueOf(reservationOrderId), paymentMethodId, Double.valueOf(totalPrice));
                 if (reservationOrderPaymentResponse != null){
-                    result.put("data", reservationService.checkoutReservation(reservationOrderPaymentResponse.getReservationOrder().getReservation().getReservationId()));
+                    result.put("data", reservationService.checkoutReservation(reservationOrderPaymentResponse.getReservationOrder().getReservation().getReservationId() ,
+                            reservationOrderPaymentResponse.getReservationOrderPaymentId()) );
                 }else {
                     result.put("data", null);
                 }

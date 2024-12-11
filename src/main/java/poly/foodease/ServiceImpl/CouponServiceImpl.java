@@ -25,7 +25,6 @@ public class CouponServiceImpl implements CouponService {
     CouponMapper couponMapper;
 
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Page<CouponResponse> getAllCoupon(Integer pageCurrent, Integer pageSize, String orderBy, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(orderBy, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
@@ -45,7 +44,6 @@ public class CouponServiceImpl implements CouponService {
         return Optional.of(couponMapper.convertEnToResponse(coupon));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public CouponResponse createCoupon(CouponRequest couponRequest) {
         Coupon coupon = couponMapper.convertReqToEn(couponRequest);
@@ -53,7 +51,6 @@ public class CouponServiceImpl implements CouponService {
         return couponMapper.convertEnToResponse(couponCreated);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Optional<CouponResponse> updateCoupon(Integer couponId, CouponRequest couponRequest) {
         return Optional.of(couponRepo.findById(couponId)
@@ -66,13 +63,11 @@ public class CouponServiceImpl implements CouponService {
                 .orElseThrow(() -> new EntityNotFoundException("not found Coupon")));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public CouponResponse removeCoupon(Integer couponId) {
         return null;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN' , 'USER')")
     @Override
     public Optional<Object> checkCouponByCode(String code) {
         Coupon couponEn = couponRepo.findCouponByCode(code)

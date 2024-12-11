@@ -53,6 +53,7 @@ public class ReservationOrderPaymentServiceImpl implements ReservationOrderPayme
         reservationOrderPaymentRequest.setReservationOrderId(reservationOrderId);
         reservationOrderPaymentRequest.setPaymentMethodId(paymentMethodId);
         reservationOrderPaymentRequest.setTotalAmount(totalAmount);
+        reservationOrderPaymentRequest.setReservationOrderPaymentStatusId(1);
         ReservationOrderPayment reservationOrderPayment = reservationOrderPaymentMapper.convertReqToEn(reservationOrderPaymentRequest);
         ReservationOrderPayment reservationOrderPaymentCreated = reservationOrderPaymentRepo.save(reservationOrderPayment);
         return reservationOrderPaymentMapper.convertEnToRes(reservationOrderPaymentCreated);

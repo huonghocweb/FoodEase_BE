@@ -45,7 +45,7 @@ public class SecurityConfig {
 //    }
 
     private final String [] PUBLIC_ENDPOINT = {"/api/user/food/**", "/api/user/foodSize/**","/api/user/foodvariation/**","/api/user/topping/**",
-"/api/tablecategories/**", "/api/restables/**", "/api/payment/ipn/**"};
+"/api/tablecategories/**", "/api/restables/**", "/api/payment/ipn/**" , "/api/user/foodImage/**" , "/api/user/foodReview/**"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
