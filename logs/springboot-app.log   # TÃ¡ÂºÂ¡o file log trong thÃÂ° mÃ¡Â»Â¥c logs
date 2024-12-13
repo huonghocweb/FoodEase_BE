@@ -3498,3 +3498,33 @@ Caused by: java.lang.IllegalArgumentException: JDBC style parameters (?) are not
 2024-12-13 19:46:14 - Total orders to update: 29
 2024-12-13 19:47:02 - HikariPool-55 - Shutdown initiated...
 2024-12-13 19:47:02 - HikariPool-55 - Shutdown completed.
+2024-12-13 19:47:03 - Starting FoodEaseApplication using Java 17.0.9 with PID 4428 (D:\DuAnTotNghiep\Code\Be-10-12\FoodEase\target\classes started by ADMIN in D:\DuAnTotNghiep\Code\Be-10-12\FoodEase)
+2024-12-13 19:47:03 - No active profile set, falling back to 1 default profile: "default"
+2024-12-13 19:47:04 - Starting service [Tomcat]
+2024-12-13 19:47:04 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-13 19:47:04 - Initializing Spring embedded WebApplicationContext
+2024-12-13 19:47:04 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13 19:47:04 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-13 19:47:04 - HikariPool-56 - Starting...
+2024-12-13 19:47:04 - HikariPool-56 - Added connection ConnectionID:631 ClientConnectionId: 3f1950e0-cfc6-4549-912d-cd8cf0f6e152
+2024-12-13 19:47:04 - HikariPool-56 - Start completed.
+2024-12-13 19:47:04 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-13 19:47:04 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-13 19:47:06 - HikariPool-56 - Shutdown initiated...
+2024-12-13 19:47:06 - HikariPool-56 - Shutdown completed.
+2024-12-13 19:47:06 - Stopping service [Tomcat]
+2024-12-13 19:47:06 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method setFilterChains in org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration required a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
