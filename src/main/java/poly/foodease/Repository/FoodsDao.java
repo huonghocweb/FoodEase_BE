@@ -19,7 +19,7 @@ public interface FoodsDao extends JpaRepository<Foods, Integer>{
 
 
 	//Hưởng
-	@Query("SELECT f FROM Foods f WHERE f.foodName LIKE :foodName")
+	@Query("SELECT f FROM Foods f WHERE f.foodName LIKE CONCAT('%', :foodName, '%')")
 	Page<Foods> findFoodsByFoodName(@Param("foodName") String foodName,
 									Pageable pageable);
 	//Hưởng

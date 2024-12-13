@@ -1,5 +1,6 @@
 package poly.foodease.Controller.Api;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.apache.http.HttpStatus;
@@ -152,15 +153,23 @@ public class FoodsApi {
 			@RequestParam("pageCurrent") Integer pageCurrent,
 			@RequestParam("pageSize") Integer pageSize,
 			@RequestParam("sortOrder") String sortOrder,
-			@RequestParam("sortBy") String sortBy
-	){
+			@RequestParam("sortBy") String sortBy,
+			@RequestParam(value = "keyWord" ,required = false) String keyWord,
+			@RequestParam(value = "startDate" , required = false)LocalDate startDate,
+			@RequestParam(value = "endDate" , required = false) LocalDate endDate
+			){
 		Map<String,Object> result = new HashMap<>();
 		Sort sort = Sort.by(new Sort.Order(Objects.equals("asc", sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC , sortBy));
 		Pageable pageable = PageRequest.of(pageCurrent,  pageSize, sort);
 		try {
 			result.put("success",true);
 			result.put("message","Fill All Foods By Huong ");
-			result.put("data",foodService.fillAllFoodByHuong(pageable));
+			if (!keyWord.isEmpty()){
+				result.put("data",foodService.findFoodsByFoodName(keyWord, pageable));
+			}else {
+				result.put("data",foodService.fillAllFoodByHuong(pageable));
+			}
+
 		}catch (Exception e){
 			result.put("success",false);
 			result.put("message",e.getMessage());

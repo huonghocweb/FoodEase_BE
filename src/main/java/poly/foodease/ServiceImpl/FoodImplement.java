@@ -144,6 +144,7 @@ public class FoodImplement implements FoodsService {
 	@Override
 	public Page<FoodResponse> findFoodsByFoodName(String foodName, Pageable pageable) {
 		Page<Foods> foodsByFoodName = foodsDao.findFoodsByFoodName(foodName, pageable);
+		System.out.println("Size " + foodsByFoodName.getContent().size());
 		List<FoodResponse> foodResponses = foodsByFoodName.getContent().stream()
 				.map(foodMapper :: converEntoResponse)
 				.collect(Collectors.toList());

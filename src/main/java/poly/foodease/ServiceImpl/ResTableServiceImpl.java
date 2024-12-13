@@ -200,6 +200,7 @@ public class ResTableServiceImpl implements ResTableService {
                 bodyBuilder.append("<p>Thông tin chi tiết:</p>");
                 bodyBuilder.append("<ul>");
                 bodyBuilder.append("<strong>Mã bàn:</strong> ").append(reservationCreate.getResTable().getTableId()).append("<br>");
+                bodyBuilder.append("<strong>Mã checkin:</strong> ").append(randomCode).append("<br>");
                 bodyBuilder.append("<strong>Ngày Check In : </strong> ").append(reservationCreate.getCheckinTime().toLocalDate()).append("<br>");
                 bodyBuilder.append("<strong>Giờ Check In:</strong> ").append(reservationCreate.getCheckinTime().toLocalTime()).append("<br>");
                 bodyBuilder.append("<strong>Giờ Check Out:</strong> ").append(reservationCreate.getCheckoutTime().toLocalTime()).append("<br>");
@@ -210,7 +211,7 @@ public class ResTableServiceImpl implements ResTableService {
                 bodyBuilder.append("<p>Trân trọng,<br>Công ty Victory Group</p>");
                 bodyBuilder.append("</body></html>");
                 List<File> files = new ArrayList<>();
-                File qrcodeFile = qrCodeService.createQrCodeWithFileTemp("Mã Checkin Của Bạn Là  : " + randomCode , 360, 360);
+                File qrcodeFile = qrCodeService.createQrCodeWithFileTemp(randomCode , 360, 360);
                 mailInfo.setBody(bodyBuilder.toString());
                 mailInfo.setSubject("Reservation Information");
                 files.add(qrcodeFile);

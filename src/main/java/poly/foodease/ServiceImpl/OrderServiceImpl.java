@@ -170,7 +170,7 @@ public class OrderServiceImpl implements OrderService {
                     LocalDateTime paymentDateTime = order.getPaymentDatetime();
                     if (paymentDateTime.plusMinutes(3).isBefore(now)) {
                         logger.info("Order ID: {} status changing to Shipping", order.getOrderId());
-                        order.setOrderStatus(orderStatusRepo.findById(3).orElseThrow());
+                      //  order.setOrderStatus(orderStatusRepo.findById(3).orElseThrow());
                         webSocketController.sendOrderUpdateMessage("Order " + order.getOrderId() + " is now Shipping.");
                     }
                 } else if (order.getOrderStatus().getOrderStatusId() == 3) {

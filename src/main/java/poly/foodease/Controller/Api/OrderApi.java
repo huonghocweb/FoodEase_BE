@@ -94,7 +94,8 @@ public class OrderApi {
 	}
 
 	@GetMapping("/changeOrderStatus/{orderId}/{orderStatusId}")
-	public ResponseEntity<Object> changeOrderStatus(@PathVariable("orderId") Integer orderId,
+	public ResponseEntity<Object> changeOrderStatus(
+			@PathVariable("orderId") Integer orderId,
 			@PathVariable("orderStatusId") Integer orderStatusId) {
 		Map<String, Object> result = new HashMap<>();
 		System.out.println("Change Order Status to " + orderStatusId);
@@ -286,7 +287,7 @@ public class OrderApi {
 			 @RequestParam(value = "sortBy", required = false, defaultValue = "orderDate") String sortBy,
 		        @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") String sortDirection) {
 		try {
-			Pageable pageable = PageRequest.of(page.orElse(0), 5,Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+			Pageable pageable = PageRequest.of(page.orElse(0), 8,Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
 			if (!date.isPresent() && !endDate.isPresent()) {
 				LocalDate today = date.orElse(LocalDate.now());
 

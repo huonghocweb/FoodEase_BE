@@ -244,7 +244,6 @@ public class ReservationServiceImpl implements ReservationService {
 
 
 
-    @PreAuthorize("hasAnyRole( 'ADMIN', 'STAFF')")
     @Override
     public ReservationOrderPaymentResponse checkoutReservation(Integer reservationId , Integer reservationOrderPaymentId) {
         Reservation reservation = reservationRepo.findById(reservationId)
@@ -254,7 +253,10 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservationUpdated = reservationRepo.save(reservation);
         ReservationOrderPayment reservationOrderPayment = reservationOrderPaymentRepo.findById(reservationOrderPaymentId)
                 .orElseThrow(()-> new EntityNotFoundException("not found Reservation Order Payment"));
-        reservationOrderPayment.setReservationPaymentStatus(reservationOrderPaymentStatusRepo.findById(7).get());
+        System.out.println("ReserOP : " + reservationOrderPayment.getReservationOrderPaymentId());
+        reservationOrderPayment.setReservationPaymentStatus(reservationOrderPaymentStatusRepo.findById(3)
+                .orElseThrow(() -> new EntityNotFoundException("not ofund Status")));
+        System.out.println("ReserOP Status : " + reservationOrderPayment.getReservationPaymentStatus().getReservationPaymentStatusId());
         return reservationOrderPaymentMapper.convertEnToRes(reservationOrderPaymentRepo.save(reservationOrderPayment));
     }
 
