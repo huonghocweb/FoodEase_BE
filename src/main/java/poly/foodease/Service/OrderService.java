@@ -1,5 +1,6 @@
 package poly.foodease.Service;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,7 @@ import poly.foodease.Model.Request.PaymentMethodRevenueRequest;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Model.Response.PaymentMethodRevenueResponse;
 import poly.foodease.Report.ReportOrder;
+import poly.foodease.Report.ReportRevenueByDay;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
@@ -44,5 +46,10 @@ public interface OrderService {
     Page<ReportOrder> ReportRevenueByToday(LocalDate date,Pageable page);
     List<ReportUserBuy> findAllReportUserBuy();
     Page<OrderResponse> findOrdersByOrderDateBetween( Optional<LocalDate> date,  Optional<LocalDate> endDate, Pageable page);
- 
+    
+    Page<poly.foodease.Report.ReportRevenueByDay> ReportRevenueByDay( Optional<LocalDate> date,  Optional<LocalDate> endDate, Pageable page);
+    Page< ReportRevenueByDay> ReportRevenueDayByToday(LocalDate today,Pageable page);
+    List<ReportRevenueByMonth> getRevenueByMonthAndYear(Integer year);
+    List<ReportRevenueByYear> ReportRevenueByYear1(Integer year);
+	
 }

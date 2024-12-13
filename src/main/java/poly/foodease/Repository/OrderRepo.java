@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import poly.foodease.Model.Entity.Order;
 import poly.foodease.Model.Response.PaymentMethodRevenueResponse;
 import poly.foodease.Report.ReportOrder;
+import poly.foodease.Report.ReportRevenueByDay;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
@@ -79,5 +80,27 @@ public interface OrderRepo extends JpaRepository<Order ,Integer> {
 
     @Query("SELECT o FROM Order o WHERE o.orderDate BETWEEN :startDate AND :endDate")
     Page<Order> findOrdersByOrderDateBetween(@Param("startDate") Optional<LocalDate> date, @Param("endDate") Optional<LocalDate> endDate, Pageable page);
+    
+    @Query("SELECT new poly.foodease.Report.ReportRevenueByDay(o.orderDate,sum(o.totalPrice))"
+    		+ "from Order o where o.orderDate  BETWEEN :startDate AND :endDate group by o.orderDate")
+    Page<ReportRevenueByDay> ReportRevenueByDay(@Param("startDate") Optional<LocalDate> date, @Param("endDate") Optional<LocalDate> endDate, Pageable page);
+    
+    @Query("SELECT new poly.foodease.Report.ReportRevenueByDay(o.orderDate,sum(o.totalPrice))"
+    		+ "from Order o where o.orderDate =?1 group by o.orderDate")
+    Page<ReportRevenueByDay> ReportRevenueDayByToday(LocalDate today,Pageable page);
+    
+    @Query("SELECT new poly.foodease.Report.ReportRevenueByMonth(YEAR(o.orderDate), MONTH(o.orderDate), SUM(o.totalPrice), SUM(o.totalQuantity)) " +
+    	       "FROM Order o " +
+    	       "WHERE YEAR(o.orderDate) = ?1 " +
+    	       "GROUP BY YEAR(o.orderDate), MONTH(o.orderDate) " +
+    	       "ORDER BY YEAR(o.orderDate), MONTH(o.orderDate)")
+    	List<ReportRevenueByMonth> getRevenueByMonthAndYear(Integer year);
+    
+    
+    @Query("SELECT new poly.foodease.Report.ReportRevenueByYear(YEAR(o.orderDate), SUM(o.totalPrice), SUM(o.totalQuantity)) " +
+    	       "FROM Order o WHERE YEAR(o.orderDate) = ?1 " +
+    	       "GROUP BY YEAR(o.orderDate) " +
+    	       "ORDER BY YEAR(o.orderDate)")
+    	List<ReportRevenueByYear> ReportRevenueByYear1(Integer year);
 
 }

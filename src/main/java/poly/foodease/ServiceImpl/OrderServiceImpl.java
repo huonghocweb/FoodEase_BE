@@ -269,4 +269,36 @@ public class OrderServiceImpl implements OrderService {
 		return list.map(orderMapper :: convertEnToRes);
 		
 	}
+
+	@Override
+	public Page<poly.foodease.Report.ReportRevenueByDay> ReportRevenueByDay(Optional<LocalDate> date,
+			Optional<LocalDate> endDate, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueByDay(date, endDate, page);
+	}
+
+	@Override
+	public Page<poly.foodease.Report.ReportRevenueByDay> ReportRevenueDayByToday(LocalDate today, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueDayByToday(today, page);
+	}
+
+	@Override
+	public List<ReportRevenueByMonth> getRevenueByMonthAndYear(Integer year) {
+		// TODO Auto-generated method stub
+		return orderRepo.getRevenueByMonthAndYear(year);
+	}
+
+	@Override
+	public List<poly.foodease.Report.ReportRevenueByYear> ReportRevenueByYear1(Integer year) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueByYear1(year);
+	}
+
+	
+
+
+
+	
+	
 }
