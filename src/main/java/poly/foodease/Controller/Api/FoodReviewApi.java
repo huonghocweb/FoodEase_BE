@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -91,6 +92,18 @@ public class FoodReviewApi {
 			// TODO: handle exception
 			e.printStackTrace();
 			return ResponseEntity.ok(null);
+		}
+	}
+	@DeleteMapping("/deleteByid/{id}")
+	ResponseEntity<Void> deleteId(@PathVariable("id") Integer id)
+	{
+		try {
+			foodReviewService.DeleteById(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

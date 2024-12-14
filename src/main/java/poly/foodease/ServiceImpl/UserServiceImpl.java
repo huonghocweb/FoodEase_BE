@@ -213,5 +213,12 @@ public class UserServiceImpl implements UserService {
 
         return "Verification code sent to your email!";
     }
+
+	@Override
+	public User findById(Integer id) {
+		// TODO Auto-generated method stub
+		User user =userRepo.findById(id).get();
+		return user;
+	}
 //Hòa
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.cglib.core.Local;
@@ -22,6 +23,7 @@ import poly.foodease.Model.Response.OrderDTO;
 import poly.foodease.Model.Response.OrderDetailDTO;
 import poly.foodease.Model.Response.OrderResponse;
 import poly.foodease.Report.ReportOrder;
+import poly.foodease.Report.ReportRevenueByDay;
 import poly.foodease.Report.ReportRevenueByMonth;
 import poly.foodease.Report.ReportRevenueByYear;
 import poly.foodease.Report.ReportUserBuy;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -342,4 +345,77 @@ public class OrderApi {
 		return ResponseEntity.ok(result);
 	}
 
+	@GetMapping("/findRevenueByDaily")
+	public ResponseEntity<Page<ReportRevenueByDay>> ReportRevenueByDay(@RequestParam("date") Optional<LocalDate> date,
+			@RequestParam("page") Optional<Integer> page, @RequestParam("EndDate") Optional<LocalDate> endDate){
+		try {
+			Pageable pageable = PageRequest.of(page.orElse(0), 10);
+			if (!date.isPresent() && !endDate.isPresent()) {
+				LocalDate today = date.orElse(LocalDate.now());
+			
+				Page<ReportRevenueByDay> reportRevenueByDay=orderService.ReportRevenueDayByToday(today, pageable);
+				return ResponseEntity.ok(reportRevenueByDay);
+			}
+
+			else if (date != null && endDate != null) {
+				
+				Page<ReportRevenueByDay> beetWeenDate = orderService.ReportRevenueByDay(date, endDate, pageable);
+				return ResponseEntity.ok(beetWeenDate);
+			}
+			
+			return null;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	@GetMapping("findRevenueByMonthAndYear")
+	public ResponseEntity<List<ReportRevenueByMonth>> findRevenueByMonthAndYear(@RequestParam(value = "year",required = false)  Integer year){
+		try {
+			if(year!=null)
+			{
+				
+				List<ReportRevenueByMonth> findRevenueByMonthAndYear=orderService.getRevenueByMonthAndYear(year);
+				return ResponseEntity.ok(findRevenueByMonthAndYear);
+			}
+			else if(year==null)
+			{
+				Integer yearToday=Year.now().getValue();
+				System.out.println(yearToday);
+				
+				
+				List<ReportRevenueByMonth> findRevenueByMonthAndYear=orderService.getRevenueByMonthAndYear(yearToday);
+				return ResponseEntity.ok(findRevenueByMonthAndYear);
+			}
+			return null;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+			
+		}				
+	}
+	
+	@GetMapping("/findRevenueByYear1")
+	public ResponseEntity<List<ReportRevenueByYear>> findRevenueByYear1(@RequestParam(value = "year",required = false)  Integer year){
+		try {
+			if(year!= null) {
+				List<ReportRevenueByYear>findRevenueByYear1= orderService.ReportRevenueByYear1(year);
+				return ResponseEntity.ok(findRevenueByYear1);
+			}
+			else if(year == null) {
+				System.out.println("duwr liee nulll");
+				List<ReportRevenueByYear>findRevenueByYear1= orderService.ReportRevenueByYear();
+				return ResponseEntity.ok(findRevenueByYear1);
+			}
+			return null;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

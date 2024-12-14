@@ -154,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
 
     // Hàm này giúp tự động cập nhật trạng thái đơn hàng
     @Override
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 30000)
     @Transactional
     public List<OrderResponse> changeOrderStatusToDelived() {
     logger.info("Scheduled update for changing order statuses to delivered");
@@ -166,7 +166,10 @@ public class OrderServiceImpl implements OrderService {
 
         orders.forEach(order -> {
             try {
-                if (order.getOrderStatus().getOrderStatusId() == 2) {
+                if(order.getOrderStatus().getOrderStatusId() == 1){
+                    webSocketController.sendOrderUpdateMessage("Your Order With Id : " + order.getOrderId() + " pay failed , please try again!");
+                }
+                else if (order.getOrderStatus().getOrderStatusId() == 2) {
                     LocalDateTime paymentDateTime = order.getPaymentDatetime();
                     if (paymentDateTime.plusMinutes(3).isBefore(now)) {
                         logger.info("Order ID: {} status changing to Shipping", order.getOrderId());
@@ -180,6 +183,8 @@ public class OrderServiceImpl implements OrderService {
                         order.setOrderStatus(orderStatusRepo.findById(4).orElseThrow());
                         webSocketController.sendOrderUpdateMessage("Order " + order.getOrderId() + " is now Delivered.");
                     }
+                }else {
+                    webSocketController.sendOrderUpdateMessage("No Notification here !");
                 }
             } catch (Exception e) {
                 logger.error("Error updating status for order ID: {}", order.getOrderId(), e);
@@ -269,4 +274,36 @@ public class OrderServiceImpl implements OrderService {
 		return list.map(orderMapper :: convertEnToRes);
 		
 	}
+
+	@Override
+	public Page<poly.foodease.Report.ReportRevenueByDay> ReportRevenueByDay(Optional<LocalDate> date,
+			Optional<LocalDate> endDate, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueByDay(date, endDate, page);
+	}
+
+	@Override
+	public Page<poly.foodease.Report.ReportRevenueByDay> ReportRevenueDayByToday(LocalDate today, Pageable page) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueDayByToday(today, page);
+	}
+
+	@Override
+	public List<ReportRevenueByMonth> getRevenueByMonthAndYear(Integer year) {
+		// TODO Auto-generated method stub
+		return orderRepo.getRevenueByMonthAndYear(year);
+	}
+
+	@Override
+	public List<poly.foodease.Report.ReportRevenueByYear> ReportRevenueByYear1(Integer year) {
+		// TODO Auto-generated method stub
+		return orderRepo.ReportRevenueByYear1(year);
+	}
+
+	
+
+
+
+	
+	
 }

@@ -41,8 +41,14 @@ public class CartServiceImpl implements CartService {
 //                .sum();
         if(cart.getItems().containsKey(foodVaId)){
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
+
         }else{
             cartItem.setQuantity(quantity);
+        }
+        if (cartItem.getQuantity() >= foodVariation.getQuantityStock()){
+            cartItem.setQuantity(foodVariation.getQuantityStock());
+            System.out.println("SP : " + foodVariation.getFoodVariationId() + foodVariation.getQuantityStock());
+            System.out.println("So luong ton kho khong du ");
         }
         if (cartItem.getQuantity() == 0){
             this.removeCartItem(cartId, foodVaId);
@@ -88,9 +94,11 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Void removeCartItem(Integer cartId, Integer foodVaId) {
+    public Cart removeCartItem(Integer cartId, Integer foodVaId) {
+
         Cart cart = cartStore.get(cartId);
         CartItem cartItem = cart.getItems().remove(foodVaId);
-        return null;
+        System.out.println("REMOVE " + foodVaId);
+        return cart;
     }
 }

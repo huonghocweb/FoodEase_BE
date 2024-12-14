@@ -549,4 +549,18 @@ public class  UserApi {
         excelExporter.export(response);
 
     }
+    @GetMapping("/findUserByid/{id}")
+    public ResponseEntity<User> findUserByid(@PathVariable("id") Integer id)
+    {
+    	try {
+    		User user= userService.findById(id);
+    		return ResponseEntity.ok(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+    	
+    	
+    }
 }

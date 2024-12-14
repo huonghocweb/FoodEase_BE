@@ -10,6 +10,6 @@ public interface CartService {
     Double getTotalPrice(Integer cartId);
     Integer getTotalQuantity (Integer cartId);
     Void removeCart(Integer cartId);
-    Void removeCartItem(Integer cartId, Integer foodVaId);
+    Cart removeCartItem(Integer cartId, Integer foodVaId);
 
 }

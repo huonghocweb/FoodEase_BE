@@ -92,6 +92,7 @@ public class CartApi {
             @PathVariable("cartId") Integer cartId,
             @PathVariable("foodVaId") Integer foodVaId){
         Map<String,Object> result = new HashMap<>();
+        System.out.println(cartId + "foodID" + foodVaId);
         try {
             result.put("success",true);
             result.put("message", "Remove CartItem By FoodVaId");
