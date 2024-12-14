@@ -54,7 +54,6 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationOrderPaymentMapper reservationOrderPaymentMapper;
 
 
-    @PreAuthorize("hasAnyRole( 'ADMIN', 'STAFF')")
     @Override
     public Page<ReservationResponse> getAllReservation(Pageable pageable) {
 
@@ -65,7 +64,6 @@ public class ReservationServiceImpl implements ReservationService {
         return new PageImpl<>(reservations,pageable, reservationPage.getTotalElements());
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Optional<ReservationResponse> getReservationByReservationId(Integer reservationId) {
         Reservation reservation = reservationRepo.findById(reservationId)
@@ -73,7 +71,6 @@ public class ReservationServiceImpl implements ReservationService {
         return Optional.of(reservationMapper.convertEnToRes(reservation));
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Optional<ReservationResponse> cancelRequestReservation(Integer reservationId) {
         Reservation reservation =reservationRepo.findById(reservationId)
@@ -90,7 +87,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ReservationResponse> getReservationByUserName(String userName, Integer pageCurrent,Integer pageSize, String sortOrder, String sortBy) {
         Sort sort = Sort.by(new Sort.Order(Objects.equals(sortOrder, "asc") ? Sort.Direction.ASC : Sort.Direction.DESC,sortBy  ));
@@ -102,7 +98,6 @@ public class ReservationServiceImpl implements ReservationService {
         return new PageImpl<>(reservations,pageable,reservationPage.getTotalElements());
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public ReservationResponse createReservation(ReservationRequest reservationRequest) {
         Reservation reservation = reservationMapper.convertReqToEn(reservationRequest);
@@ -110,7 +105,6 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.convertEnToRes(reservationCreated);
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Optional<ReservationResponse> updateReservation(Integer reservationId, ReservationRequest reservationRequest) {
         return Optional.of(reservationRepo.findById(reservationId).map(reservationExists -> {
@@ -121,7 +115,6 @@ public class ReservationServiceImpl implements ReservationService {
         })).orElseThrow(() -> new EntityNotFoundException("Not found Reservation"));
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public List<ReservationResponse> getReservedByTableIdAndDate(Integer tableId, LocalDate localDate) {
         LocalDateTime startOfDay = localDate.atTime(LocalTime.of(9, 0));
@@ -136,7 +129,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
-    @PreAuthorize("hasAnyRole( 'ADMIN', 'STAFF')")
     @Override
     public ReservationResponse checkinReservation(Integer reservationId, String checkinKey) {
         Reservation reservation = reservationRepo.findById(reservationId)
@@ -154,7 +146,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ReservationResponse> getReservationByBookDate(LocalDate startDate, LocalDate endDate, Pageable pageable) {
         LocalDateTime startDateTime = startDate.atStartOfDay();
@@ -166,7 +157,6 @@ public class ReservationServiceImpl implements ReservationService {
         return new PageImpl<>(reservations,pageable, reservationPage.getTotalElements());
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'STAFF')")
     @Override
     public Page<ReservationResponse> getReservationByKeyWord(String keyWord, Pageable pageable) {
         Page<Reservation>reservationPage = reservationRepo.getReservationByKeyWord(keyWord, pageable);

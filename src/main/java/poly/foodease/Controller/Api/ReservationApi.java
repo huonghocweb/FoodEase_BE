@@ -142,12 +142,15 @@ public class ReservationApi {
         return ResponseEntity.ok(result);
     }
 
+
+    // Hàm kiếm tra lây ra các lịch đặt bàn trước theo ngày đưa vào
     @GetMapping("/getByTableIdAndDate/{tableId}")
     public ResponseEntity<Object> getReservationByTableIdAndDate(
             @PathVariable("tableId") Integer tableId,
             @RequestParam("dateCheckTime")LocalDate dateCheckTime
             ){
         Map<String,Object> result = new HashMap<>();
+        System.out.println("Check History Reser by Date ");
         try {
             result.put("success",true);
             result.put("message","Update Reservation ");
