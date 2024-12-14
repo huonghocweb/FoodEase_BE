@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -123,12 +124,17 @@ public class FoodVariationsApi {
 	public ResponseEntity<Void> deleteFoodVariation(@PathVariable("foodIdVariationId") Integer id){
 		try {
 			foodVariationsService.deletebyId(id);
-			return ResponseEntity.ok(null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
-		}
+			return ResponseEntity.ok().build();
+		} catch (DataIntegrityViolationException e) {
+	        // Lỗi do khóa ngoại hoặc dữ liệu không hợp lệ
+	        System.out.println("Xóa thất bại: Khóa ngoại còn tồn tại");
+	        return ResponseEntity.status(HttpStatus.SC_CONFLICT).build(); // trả về 409 Conflict
+	    } catch (Exception e) {
+	        // Xử lý các loại lỗi khác nếu cần
+	        System.out.println("Xóa thất bại");
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build(); // vai trò 500 Internal Server Error
+	    }
 		
 	}
 	@PutMapping("/updateFoodVariation/{foodVariationId}")

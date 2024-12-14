@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -105,17 +106,21 @@ public class FoodsApi {
 		
 	}
 	@DeleteMapping("/deleteFood/{foodId}")
-	public ResponseEntity<Void> deleteFood(@PathVariable("foodId") Integer foodId){
-		try {
-			foodService.deleteFood(foodId);
-			System.out.println("thanh cong");
-			return ResponseEntity.ok(null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("thất bại");
-			e.printStackTrace();
-		}
-		return null;
+	public ResponseEntity<Void> deleteFood(@PathVariable("foodId") Integer foodId) {
+	    try {
+	        foodService.deleteFood(foodId);
+	        System.out.println("Xóa thành công");
+	        return ResponseEntity.ok().build(); // Trả về 200 OK
+	    } catch (DataIntegrityViolationException e) {
+	        // Lỗi do khóa ngoại hoặc dữ liệu không hợp lệ
+	        System.out.println("Xóa thất bại: Khóa ngoại còn tồn tại");
+	        return ResponseEntity.status(HttpStatus.SC_CONFLICT).build(); // trả về 409 Conflict
+	    } catch (Exception e) {
+	        // Xử lý các loại lỗi khác nếu cần
+	        System.out.println("Xóa thất bại");
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build(); // vai trò 500 Internal Server Error
+	    }
 	}
 	@PutMapping("/updateFood/{foodId}")
 	public ResponseEntity<?> updateFood(
