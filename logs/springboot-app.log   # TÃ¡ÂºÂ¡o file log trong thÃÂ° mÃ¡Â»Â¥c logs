@@ -10061,3 +10061,159 @@ java.lang.NullPointerException: Cannot invoke "java.time.LocalDateTime.plusMinut
 2024-12-14 10:01:49 - Started FoodEaseApplication in 4.545 seconds (process running for 33.791)
 2024-12-14 10:02:03 - HikariPool-2 - Shutdown initiated...
 2024-12-14 10:02:03 - HikariPool-2 - Shutdown completed.
+2024-12-14 10:02:03 - Starting FoodEaseApplication using Java 17.0.10 with PID 14300 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-14 10:02:03 - No active profile set, falling back to 1 default profile: "default"
+2024-12-14 10:02:04 - Starting service [Tomcat]
+2024-12-14 10:02:04 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-14 10:02:05 - Initializing Spring embedded WebApplicationContext
+2024-12-14 10:02:05 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-14 10:02:05 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:05 - HikariPool-3 - Starting...
+2024-12-14 10:02:05 - HikariPool-3 - Added connection ConnectionID:21 ClientConnectionId: d1b80b88-03f0-4096-85f2-1a86f4cc3fb4
+2024-12-14 10:02:05 - HikariPool-3 - Start completed.
+2024-12-14 10:02:05 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:05 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-14 10:02:06 - HikariPool-3 - Shutdown initiated...
+2024-12-14 10:02:06 - HikariPool-3 - Shutdown completed.
+2024-12-14 10:02:06 - Stopping service [Tomcat]
+2024-12-14 10:02:06 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field userMapper in poly.foodease.Config.OAuth2LoginSuccessHandler required a bean of type 'poly.foodease.Mapper.UserMapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'poly.foodease.Mapper.UserMapper' in your configuration.
+
+2024-12-14 10:02:12 - Starting FoodEaseApplication using Java 17.0.10 with PID 14300 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-14 10:02:12 - No active profile set, falling back to 1 default profile: "default"
+2024-12-14 10:02:14 - Starting service [Tomcat]
+2024-12-14 10:02:14 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-14 10:02:14 - Initializing Spring embedded WebApplicationContext
+2024-12-14 10:02:15 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-14 10:02:15 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:15 - HikariPool-4 - Starting...
+2024-12-14 10:02:15 - HikariPool-4 - Added connection ConnectionID:31 ClientConnectionId: 78d4c21c-8bf4-446e-bfef-09e09d299da3
+2024-12-14 10:02:15 - HikariPool-4 - Start completed.
+2024-12-14 10:02:15 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:16 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-14 10:02:20 - Started FoodEaseApplication in 7.771 seconds (process running for 64.277)
+2024-12-14 10:02:20 - Scheduled update for changing order statuses to delivered
+2024-12-14 10:02:20 - Total orders to update: 27
+2024-12-14 10:02:20 - Error updating status for order ID: 1204
+java.lang.NullPointerException: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "estimatedDateTime" is null
+	at poly.foodease.ServiceImpl.OrderServiceImpl.lambda$changeOrderStatusToDelived$5(OrderServiceImpl.java:181) ~[classes/:na]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at poly.foodease.ServiceImpl.OrderServiceImpl.changeOrderStatusToDelived(OrderServiceImpl.java:167) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379) ~[spring-tx-6.1.12.jar:6.1.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720) ~[spring-aop-6.1.12.jar:6.1.12]
+	at poly.foodease.ServiceImpl.OrderServiceImpl$$SpringCGLIB$$0.changeOrderStatusToDelived(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.12.jar:6.1.12]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.3.jar:1.13.3]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.12.jar:6.1.12]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2024-12-14 10:02:20 - Order ID: 1206 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1207 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1208 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1209 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1210 status changing to Shipping
+2024-12-14 10:02:20 - Error updating status for order ID: 1211
+java.lang.NullPointerException: Cannot invoke "java.time.LocalDateTime.plusMinutes(long)" because "paymentDateTime" is null
+	at poly.foodease.ServiceImpl.OrderServiceImpl.lambda$changeOrderStatusToDelived$5(OrderServiceImpl.java:174) ~[classes/:na]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at poly.foodease.ServiceImpl.OrderServiceImpl.changeOrderStatusToDelived(OrderServiceImpl.java:167) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379) ~[spring-tx-6.1.12.jar:6.1.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720) ~[spring-aop-6.1.12.jar:6.1.12]
+	at poly.foodease.ServiceImpl.OrderServiceImpl$$SpringCGLIB$$0.changeOrderStatusToDelived(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.12.jar:6.1.12]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.3.jar:1.13.3]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.12.jar:6.1.12]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2024-12-14 10:02:20 - Order ID: 1212 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1213 status changing to Shipping
+2024-12-14 10:02:20 - Order ID: 1221 status changing to Shipping
+2024-12-14 10:02:26 - HikariPool-4 - Shutdown initiated...
+2024-12-14 10:02:26 - HikariPool-4 - Shutdown completed.
+2024-12-14 10:02:26 - Starting FoodEaseApplication using Java 17.0.10 with PID 14300 (D:\HK7\ASM2_Nhom3_FoodEase\FoodEase\target\classes started by ASUS in D:\HK7\ASM2_Nhom3_FoodEase\FoodEase)
+2024-12-14 10:02:26 - No active profile set, falling back to 1 default profile: "default"
+2024-12-14 10:02:27 - Starting service [Tomcat]
+2024-12-14 10:02:27 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-12-14 10:02:27 - Initializing Spring embedded WebApplicationContext
+2024-12-14 10:02:28 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-14 10:02:28 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:28 - HikariPool-5 - Starting...
+2024-12-14 10:02:28 - HikariPool-5 - Added connection ConnectionID:41 ClientConnectionId: 6e3d8376-02cb-4d10-9ea5-a67e0b0b38f7
+2024-12-14 10:02:28 - HikariPool-5 - Start completed.
+2024-12-14 10:02:28 - HHH000021: Bytecode provider name : bytebuddy
+2024-12-14 10:02:28 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-14 10:02:31 - HikariPool-5 - Shutdown initiated...
+2024-12-14 10:02:31 - HikariPool-5 - Shutdown completed.
+2024-12-14 10:02:31 - Stopping service [Tomcat]
+2024-12-14 10:02:31 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method setFilterChains in org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration required a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
